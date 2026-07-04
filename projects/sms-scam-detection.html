@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SMS Scam &amp; Spam Detection — Transformer NLP · Aliyah Alabdali</title>
+<meta name="description" content="A Transformer encoder built from scratch in PyTorch that classifies SMS as scam/spam or legitimate at 98% accuracy and 0.95 macro-F1 on a heavily imbalanced dataset. Case study by Aliyah Alabdali.">
+<meta name="theme-color" content="#FBF8F7">
+<link rel="canonical" href="https://aliyahalabdali.github.io/projects/sms-scam-detection.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SMS Scam & Spam Detection — Transformer NLP">
+<meta property="og:description" content="A from-scratch Transformer encoder in PyTorch — 98% accuracy, 0.95 macro-F1 on imbalanced data.">
+<meta property="og:image" content="../assets/media/sms-inference.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239D8189'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CreativeWork","name":"SMS Scam & Spam Detection","author":{"@type":"Person","name":"Aliyah Alabdali"},"about":["Natural Language Processing","Transformers","Text classification"],"keywords":"Transformer, PyTorch, NLP, macro-F1, imbalanced data"}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#overview">Skip to content</a>
+
+<header class="nav" id="top">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../index.html" aria-label="Back to Aliyah Alabdali home">
+      <svg class="monogram" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9D8189"/><stop offset="1" stop-color="#F4ACB7"/></linearGradient></defs>
+        <rect width="100" height="100" rx="26" fill="url(#mg)"/>
+        <text x="50" y="69" font-family="Fraunces,Georgia,serif" font-size="52" fill="#fff" text-anchor="middle">A</text>
+      </svg>
+      <span>Aliyah&nbsp;Alabdali</span>
+    </a>
+    <div class="nav__cta">
+      <a class="btn btn--ghost" href="../index.html#work">All work</a>
+      <a class="btn btn--primary" href="https://github.com/AliyahAlabdali/SMS-Scam-Detection-Transformer" target="_blank" rel="noopener">GitHub
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="case-hero">
+  <div class="case-hero__orbs" aria-hidden="true"><div class="orb orb--1"></div><div class="orb orb--2"></div></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" data-load data-delay="1">
+      <a href="../index.html">Home</a><span>/</span><a href="../index.html#work">Work</a><span>/</span>SMS Scam Detection
+    </nav>
+    <div class="case-hero__meta" data-load data-delay="1">
+      <span class="badge">Advanced Deep Learning</span><span class="badge">2026</span><span class="badge">NLP</span>
+    </div>
+    <h1 class="case-hero__title" data-load data-delay="2">SMS scam &amp; <em>spam detection</em></h1>
+    <p class="case-hero__lede" data-load data-delay="3">A Transformer encoder — built from scratch in PyTorch — that separates
+      scam and spam messages from legitimate ones on a heavily imbalanced dataset, and gets brand-new, hand-written
+      messages right too.</p>
+    <div class="case-hero__cta" data-load data-delay="4">
+      <a class="btn btn--primary" href="#results">See the results
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+      <a class="btn btn--ghost" href="https://github.com/AliyahAlabdali/SMS-Scam-Detection-Transformer" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+    <figure class="case-figure" data-load data-delay="4" style="background:#fff">
+      <img src="../assets/media/sms-inference.png" alt="Inference demo: the model classifies six unseen hand-written messages, correctly labelling scams with high probability and legitimate messages with low scam probability.">
+      <figcaption>Inference on brand-new, hand-written messages the model has never seen — scams flagged with high confidence.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="wrap case-body">
+  <nav class="case-nav" aria-label="Sections">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#problem">Problem</a>
+    <a href="#role">My role</a>
+    <a href="#tech">Tech stack</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#features">Key features</a>
+    <a href="#challenges">Challenges</a>
+    <a href="#results">Results</a>
+  </nav>
+
+  <div class="case-content">
+    <section class="case-block" id="overview" data-reveal>
+      <span class="eyebrow">Overview</span>
+      <h2>Reading intent, not just keywords.</h2>
+      <p>This project is a text classifier that decides whether an SMS is a <strong>scam/spam</strong> message or
+        <strong>legitimate</strong>. Rather than reaching for a pre-trained library model, I implemented a
+        <strong>Transformer encoder from scratch in PyTorch</strong> — tokenisation, embeddings, self-attention,
+        and a classification head — to understand the architecture end to end.</p>
+      <p>On a highly imbalanced dataset it reaches <strong>98% accuracy and a 0.95 macro-F1</strong>, and — the part
+        that matters most — it correctly labels fresh messages I wrote by hand that never appeared in training.</p>
+    </section>
+
+    <section class="case-block" id="problem" data-reveal>
+      <span class="eyebrow">Problem</span>
+      <h2>When 98% accuracy can still be useless.</h2>
+      <p>Scam and spam SMS drive real financial fraud, but scam messages are rare compared to normal ones — the
+        dataset is <strong>heavily imbalanced</strong>. A lazy model can score high accuracy simply by calling
+        almost everything "legit" and quietly missing the scams, which is exactly the failure that hurts people.</p>
+      <p>So the real target wasn't raw accuracy — it was a strong <strong>macro-F1</strong> that treats the rare
+        scam class as seriously as the common one, plus the ability to <strong>generalise to unseen phrasing</strong>,
+        because scammers never reuse the same wording twice.</p>
+    </section>
+
+    <section class="case-block" id="role" data-reveal>
+      <span class="eyebrow">My role</span>
+      <h2>Built the model, top to bottom.</h2>
+      <p>This was an individual deep-learning project, so I owned every layer:</p>
+      <div class="role-grid">
+        <div class="role-card"><h4>Data &amp; tokenisation</h4><p>Prepared the imbalanced corpus and a tokenizer + vocabulary for the encoder.</p></div>
+        <div class="role-card"><h4>Model</h4><p>Implemented the Transformer encoder from scratch — embeddings, multi-head attention, FFN, classifier head.</p></div>
+        <div class="role-card"><h4>Training</h4><p>Trained and tuned for the minority class, optimising for macro-F1 rather than accuracy alone.</p></div>
+        <div class="role-card"><h4>Evaluation</h4><p>Validated on held-out data and on new hand-written messages to test real generalisation.</p></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="tech" data-reveal>
+      <span class="eyebrow">Tech stack</span>
+      <h2>What it's built with.</h2>
+      <div class="tech-grid">
+        <div class="tech-col"><h4>Modelling</h4><div class="chips"><span class="chip">PyTorch</span><span class="chip">Transformers</span></div></div>
+        <div class="tech-col"><h4>ML utilities</h4><div class="chips"><span class="chip">Scikit-learn</span></div></div>
+        <div class="tech-col"><h4>Domain</h4><div class="chips"><span class="chip">NLP</span><span class="chip">Text classification</span></div></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="architecture" data-reveal>
+      <span class="eyebrow">Architecture</span>
+      <h2>Inside the encoder.</h2>
+      <p>A message becomes tokens, tokens become embeddings, and stacked self-attention blocks build a
+        representation that a small head turns into a scam probability.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 1240 210" role="img" aria-label="Pipeline: raw SMS, tokenize, token and positional embeddings, N transformer encoder blocks with multi-head attention and feed-forward, pooling and linear classifier, output LEGIT or SCAM with probability">
+          <text x="16" y="24" font-family="Space Mono,monospace" font-size="13" letter-spacing="2" fill="#6E545B">TRANSFORMER ENCODER — TEXT CLASSIFICATION</text>
+          <line x1="16" y1="36" x2="1224" y2="36" stroke="#EBDEDD"/>
+          <g font-family="Space Mono,monospace">
+            <rect x="16" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/><rect x="16" y="70" width="5" height="92" rx="2.5" fill="#9D8189"/>
+            <text x="40" y="104" font-size="14" fill="#2A2023">Raw SMS</text><text x="40" y="126" font-size="11" fill="#5C4C52">incoming</text><text x="40" y="142" font-size="11" fill="#5C4C52">message</text>
+
+            <rect x="224" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/><rect x="224" y="70" width="5" height="92" rx="2.5" fill="#9D8189"/>
+            <text x="248" y="104" font-size="14" fill="#2A2023">Tokenise</text><text x="248" y="126" font-size="11" fill="#5C4C52">tokens +</text><text x="248" y="142" font-size="11" fill="#5C4C52">vocabulary</text>
+
+            <rect x="432" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/><rect x="432" y="70" width="5" height="92" rx="2.5" fill="#9D8189"/>
+            <text x="456" y="104" font-size="14" fill="#2A2023">Embeddings</text><text x="456" y="126" font-size="11" fill="#5C4C52">token +</text><text x="456" y="142" font-size="11" fill="#5C4C52">positional</text>
+
+            <rect x="640" y="66" width="168" height="100" rx="14" fill="#FFF4F6" stroke="#F4ACB7"/><rect x="640" y="66" width="5" height="100" rx="2.5" fill="#F4ACB7"/>
+            <text x="664" y="100" font-size="14" fill="#2A2023">Encoder ×N</text><text x="664" y="122" font-size="11" fill="#5C4C52">multi-head</text><text x="664" y="138" font-size="11" fill="#5C4C52">attention + FFN</text>
+
+            <rect x="848" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/><rect x="848" y="70" width="5" height="92" rx="2.5" fill="#9D8189"/>
+            <text x="872" y="104" font-size="14" fill="#2A2023">Pool + Head</text><text x="872" y="126" font-size="11" fill="#5C4C52">linear</text><text x="872" y="142" font-size="11" fill="#5C4C52">classifier</text>
+
+            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/><rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#6E545B"/>
+            <text x="1080" y="104" font-size="14" fill="#2A2023">Output</text><text x="1080" y="126" font-size="11" fill="#5C4C52">LEGIT / SCAM</text><text x="1080" y="142" font-size="11" fill="#5C4C52">+ p(scam)</text>
+          </g>
+          <g stroke="#9D8189" stroke-width="2" fill="#9D8189">
+            <line x1="184" y1="116" x2="216" y2="116"/><path d="M216 116l-8-4v8z"/>
+            <line x1="392" y1="116" x2="424" y2="116"/><path d="M424 116l-8-4v8z"/>
+            <line x1="600" y1="116" x2="632" y2="116"/><path d="M632 116l-8-4v8z"/>
+            <line x1="808" y1="116" x2="840" y2="116"/><path d="M840 116l-8-4v8z"/>
+            <line x1="1016" y1="116" x2="1048" y2="116"/><path d="M1048 116l-8-4v8z"/>
+          </g>
+        </svg>
+        <figcaption>From raw text to a calibrated scam probability.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-block" id="features" data-reveal>
+      <span class="eyebrow">Key features</span>
+      <h2>What it does.</h2>
+      <ul class="ticks">
+        <li><strong>From-scratch Transformer encoder</strong> in PyTorch — attention and positional encoding implemented directly, not imported.</li>
+        <li><strong>Imbalance-aware</strong> training and evaluation, optimised for macro-F1 so rare scams aren't ignored.</li>
+        <li><strong>Probability output</strong> — every message gets a scam probability, not just a hard label.</li>
+        <li><strong>Generalises to unseen text</strong> — correctly classifies brand-new hand-written messages at inference time.</li>
+      </ul>
+    </section>
+
+    <section class="case-block" id="challenges" data-reveal>
+      <span class="eyebrow">Challenges</span>
+      <h2>The hard parts — and how I solved them.</h2>
+      <div class="challenge">
+        <span class="tag">Imbalance</span>
+        <h4>The rare class is the important class</h4>
+        <p>With scams heavily outnumbered, I optimised and evaluated for <strong>macro-F1</strong> instead of accuracy,
+        forcing the model to treat the minority scam class as a first-class citizen — landing at <strong>0.95 macro-F1</strong>.</p>
+      </div>
+      <div class="challenge">
+        <span class="tag">Implementation</span>
+        <h4>Building attention by hand</h4>
+        <p>Implementing the encoder from scratch meant getting embeddings, positional information, multi-head
+        self-attention, and the classification head all working together correctly — a deep dive that made the
+        architecture genuinely mine rather than a black box.</p>
+      </div>
+      <div class="challenge">
+        <span class="tag">Generalisation</span>
+        <h4>Scammers never repeat themselves</h4>
+        <p>To prove it learned <em>intent</em> and not memorised phrasing, I tested it on new messages I wrote by hand.
+        As the demo shows, it flags obvious scams with high probability and passes normal messages through — evidence
+        it generalises beyond the training set.</p>
+      </div>
+    </section>
+
+    <section class="case-block" id="results" data-reveal>
+      <span class="eyebrow">Results &amp; impact</span>
+      <h2>Strong where it counts.</h2>
+      <div class="metrics">
+        <div class="metric"><div class="num"><span data-count="98" data-dec="0">98</span><small>%</small></div><div class="lbl">accuracy</div></div>
+        <div class="metric"><div class="num"><span data-count="0.95" data-dec="2">0.95</span></div><div class="lbl">macro F1-score</div></div>
+        <div class="metric"><div class="num"><span data-count="100" data-dec="0">100</span><small>%</small></div><div class="lbl">from-scratch encoder</div></div>
+      </div>
+      <p>The classifier pairs high accuracy with a macro-F1 that shows it isn't cheating on the imbalance — and it
+        holds up on unseen, hand-written messages, which is the real test of a scam detector.</p>
+      <div class="prow__links" style="margin-top:1.4rem">
+        <a class="link-arrow solid" href="https://github.com/AliyahAlabdali/SMS-Scam-Detection-Transformer" target="_blank" rel="noopener">View repository
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+      </div>
+    </section>
+  </div>
+</div>
+
+<section class="section next-proj">
+  <div class="wrap">
+    <a href="brain-tumor.html" data-reveal>
+      <div><div class="t">Next project</div><div class="n">Brain Tumor MRI Classifier</div></div>
+      <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span>© <span data-year>2026</span> Aliyah Alabdali</span>
+    <a class="to-top" href="../index.html">Back to portfolio
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+  </div>
+</footer>
+<script src="../assets/js/main.js" defer></script>
+</body>
+</html>

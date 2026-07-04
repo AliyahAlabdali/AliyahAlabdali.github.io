@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brain Tumor MRI Classifier — In-browser AI · Aliyah Alabdali</title>
+<meta name="description" content="A privacy-first web app that classifies brain-MRI scans into four tumor types entirely in the browser via ONNX Runtime Web — ~79% accuracy, ~9ms inference, ~1.5MB model, no patient data leaving the device. Case study by Aliyah Alabdali.">
+<meta name="theme-color" content="#FBF8F7">
+<link rel="canonical" href="https://aliyahalabdali.github.io/projects/brain-tumor.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Brain Tumor MRI Classifier — In-browser, Privacy-first">
+<meta property="og:description" content="Four-class brain-MRI classification running fully in-browser via ONNX Runtime Web. ~9ms inference, ~1.5MB model.">
+<meta property="og:image" content="../assets/media/btcs-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239D8189'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CreativeWork","name":"Brain Tumor MRI Classifier","author":{"@type":"Person","name":"Aliyah Alabdali"},"about":["Deep Learning","Medical imaging","On-device inference"],"keywords":"ONNX Runtime Web, React, Vite, brain MRI, in-browser inference"}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#overview">Skip to content</a>
+
+<header class="nav" id="top">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../index.html" aria-label="Back to Aliyah Alabdali home">
+      <svg class="monogram" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9D8189"/><stop offset="1" stop-color="#F4ACB7"/></linearGradient></defs>
+        <rect width="100" height="100" rx="26" fill="url(#mg)"/>
+        <text x="50" y="69" font-family="Fraunces,Georgia,serif" font-size="52" fill="#fff" text-anchor="middle">A</text>
+      </svg>
+      <span>Aliyah&nbsp;Alabdali</span>
+    </a>
+    <div class="nav__cta">
+      <a class="btn btn--ghost" href="../index.html#work">All work</a>
+      <a class="btn btn--primary" href="https://btcs-project.vercel.app/" target="_blank" rel="noopener">Live demo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="case-hero">
+  <div class="case-hero__orbs" aria-hidden="true"><div class="orb orb--1"></div><div class="orb orb--2"></div></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" data-load data-delay="1">
+      <a href="../index.html">Home</a><span>/</span><a href="../index.html#work">Work</a><span>/</span>Brain Tumor Classifier
+    </nav>
+    <div class="case-hero__meta" data-load data-delay="1">
+      <span class="badge">AI System Design</span><span class="badge">2025</span><span class="badge">Deep Learning</span>
+    </div>
+    <h1 class="case-hero__title" data-load data-delay="2">Brain tumor MRI classifier — <em>in your browser</em></h1>
+    <p class="case-hero__lede" data-load data-delay="3">A privacy-first web app that sorts brain-MRI scans into four tumor types
+      entirely on-device. The scan never leaves your machine, and a ~1.5&nbsp;MB model returns an answer in about nine
+      milliseconds.</p>
+    <div class="case-hero__cta" data-load data-delay="4">
+      <a class="btn btn--primary" href="https://btcs-project.vercel.app/" target="_blank" rel="noopener">Try the live demo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+      <a class="btn btn--ghost" href="https://github.com/AliyahAlabdali/BTCS-Project" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+    <figure class="case-figure" data-load data-delay="4">
+      <video controls muted loop playsinline preload="metadata" poster="../assets/media/btcs-poster.jpg">
+        <source src="../assets/media/btcs-demo.mp4" type="video/mp4">
+        Your browser doesn't support embedded video.
+      </video>
+      <figcaption>Upload a scan, get a classification with live confidence scores — computed entirely in the browser.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="wrap case-body">
+  <nav class="case-nav" aria-label="Sections">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#problem">Problem</a>
+    <a href="#role">My role</a>
+    <a href="#tech">Tech stack</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#features">Key features</a>
+    <a href="#challenges">Challenges</a>
+    <a href="#results">Results</a>
+  </nav>
+
+  <div class="case-content">
+    <section class="case-block" id="overview" data-reveal>
+      <span class="eyebrow">Overview</span>
+      <h2>Medical AI that keeps the data at home.</h2>
+      <p>This is a web application that classifies a brain-MRI scan into one of <strong>four tumor types</strong> and
+        shows real-time confidence for each. The twist: it runs the deep-learning model <strong>entirely in the
+        browser</strong> using ONNX Runtime Web, so the image is analysed locally and <strong>never uploaded anywhere</strong>.</p>
+      <p>It's a study in doing more with less — a lightweight <strong>~1.5&nbsp;MB</strong> model delivering
+        <strong>~9&nbsp;ms</strong> inference, deployed as a live app anyone can try.</p>
+    </section>
+
+    <section class="case-block" id="problem" data-reveal>
+      <span class="eyebrow">Problem</span>
+      <h2>Sensitive scans shouldn't have to travel.</h2>
+      <p>Medical images are among the most private data there is. The usual pattern — upload a scan to a server for
+        a model to analyse — introduces privacy exposure, compliance overhead, network latency, and hosting cost.
+        For a tool meant to be quick and trustworthy, that's a lot of friction.</p>
+      <p>The challenge: deliver real deep-learning classification <strong>without any patient data leaving the
+        device</strong>, while staying fast and light enough to run comfortably in a normal web browser.</p>
+    </section>
+
+    <section class="case-block" id="role" data-reveal>
+      <span class="eyebrow">My role</span>
+      <h2>Model, app, and deployment.</h2>
+      <div class="role-grid">
+        <div class="role-card"><h4>Modelling</h4><p>Trained a compact classifier and exported it to ONNX, trading size against accuracy deliberately.</p></div>
+        <div class="role-card"><h4>On-device inference</h4><p>Wired up ONNX Runtime Web so the model executes fully client-side.</p></div>
+        <div class="role-card"><h4>App</h4><p>Built the React + Vite interface with upload, prediction, and real-time confidence scoring.</p></div>
+        <div class="role-card"><h4>Deployment</h4><p>Shipped it as a live, shareable app on Vercel.</p></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="tech" data-reveal>
+      <span class="eyebrow">Tech stack</span>
+      <h2>What it's built with.</h2>
+      <div class="tech-grid">
+        <div class="tech-col"><h4>Model</h4><div class="chips"><span class="chip">YOLOv8</span><span class="chip">ONNX</span></div></div>
+        <div class="tech-col"><h4>In-browser runtime</h4><div class="chips"><span class="chip">ONNX Runtime Web</span></div></div>
+        <div class="tech-col"><h4>Frontend</h4><div class="chips"><span class="chip">React</span><span class="chip">Vite</span></div></div>
+        <div class="tech-col"><h4>Hosting</h4><div class="chips"><span class="chip">Vercel</span></div></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="architecture" data-reveal>
+      <span class="eyebrow">Architecture</span>
+      <h2>Everything happens on your side of the wire.</h2>
+      <p>The entire pipeline — from the moment a scan is selected to the confidence bars — executes inside the
+        browser tab. There's no inference server to send data to.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 1240 250" role="img" aria-label="In-browser pipeline: upload MRI, client-side preprocess, ONNX Runtime Web running a 1.5MB model, four-class softmax with confidence. A server is shown crossed out to indicate no data is uploaded.">
+          <!-- browser boundary -->
+          <rect x="16" y="52" width="1010" height="168" rx="18" fill="#FBF8F7" stroke="#9D8189" stroke-dasharray="7 6"/>
+          <text x="34" y="44" font-family="Space Mono,monospace" font-size="13" letter-spacing="2" fill="#6E545B">IN THE BROWSER · NOTHING LEAVES THE DEVICE</text>
+          <g font-family="Space Mono,monospace">
+            <rect x="44" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#EBDEDD"/><rect x="44" y="96" width="5" height="88" rx="2.5" fill="#9D8189"/>
+            <text x="68" y="128" font-size="14" fill="#2A2023">Upload MRI</text><text x="68" y="150" font-size="11" fill="#5C4C52">local file,</text><text x="68" y="166" font-size="11" fill="#5C4C52">in-memory</text>
+
+            <rect x="260" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#EBDEDD"/><rect x="260" y="96" width="5" height="88" rx="2.5" fill="#9D8189"/>
+            <text x="284" y="128" font-size="14" fill="#2A2023">Preprocess</text><text x="284" y="150" font-size="11" fill="#5C4C52">resize &amp;</text><text x="284" y="166" font-size="11" fill="#5C4C52">normalise</text>
+
+            <rect x="476" y="92" width="176" height="96" rx="13" fill="#FFF4F6" stroke="#F4ACB7"/><rect x="476" y="92" width="5" height="96" rx="2.5" fill="#F4ACB7"/>
+            <text x="500" y="124" font-size="14" fill="#2A2023">ONNX RT Web</text><text x="500" y="146" font-size="11" fill="#5C4C52">~1.5MB model</text><text x="500" y="162" font-size="11" fill="#5C4C52">~9ms inference</text>
+
+            <rect x="692" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#EBDEDD"/><rect x="692" y="96" width="5" height="88" rx="2.5" fill="#6E545B"/>
+            <text x="716" y="128" font-size="14" fill="#2A2023">4-class + conf.</text><text x="716" y="150" font-size="11" fill="#5C4C52">softmax &amp;</text><text x="716" y="166" font-size="11" fill="#5C4C52">confidence UI</text>
+          </g>
+          <!-- server crossed out -->
+          <g font-family="Space Mono,monospace">
+            <rect x="1066" y="96" width="150" height="88" rx="13" fill="#fff" stroke="#EBDEDD" opacity=".6"/>
+            <text x="1141" y="132" font-size="13" fill="#9D8189" text-anchor="middle" opacity=".8">Server</text>
+            <text x="1141" y="150" font-size="11" fill="#9D8189" text-anchor="middle" opacity=".8">/ cloud</text>
+            <line x1="1076" y1="106" x2="1206" y2="174" stroke="#F4ACB7" stroke-width="3"/>
+            <line x1="1206" y1="106" x2="1076" y2="174" stroke="#F4ACB7" stroke-width="3"/>
+          </g>
+          <text x="1141" y="210" font-family="Space Mono,monospace" font-size="11" fill="#6E545B" text-anchor="middle">no upload</text>
+          <!-- arrows -->
+          <g stroke="#9D8189" stroke-width="2" fill="#9D8189">
+            <line x1="220" y1="140" x2="252" y2="140"/><path d="M252 140l-8-4v8z"/>
+            <line x1="436" y1="140" x2="468" y2="140"/><path d="M468 140l-8-4v8z"/>
+            <line x1="652" y1="140" x2="684" y2="140"/><path d="M684 140l-8-4v8z"/>
+          </g>
+          <line x1="1026" y1="140" x2="1060" y2="140" stroke="#E0CFCE" stroke-width="2" stroke-dasharray="4 4"/>
+        </svg>
+        <figcaption>A fully client-side inference pipeline — private by design.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-block" id="features" data-reveal>
+      <span class="eyebrow">Key features</span>
+      <h2>What it does.</h2>
+      <ul class="ticks">
+        <li><strong>Four-class classification</strong> of brain-MRI scans with a clear predicted type.</li>
+        <li><strong>Fully in-browser</strong> — inference runs on-device through ONNX Runtime Web.</li>
+        <li><strong>Privacy-first</strong> — scans are processed locally and never sent to a server.</li>
+        <li><strong>Real-time confidence scoring</strong> so users see how sure the model is per class.</li>
+        <li><strong>Featherweight &amp; fast</strong> — a ~1.5&nbsp;MB model returning results in about 9&nbsp;ms.</li>
+        <li><strong>Live &amp; shareable</strong> — deployed on Vercel, no install required.</li>
+      </ul>
+    </section>
+
+    <section class="case-block" id="challenges" data-reveal>
+      <span class="eyebrow">Challenges</span>
+      <h2>The hard parts — and how I solved them.</h2>
+      <div class="challenge">
+        <span class="tag">On-device ML</span>
+        <h4>Running a neural net inside a browser tab</h4>
+        <p>Browsers aren't built for deep learning. I used <strong>ONNX Runtime Web</strong> with a model exported and
+        trimmed to a <strong>~1.5&nbsp;MB</strong> footprint, which loads quickly and runs at roughly
+        <strong>9&nbsp;ms</strong> per inference — fast enough to feel instant.</p>
+      </div>
+      <div class="challenge">
+        <span class="tag">Privacy</span>
+        <h4>Keeping data on the device</h4>
+        <p>By moving inference to the client, the architecture removes the need to upload sensitive scans at all —
+        privacy becomes a property of the design, not a policy bolted on afterwards.</p>
+      </div>
+      <div class="challenge">
+        <span class="tag">Trade-offs</span>
+        <h4>Small model, honest accuracy</h4>
+        <p>Shrinking a model always costs something. I balanced size and speed against accuracy to land at a
+        practical <strong>~79%</strong> — a deliberate engineering trade-off for a tool that has to load and run
+        anywhere, on any device, with no backend.</p>
+      </div>
+    </section>
+
+    <section class="case-block" id="results" data-reveal>
+      <span class="eyebrow">Results &amp; impact</span>
+      <h2>Fast, private, and live.</h2>
+      <div class="metrics">
+        <div class="metric"><div class="num"><small>~</small><span data-count="79" data-dec="0">79</span><small>%</small></div><div class="lbl">accuracy</div></div>
+        <div class="metric"><div class="num"><small>~</small><span data-count="9" data-dec="0">9</span><small>ms</small></div><div class="lbl">inference time</div></div>
+        <div class="metric"><div class="num"><small>~</small><span data-count="1.5" data-dec="1">1.5</span><small>MB</small></div><div class="lbl">model size</div></div>
+        <div class="metric"><div class="num"><span data-count="0" data-dec="0">0</span></div><div class="lbl">bytes of data uploaded</div></div>
+      </div>
+      <p>The finished app proves a full deep-learning workflow can live entirely on the client: private by
+        construction, tiny, fast, and deployed for anyone to try.</p>
+      <div class="prow__links" style="margin-top:1.4rem">
+        <a class="link-arrow solid" href="https://btcs-project.vercel.app/" target="_blank" rel="noopener">Open live demo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+        <a class="link-arrow" href="https://github.com/AliyahAlabdali/BTCS-Project" target="_blank" rel="noopener">View repository
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+      </div>
+    </section>
+  </div>
+</div>
+
+<section class="section next-proj">
+  <div class="wrap">
+    <a href="yaqidh.html" data-reveal>
+      <div><div class="t">Next project</div><div class="n">Yaqidh — AI Child-Safety Monitoring</div></div>
+      <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span>© <span data-year>2026</span> Aliyah Alabdali</span>
+    <a class="to-top" href="../index.html">Back to portfolio
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+  </div>
+</footer>
+<script src="../assets/js/main.js" defer></script>
+</body>
+</html>
