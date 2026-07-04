@@ -305,10 +305,10 @@ h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.08;
 
 /* ----- GitHub ----------------------------------------------------------- */
 .gh{background:linear-gradient(180deg,var(--cream),var(--cream-2))}
-.gh__stats{display:grid;grid-template-columns:1.1fr .9fr;gap:1.1rem;margin-bottom:2rem}
+.gh__stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.1rem;margin-bottom:2rem}
 .gh__card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:.6rem;
   box-shadow:var(--shadow-sm);display:grid;place-items:center;overflow:hidden}
-.gh__card img{width:100%;border-radius:10px}
+.gh__card img{width:100%;height:auto;max-width:100%;border-radius:10px;display:block}
 .repos{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1.1rem}
 .repo{display:block;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
   padding:1.4rem;box-shadow:var(--shadow-sm);transition:transform .4s var(--ease),box-shadow .4s,border-color .4s}
