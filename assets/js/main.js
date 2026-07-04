@@ -1,5 +1,5 @@
 /* =========================================================================
-   Portfolio interactions — vanilla JS, no dependencies.
+   Portfolio interactions: vanilla JS, no dependencies.
    Nav state · mobile menu · scroll reveal · scrollspy · metric count-up ·
    lazy video autoplay · hero load. Respects prefers-reduced-motion.
    ========================================================================= */
@@ -136,7 +136,7 @@
       var email = encodeURIComponent(form.email.value.trim());
       var msg = encodeURIComponent(form.message.value.trim());
       var subject = "Portfolio enquiry from " + decodeURIComponent(name);
-      var body = decodeURIComponent(msg) + "\n\n— " + decodeURIComponent(name) + " (" + decodeURIComponent(email) + ")";
+      var body = decodeURIComponent(msg) + "\n\n" + decodeURIComponent(name) + " (" + decodeURIComponent(email) + ")";
       window.location.href = "mailto:AliyahAlabdali24@gmail.com?subject=" +
         encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     });
