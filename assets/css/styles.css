@@ -162,7 +162,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.08;
 .dot{width:8px;height:8px;border-radius:50%;background:#4caf7d;box-shadow:0 0 0 0 rgba(76,175,125,.5);
   animation:pulse 2.4s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(76,175,125,.45)}70%{box-shadow:0 0 0 9px rgba(76,175,125,0)}100%{box-shadow:0 0 0 0 rgba(76,175,125,0)}}
-.hero__name{font-size:var(--step-5);font-weight:300;margin:.5rem 0 .1rem;letter-spacing:-.025em}
+.hero__name{font-size:var(--step-5);font-weight:300;margin:.5rem 0 1rem;letter-spacing:-.025em}
 .hero__name em{font-style:italic;font-weight:340;color:var(--mauve-deep)}
 .hero__role{font-family:var(--f-mono);font-size:clamp(.85rem,.7rem + .6vw,1.05rem);
   letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:1.3rem}
