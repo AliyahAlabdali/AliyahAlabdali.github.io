@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yaqidh — AI Child-Safety Monitoring · Aliyah Alabdali</title>
+<meta name="description" content="Yaqidh: a real-time computer-vision system that detects child falls and violence from live CCTV using custom YOLOv8 models, delivering role-based alerts through a FastAPI + React stack. Case study by Aliyah Alabdali.">
+<meta name="theme-color" content="#FBF8F7">
+<link rel="canonical" href="https://aliyahalabdali.github.io/projects/yaqidh.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yaqidh — AI Child-Safety Monitoring System">
+<meta property="og:description" content="Real-time fall & violence detection from live CCTV with custom YOLOv8 models and role-based alerts.">
+<meta property="og:image" content="../assets/media/yaqidh-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239D8189'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CreativeWork","name":"Yaqidh — AI Child-Safety Monitoring System","author":{"@type":"Person","name":"Aliyah Alabdali"},"about":["Computer Vision","YOLOv8","Real-time detection"],"keywords":"YOLOv8, ONNX, FastAPI, React, PostgreSQL, computer vision"}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#overview">Skip to content</a>
+
+<header class="nav" id="top">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../index.html" aria-label="Back to Aliyah Alabdali home">
+      <svg class="monogram" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9D8189"/><stop offset="1" stop-color="#F4ACB7"/></linearGradient></defs>
+        <rect width="100" height="100" rx="26" fill="url(#mg)"/>
+        <text x="50" y="69" font-family="Fraunces,Georgia,serif" font-size="52" fill="#fff" text-anchor="middle">A</text>
+      </svg>
+      <span>Aliyah&nbsp;Alabdali</span>
+    </a>
+    <div class="nav__cta">
+      <a class="btn btn--ghost" href="../index.html#work">All work</a>
+      <a class="btn btn--primary" href="https://github.com/Yaqidh-Project/Yaqidh" target="_blank" rel="noopener">GitHub
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="case-hero">
+  <div class="case-hero__orbs" aria-hidden="true">
+    <div class="orb orb--1"></div><div class="orb orb--2"></div>
+  </div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" data-load data-delay="1">
+      <a href="../index.html">Home</a><span>/</span><a href="../index.html#work">Work</a><span>/</span>Yaqidh
+    </nav>
+    <div class="case-hero__meta" data-load data-delay="1">
+      <span class="badge">Graduation Project</span><span class="badge">2025 – 2026</span><span class="badge">Computer Vision</span>
+    </div>
+    <h1 class="case-hero__title" data-load data-delay="2">Yaqidh — <em>AI child-safety</em> monitoring</h1>
+    <p class="case-hero__lede" data-load data-delay="3">A real-time system that watches live CCTV, detects child falls and
+      violence with custom YOLOv8 models, and sends instant, role-based alerts to the people responsible — wrapped in a
+      secure, full-stack product with live analytics.</p>
+    <div class="case-hero__cta" data-load data-delay="4">
+      <a class="btn btn--primary" href="#results">See the results
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+      <a class="btn btn--ghost" href="https://github.com/Yaqidh-Project/Yaqidh" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+
+    <figure class="case-figure" data-load data-delay="4">
+      <video controls muted loop playsinline preload="metadata" poster="../assets/media/yaqidh-poster.jpg">
+        <source src="../assets/media/yaqidh-demo.mp4" type="video/mp4">
+        Your browser doesn't support embedded video.
+      </video>
+      <figcaption>Live incident detection — a fall is flagged in real time and routed to the right people.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- BODY -->
+<div class="wrap case-body">
+  <nav class="case-nav" aria-label="Sections">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#problem">Problem</a>
+    <a href="#role">My role</a>
+    <a href="#tech">Tech stack</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#features">Key features</a>
+    <a href="#challenges">Challenges</a>
+    <a href="#results">Results</a>
+  </nav>
+
+  <div class="case-content">
+
+    <section class="case-block" id="overview" data-reveal>
+      <span class="eyebrow">Overview</span>
+      <h2>Watching for the moments that matter.</h2>
+      <p>Yaqidh (يقظ — "vigilant") is an end-to-end computer-vision platform built to protect children in
+        environments like nurseries, schools, and homes. It connects to existing CCTV, continuously analyses the
+        video for two high-risk events — <strong>falls</strong> and <strong>violence</strong> — and, the moment one
+        is detected, pushes a targeted alert to the right person: a parent, a teacher, or a facility manager.</p>
+      <p>It's not just a model in a notebook. Yaqidh is a complete product: two trained detection models optimised
+        for real-time inference, a secure API, a database, and role-aware dashboards that turn raw detections into
+        something a caregiver can act on in seconds.</p>
+    </section>
+
+    <section class="case-block" id="problem" data-reveal>
+      <span class="eyebrow">Problem</span>
+      <h2>Cameras record everything and catch nothing.</h2>
+      <p>Most child-supervision settings already have CCTV — but footage is only useful if someone happens to be
+        watching the right screen at the right second. In practice, no one can monitor dozens of feeds around the
+        clock, so incidents like falls or physical altercations are often discovered <em>after</em> the fact, from
+        recordings, when it's already too late to intervene.</p>
+      <p>The goal was to close that gap: <strong>detect the incident as it happens</strong> and get a clear,
+        role-appropriate notification to the person who can respond — without adding new hardware or asking anyone
+        to stare at a monitor.</p>
+    </section>
+
+    <section class="case-block" id="role" data-reveal>
+      <span class="eyebrow">My role</span>
+      <h2>End-to-end — model to product.</h2>
+      <p>As a core contributor, I owned the system from the data and models through to the running full-stack
+        application. My work spanned four areas:</p>
+      <div class="role-grid">
+        <div class="role-card"><h4>Model development</h4><p>Curated data and trained two custom YOLOv8 models for fall and violence detection.</p></div>
+        <div class="role-card"><h4>Optimisation</h4><p>Converted and tuned models to ONNX to hit real-time inference latency.</p></div>
+        <div class="role-card"><h4>Backend</h4><p>Built the FastAPI service, PostgreSQL data layer, and JWT/RBAC access control.</p></div>
+        <div class="role-card"><h4>Frontend</h4><p>Delivered React dashboards with live analytics and role-based alerting.</p></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="tech" data-reveal>
+      <span class="eyebrow">Tech stack</span>
+      <h2>What it's built with.</h2>
+      <div class="tech-grid">
+        <div class="tech-col"><h4>Vision &amp; ML</h4><div class="chips"><span class="chip">YOLOv8</span><span class="chip">PyTorch</span><span class="chip">OpenCV</span><span class="chip">ONNX</span></div></div>
+        <div class="tech-col"><h4>Backend</h4><div class="chips"><span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">REST APIs</span></div></div>
+        <div class="tech-col"><h4>Frontend</h4><div class="chips"><span class="chip">React</span></div></div>
+        <div class="tech-col"><h4>Security</h4><div class="chips"><span class="chip">JWT</span><span class="chip">RBAC</span></div></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="architecture" data-reveal>
+      <span class="eyebrow">Architecture</span>
+      <h2>From a video frame to a phone buzzing.</h2>
+      <p>Video flows through a vision pipeline that turns raw frames into structured incidents, then a backend
+        that decides who needs to know and delivers the alert.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 1240 210" role="img" aria-label="Yaqidh architecture: CCTV feed to OpenCV frame capture to YOLOv8 ONNX detection to event logic to FastAPI and PostgreSQL to React dashboards with role-based alerts">
+          <!-- group labels -->
+          <text x="240" y="24" font-family="Space Mono,monospace" font-size="13" letter-spacing="2" fill="#6E545B">01 · VISION PIPELINE</text>
+          <text x="880" y="24" font-family="Space Mono,monospace" font-size="13" letter-spacing="2" fill="#6E545B">02 · BACKEND &amp; DELIVERY</text>
+          <line x1="16" y1="36" x2="640" y2="36" stroke="#EBDEDD"/><line x1="648" y1="36" x2="1224" y2="36" stroke="#EBDEDD"/>
+          <!-- nodes -->
+          <g font-family="Space Mono,monospace">
+            <!-- n1 -->
+            <rect x="16" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/>
+            <rect x="16" y="70" width="5" height="92" rx="2.5" fill="#9D8189"/>
+            <text x="40" y="104" font-size="14" fill="#2A2023">CCTV Feed</text>
+            <text x="40" y="126" font-size="11" fill="#5C4C52">Live IP camera</text>
+            <text x="40" y="142" font-size="11" fill="#5C4C52">video stream</text>
+            <!-- n2 -->
+            <rect x="224" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/>
+            <rect x="224" y="70" width="5" height="92" rx="2.5" fill="#9D8189"/>
+            <text x="248" y="104" font-size="14" fill="#2A2023">OpenCV</text>
+            <text x="248" y="126" font-size="11" fill="#5C4C52">Frame capture</text>
+            <text x="248" y="142" font-size="11" fill="#5C4C52">&amp; pre-process</text>
+            <!-- n3 -->
+            <rect x="432" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/>
+            <rect x="432" y="70" width="5" height="92" rx="2.5" fill="#9D8189"/>
+            <text x="456" y="104" font-size="14" fill="#2A2023">YOLOv8 ×2</text>
+            <text x="456" y="126" font-size="11" fill="#5C4C52">ONNX inference</text>
+            <text x="456" y="142" font-size="11" fill="#5C4C52">fall + violence</text>
+            <!-- n4 -->
+            <rect x="640" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/>
+            <rect x="640" y="70" width="5" height="92" rx="2.5" fill="#F4ACB7"/>
+            <text x="664" y="104" font-size="14" fill="#2A2023">Event Logic</text>
+            <text x="664" y="126" font-size="11" fill="#5C4C52">Incident</text>
+            <text x="664" y="142" font-size="11" fill="#5C4C52">classification</text>
+            <!-- n5 -->
+            <rect x="848" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/>
+            <rect x="848" y="70" width="5" height="92" rx="2.5" fill="#F4ACB7"/>
+            <text x="872" y="104" font-size="14" fill="#2A2023">FastAPI · DB</text>
+            <text x="872" y="126" font-size="11" fill="#5C4C52">PostgreSQL</text>
+            <text x="872" y="142" font-size="11" fill="#5C4C52">JWT / RBAC</text>
+            <!-- n6 -->
+            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/>
+            <rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#F4ACB7"/>
+            <text x="1080" y="104" font-size="14" fill="#2A2023">Dashboards</text>
+            <text x="1080" y="126" font-size="11" fill="#5C4C52">React · role</text>
+            <text x="1080" y="142" font-size="11" fill="#5C4C52">based alerts</text>
+          </g>
+          <!-- arrows -->
+          <g stroke="#9D8189" stroke-width="2" fill="#9D8189">
+            <line x1="184" y1="116" x2="216" y2="116"/><path d="M216 116l-8-4v8z"/>
+            <line x1="392" y1="116" x2="424" y2="116"/><path d="M424 116l-8-4v8z"/>
+            <line x1="600" y1="116" x2="632" y2="116"/><path d="M632 116l-8-4v8z"/>
+            <line x1="808" y1="116" x2="840" y2="116"/><path d="M840 116l-8-4v8z"/>
+            <line x1="1016" y1="116" x2="1048" y2="116"/><path d="M1048 116l-8-4v8z"/>
+          </g>
+        </svg>
+        <figcaption>End-to-end flow — capture → detect → decide → deliver.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-block" id="features" data-reveal>
+      <span class="eyebrow">Key features</span>
+      <h2>What it does.</h2>
+      <ul class="ticks">
+        <li><strong>Real-time detection</strong> of child falls and violence directly from live CCTV streams.</li>
+        <li><strong>Two dedicated YOLOv8 models</strong> — one specialised for falls, one for violence — for higher per-task accuracy.</li>
+        <li><strong>Role-based alerts</strong> that route each incident to the right audience: parents, teachers, or managers.</li>
+        <li><strong>Live analytics dashboards</strong> so caregivers can see status and history at a glance.</li>
+        <li><strong>Secure access</strong> with JWT authentication and role-based access control (RBAC) across the platform.</li>
+        <li><strong>ONNX-optimised inference</strong> that keeps latency low enough for a real-time response.</li>
+      </ul>
+    </section>
+
+    <section class="case-block" id="challenges" data-reveal>
+      <span class="eyebrow">Challenges</span>
+      <h2>The hard parts — and how I solved them.</h2>
+      <div class="challenge">
+        <span class="tag">Accuracy</span>
+        <h4>Baseline detectors weren't good enough</h4>
+        <p>Off-the-shelf baselines struggled to reliably distinguish real incidents from ordinary movement.
+        I curated task-specific data and trained two custom YOLOv8 models, reaching
+        <strong>0.81 mAP@50 for falls and 0.66 for violence</strong> — a <strong>2–3× improvement over the baselines</strong>.</p>
+      </div>
+      <div class="challenge">
+        <span class="tag">Latency</span>
+        <h4>Real-time means milliseconds count</h4>
+        <p>Detection is only useful if it's fast. I converted the models to <strong>ONNX</strong> and optimised the
+        inference path, cutting inference latency by roughly <strong>20%</strong> and keeping the pipeline responsive on live video.</p>
+      </div>
+      <div class="challenge">
+        <span class="tag">Product</span>
+        <h4>One alert doesn't fit everyone</h4>
+        <p>A parent, a teacher, and a manager need different information and different permissions. I designed
+        <strong>role-based access and alerting</strong> so each stakeholder sees exactly what's relevant to them —
+        secured end-to-end with JWT and RBAC.</p>
+      </div>
+    </section>
+
+    <section class="case-block" id="results" data-reveal>
+      <span class="eyebrow">Results &amp; impact</span>
+      <h2>A working system, not a prototype.</h2>
+      <div class="metrics">
+        <div class="metric"><div class="num"><span data-count="0.81" data-dec="2">0.81</span></div><div class="lbl">mAP@50 · fall detection</div></div>
+        <div class="metric"><div class="num"><span data-count="0.66" data-dec="2">0.66</span></div><div class="lbl">mAP@50 · violence</div></div>
+        <div class="metric"><div class="num"><span data-count="2" data-dec="0">2</span><small>–3×</small></div><div class="lbl">gain over baselines</div></div>
+        <div class="metric"><div class="num"><small>~</small><span data-count="20" data-dec="0">20</span><small>%</small></div><div class="lbl">lower inference latency</div></div>
+      </div>
+      <p>The result is a full, secured, real-time platform that takes live video and turns it into timely, actionable
+        alerts — demonstrating an end-to-end path from custom model training through optimisation to a deployed,
+        multi-user application.</p>
+      <div class="prow__links" style="margin-top:1.4rem">
+        <a class="link-arrow solid" href="https://github.com/Yaqidh-Project/Yaqidh" target="_blank" rel="noopener">View repository
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- NEXT -->
+<section class="section next-proj">
+  <div class="wrap">
+    <a href="sms-scam-detection.html" data-reveal>
+      <div>
+        <div class="t">Next project</div>
+        <div class="n">SMS Scam &amp; Spam Detection</div>
+      </div>
+      <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span>© <span data-year>2026</span> Aliyah Alabdali</span>
+    <a class="to-top" href="../index.html">Back to portfolio
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js" defer></script>
+</body>
+</html>
