@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SMS Scam &amp; Spam Detection — Transformer NLP · Aliyah Alabdali</title>
+<title>SMS Scam &amp; Spam Detection · Transformer NLP · Aliyah Alabdali</title>
 <meta name="description" content="A Transformer encoder built from scratch in PyTorch that classifies SMS as scam/spam or legitimate at 98% accuracy and 0.95 macro-F1 on a heavily imbalanced dataset. Case study by Aliyah Alabdali.">
 <meta name="theme-color" content="#FBF8F7">
 <link rel="canonical" href="https://aliyahalabdali.github.io/projects/sms-scam-detection.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SMS Scam & Spam Detection — Transformer NLP">
-<meta property="og:description" content="A from-scratch Transformer encoder in PyTorch — 98% accuracy, 0.95 macro-F1 on imbalanced data.">
+<meta property="og:title" content="SMS Scam & Spam Detection · Transformer NLP">
+<meta property="og:description" content="A from-scratch Transformer encoder in PyTorch. 98% accuracy, 0.95 macro-F1 on imbalanced data.">
 <meta property="og:image" content="../assets/media/sms-inference.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239D8189'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
@@ -54,7 +54,7 @@
       <span class="badge">Advanced Deep Learning</span><span class="badge">2026</span><span class="badge">NLP</span>
     </div>
     <h1 class="case-hero__title" data-load data-delay="2">SMS scam &amp; <em>spam detection</em></h1>
-    <p class="case-hero__lede" data-load data-delay="3">A Transformer encoder — built from scratch in PyTorch — that separates
+    <p class="case-hero__lede" data-load data-delay="3">A Transformer encoder, built from scratch in PyTorch, that separates
       scam and spam messages from legitimate ones on a heavily imbalanced dataset, and gets brand-new, hand-written
       messages right too.</p>
     <div class="case-hero__cta" data-load data-delay="4">
@@ -64,7 +64,7 @@
     </div>
     <figure class="case-figure" data-load data-delay="4" style="background:#fff">
       <img src="../assets/media/sms-inference.png" alt="Inference demo: the model classifies six unseen hand-written messages, correctly labelling scams with high probability and legitimate messages with low scam probability.">
-      <figcaption>Inference on brand-new, hand-written messages the model has never seen — scams flagged with high confidence.</figcaption>
+      <figcaption>Inference on brand-new, hand-written messages the model has never seen. Scams are flagged with high confidence.</figcaption>
     </figure>
   </div>
 </section>
@@ -87,19 +87,19 @@
       <h2>Reading intent, not just keywords.</h2>
       <p>This project is a text classifier that decides whether an SMS is a <strong>scam/spam</strong> message or
         <strong>legitimate</strong>. Rather than reaching for a pre-trained library model, I implemented a
-        <strong>Transformer encoder from scratch in PyTorch</strong> — tokenisation, embeddings, self-attention,
-        and a classification head — to understand the architecture end to end.</p>
-      <p>On a highly imbalanced dataset it reaches <strong>98% accuracy and a 0.95 macro-F1</strong>, and — the part
-        that matters most — it correctly labels fresh messages I wrote by hand that never appeared in training.</p>
+        <strong>Transformer encoder from scratch in PyTorch</strong>: tokenisation, embeddings, self-attention,
+        and a classification head, to understand the architecture end to end.</p>
+      <p>On a highly imbalanced dataset it reaches <strong>98% accuracy and a 0.95 macro-F1</strong>, and, the part
+        that matters most, it correctly labels fresh messages I wrote by hand that never appeared in training.</p>
     </section>
 
     <section class="case-block" id="problem" data-reveal>
       <span class="eyebrow">Problem</span>
       <h2>When 98% accuracy can still be useless.</h2>
-      <p>Scam and spam SMS drive real financial fraud, but scam messages are rare compared to normal ones — the
+      <p>Scam and spam SMS drive real financial fraud, but scam messages are rare compared to normal ones: the
         dataset is <strong>heavily imbalanced</strong>. A lazy model can score high accuracy simply by calling
         almost everything "legit" and quietly missing the scams, which is exactly the failure that hurts people.</p>
-      <p>So the real target wasn't raw accuracy — it was a strong <strong>macro-F1</strong> that treats the rare
+      <p>So the real target wasn't raw accuracy; it was a strong <strong>macro-F1</strong> that treats the rare
         scam class as seriously as the common one, plus the ability to <strong>generalise to unseen phrasing</strong>,
         because scammers never reuse the same wording twice.</p>
     </section>
@@ -110,7 +110,7 @@
       <p>This was an individual deep-learning project, so I owned every layer:</p>
       <div class="role-grid">
         <div class="role-card"><h4>Data &amp; tokenisation</h4><p>Prepared the imbalanced corpus and a tokenizer + vocabulary for the encoder.</p></div>
-        <div class="role-card"><h4>Model</h4><p>Implemented the Transformer encoder from scratch — embeddings, multi-head attention, FFN, classifier head.</p></div>
+        <div class="role-card"><h4>Model</h4><p>Implemented the Transformer encoder from scratch: embeddings, multi-head attention, FFN, classifier head.</p></div>
         <div class="role-card"><h4>Training</h4><p>Trained and tuned for the minority class, optimising for macro-F1 rather than accuracy alone.</p></div>
         <div class="role-card"><h4>Evaluation</h4><p>Validated on held-out data and on new hand-written messages to test real generalisation.</p></div>
       </div>
@@ -133,7 +133,7 @@
         representation that a small head turns into a scam probability.</p>
       <figure class="diagram">
         <svg viewBox="0 0 1240 210" role="img" aria-label="Pipeline: raw SMS, tokenize, token and positional embeddings, N transformer encoder blocks with multi-head attention and feed-forward, pooling and linear classifier, output LEGIT or SCAM with probability">
-          <text x="16" y="24" font-family="Space Mono,monospace" font-size="13" letter-spacing="2" fill="#6E545B">TRANSFORMER ENCODER — TEXT CLASSIFICATION</text>
+          <text x="16" y="24" font-family="Space Mono,monospace" font-size="13" letter-spacing="2" fill="#6E545B">TRANSFORMER ENCODER · TEXT CLASSIFICATION</text>
           <line x1="16" y1="36" x2="1224" y2="36" stroke="#EBDEDD"/>
           <g font-family="Space Mono,monospace">
             <rect x="16" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#EBDEDD"/><rect x="16" y="70" width="5" height="92" rx="2.5" fill="#9D8189"/>
@@ -170,34 +170,28 @@
       <span class="eyebrow">Key features</span>
       <h2>What it does.</h2>
       <ul class="ticks">
-        <li><strong>From-scratch Transformer encoder</strong> in PyTorch — attention and positional encoding implemented directly, not imported.</li>
+        <li><strong>From-scratch Transformer encoder</strong> in PyTorch: attention and positional encoding implemented directly, not imported.</li>
         <li><strong>Imbalance-aware</strong> training and evaluation, optimised for macro-F1 so rare scams aren't ignored.</li>
-        <li><strong>Probability output</strong> — every message gets a scam probability, not just a hard label.</li>
-        <li><strong>Generalises to unseen text</strong> — correctly classifies brand-new hand-written messages at inference time.</li>
+        <li><strong>Probability output</strong>: every message gets a scam probability, not just a hard label.</li>
+        <li><strong>Generalises to unseen text</strong>: correctly classifies brand-new hand-written messages at inference time.</li>
       </ul>
     </section>
 
     <section class="case-block" id="challenges" data-reveal>
       <span class="eyebrow">Challenges</span>
-      <h2>The hard parts — and how I solved them.</h2>
-      <div class="challenge">
-        <span class="tag">Imbalance</span>
-        <h4>The rare class is the important class</h4>
-        <p>With scams heavily outnumbered, I optimised and evaluated for <strong>macro-F1</strong> instead of accuracy,
-        forcing the model to treat the minority scam class as a first-class citizen — landing at <strong>0.95 macro-F1</strong>.</p>
-      </div>
+      <h2>The hard parts, and how I solved them.</h2>
       <div class="challenge">
         <span class="tag">Implementation</span>
         <h4>Building attention by hand</h4>
         <p>Implementing the encoder from scratch meant getting embeddings, positional information, multi-head
-        self-attention, and the classification head all working together correctly — a deep dive that made the
+        self-attention, and the classification head all working together correctly: a deep dive that made the
         architecture genuinely mine rather than a black box.</p>
       </div>
       <div class="challenge">
         <span class="tag">Generalisation</span>
         <h4>Scammers never repeat themselves</h4>
         <p>To prove it learned <em>intent</em> and not memorised phrasing, I tested it on new messages I wrote by hand.
-        As the demo shows, it flags obvious scams with high probability and passes normal messages through — evidence
+        As the demo shows, it flags obvious scams with high probability and passes normal messages through: evidence
         it generalises beyond the training set.</p>
       </div>
     </section>
@@ -210,7 +204,7 @@
         <div class="metric"><div class="num"><span data-count="0.95" data-dec="2">0.95</span></div><div class="lbl">macro F1-score</div></div>
         <div class="metric"><div class="num"><span data-count="100" data-dec="0">100</span><small>%</small></div><div class="lbl">from-scratch encoder</div></div>
       </div>
-      <p>The classifier pairs high accuracy with a macro-F1 that shows it isn't cheating on the imbalance — and it
+      <p>The classifier pairs high accuracy with a macro-F1 that shows it isn't cheating on the imbalance, and it
         holds up on unseen, hand-written messages, which is the real test of a scam detector.</p>
       <div class="prow__links" style="margin-top:1.4rem">
         <a class="link-arrow solid" href="https://github.com/AliyahAlabdali/SMS-Scam-Detection-Transformer" target="_blank" rel="noopener">View repository

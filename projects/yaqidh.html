@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yaqidh — AI Child-Safety Monitoring · Aliyah Alabdali</title>
+<title>Yaqidh: AI Child-Safety Monitoring · Aliyah Alabdali</title>
 <meta name="description" content="Yaqidh: a real-time computer-vision system that detects child falls and violence from live CCTV using custom YOLOv8 models, delivering role-based alerts through a FastAPI + React stack. Case study by Aliyah Alabdali.">
 <meta name="theme-color" content="#FBF8F7">
 <link rel="canonical" href="https://aliyahalabdali.github.io/projects/yaqidh.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yaqidh — AI Child-Safety Monitoring System">
+<meta property="og:title" content="Yaqidh: AI Child-Safety Monitoring System">
 <meta property="og:description" content="Real-time fall & violence detection from live CCTV with custom YOLOv8 models and role-based alerts.">
 <meta property="og:image" content="../assets/media/yaqidh-poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="../assets/css/styles.css">
 <link rel="stylesheet" href="../assets/css/project.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"CreativeWork","name":"Yaqidh — AI Child-Safety Monitoring System","author":{"@type":"Person","name":"Aliyah Alabdali"},"about":["Computer Vision","YOLOv8","Real-time detection"],"keywords":"YOLOv8, ONNX, FastAPI, React, PostgreSQL, computer vision"}
+{"@context":"https://schema.org","@type":"CreativeWork","name":"Yaqidh: AI Child-Safety Monitoring System","author":{"@type":"Person","name":"Aliyah Alabdali"},"about":["Computer Vision","YOLOv8","Real-time detection"],"keywords":"YOLOv8, ONNX, FastAPI, React, PostgreSQL, computer vision"}
 </script>
 </head>
 <body>
@@ -54,11 +54,11 @@
       <a href="../index.html">Home</a><span>/</span><a href="../index.html#work">Work</a><span>/</span>Yaqidh
     </nav>
     <div class="case-hero__meta" data-load data-delay="1">
-      <span class="badge">Graduation Project</span><span class="badge">2025 – 2026</span><span class="badge">Computer Vision</span>
+      <span class="badge">Graduation Project</span><span class="badge">2025 to 2026</span><span class="badge">Computer Vision</span>
     </div>
-    <h1 class="case-hero__title" data-load data-delay="2">Yaqidh — <em>AI child-safety</em> monitoring</h1>
+    <h1 class="case-hero__title" data-load data-delay="2">Yaqidh: <em>AI child-safety</em> monitoring</h1>
     <p class="case-hero__lede" data-load data-delay="3">A real-time system that watches live CCTV, detects child falls and
-      violence with custom YOLOv8 models, and sends instant, role-based alerts to the people responsible — wrapped in a
+      violence with custom YOLOv8 models, and sends instant, role-based alerts to the people responsible, wrapped in a
       secure, full-stack product with live analytics.</p>
     <div class="case-hero__cta" data-load data-delay="4">
       <a class="btn btn--primary" href="#results">See the results
@@ -71,7 +71,7 @@
         <source src="../assets/media/yaqidh-demo.mp4" type="video/mp4">
         Your browser doesn't support embedded video.
       </video>
-      <figcaption>Live incident detection — a fall is flagged in real time and routed to the right people.</figcaption>
+      <figcaption>A full walkthrough of Yaqidh: live monitoring, fall detection, instant alerts, and the analytics dashboard.</figcaption>
     </figure>
   </div>
 </section>
@@ -94,9 +94,9 @@
     <section class="case-block" id="overview" data-reveal>
       <span class="eyebrow">Overview</span>
       <h2>Watching for the moments that matter.</h2>
-      <p>Yaqidh (يقظ — "vigilant") is an end-to-end computer-vision platform built to protect children in
+      <p>Yaqidh (يقظ, "vigilant") is an end-to-end computer-vision platform built to protect children in
         environments like nurseries, schools, and homes. It connects to existing CCTV, continuously analyses the
-        video for two high-risk events — <strong>falls</strong> and <strong>violence</strong> — and, the moment one
+        video for two high-risk events (<strong>falls</strong> and <strong>violence</strong>) and, the moment one
         is detected, pushes a targeted alert to the right person: a parent, a teacher, or a facility manager.</p>
       <p>It's not just a model in a notebook. Yaqidh is a complete product: two trained detection models optimised
         for real-time inference, a secure API, a database, and role-aware dashboards that turn raw detections into
@@ -106,25 +106,26 @@
     <section class="case-block" id="problem" data-reveal>
       <span class="eyebrow">Problem</span>
       <h2>Cameras record everything and catch nothing.</h2>
-      <p>Most child-supervision settings already have CCTV — but footage is only useful if someone happens to be
+      <p>Most child-supervision settings already have CCTV, but footage is only useful if someone happens to be
         watching the right screen at the right second. In practice, no one can monitor dozens of feeds around the
         clock, so incidents like falls or physical altercations are often discovered <em>after</em> the fact, from
         recordings, when it's already too late to intervene.</p>
       <p>The goal was to close that gap: <strong>detect the incident as it happens</strong> and get a clear,
-        role-appropriate notification to the person who can respond — without adding new hardware or asking anyone
+        role-appropriate notification to the person who can respond, without adding new hardware or asking anyone
         to stare at a monitor.</p>
     </section>
 
     <section class="case-block" id="role" data-reveal>
       <span class="eyebrow">My role</span>
-      <h2>End-to-end — model to product.</h2>
-      <p>As a core contributor, I owned the system from the data and models through to the running full-stack
-        application. My work spanned four areas:</p>
+      <h2>From model to full-stack app.</h2>
+      <p>As a core contributor, my work on Yaqidh spanned the detection model, the full-stack application,
+        and the reporting workflow:</p>
       <div class="role-grid">
-        <div class="role-card"><h4>Model development</h4><p>Curated data and trained two custom YOLOv8 models for fall and violence detection.</p></div>
-        <div class="role-card"><h4>Optimisation</h4><p>Converted and tuned models to ONNX to hit real-time inference latency.</p></div>
-        <div class="role-card"><h4>Backend</h4><p>Built the FastAPI service, PostgreSQL data layer, and JWT/RBAC access control.</p></div>
-        <div class="role-card"><h4>Frontend</h4><p>Delivered React dashboards with live analytics and role-based alerting.</p></div>
+        <div class="role-card"><h4>Fall-detection model</h4><p>Developed the custom YOLOv8 fall-detection model.</p></div>
+        <div class="role-card"><h4>ONNX conversion</h4><p>Converted the fall-detection model to ONNX for optimised, real-time inference.</p></div>
+        <div class="role-card"><h4>Backend</h4><p>Developed the backend with FastAPI, PostgreSQL, and JWT/RBAC access control.</p></div>
+        <div class="role-card"><h4>Frontend</h4><p>Developed the frontend, including the React dashboards.</p></div>
+        <div class="role-card"><h4>Report generation</h4><p>Implemented the report-generation functionality.</p></div>
       </div>
     </section>
 
@@ -198,7 +199,7 @@
             <line x1="1016" y1="116" x2="1048" y2="116"/><path d="M1048 116l-8-4v8z"/>
           </g>
         </svg>
-        <figcaption>End-to-end flow — capture → detect → decide → deliver.</figcaption>
+        <figcaption>End-to-end flow: capture → detect → decide → deliver.</figcaption>
       </figure>
     </section>
 
@@ -207,7 +208,7 @@
       <h2>What it does.</h2>
       <ul class="ticks">
         <li><strong>Real-time detection</strong> of child falls and violence directly from live CCTV streams.</li>
-        <li><strong>Two dedicated YOLOv8 models</strong> — one specialised for falls, one for violence — for higher per-task accuracy.</li>
+        <li><strong>Two dedicated YOLOv8 models</strong>, one specialised for falls and one for violence, for higher per-task accuracy.</li>
         <li><strong>Role-based alerts</strong> that route each incident to the right audience: parents, teachers, or managers.</li>
         <li><strong>Live analytics dashboards</strong> so caregivers can see status and history at a glance.</li>
         <li><strong>Secure access</strong> with JWT authentication and role-based access control (RBAC) across the platform.</li>
@@ -217,25 +218,33 @@
 
     <section class="case-block" id="challenges" data-reveal>
       <span class="eyebrow">Challenges</span>
-      <h2>The hard parts — and how I solved them.</h2>
+      <h2>The hard parts, and how I solved them.</h2>
+      <div class="challenge">
+        <span class="tag">Dataset</span>
+        <h4>No dataset existed for children</h4>
+        <p>There was no available dataset of children for the fall-detection task, so I <strong>collected the
+        children's data myself</strong> and <strong>manually annotated it using Roboflow</strong>, building the
+        foundation the model was trained on from scratch.</p>
+      </div>
       <div class="challenge">
         <span class="tag">Accuracy</span>
         <h4>Baseline detectors weren't good enough</h4>
         <p>Off-the-shelf baselines struggled to reliably distinguish real incidents from ordinary movement.
-        I curated task-specific data and trained two custom YOLOv8 models, reaching
-        <strong>0.81 mAP@50 for falls and 0.66 for violence</strong> — a <strong>2–3× improvement over the baselines</strong>.</p>
+        I trained the custom YOLOv8 fall-detection model to <strong>0.81 mAP@50</strong>, a
+        <strong>2-3× improvement over the baseline</strong>.</p>
       </div>
       <div class="challenge">
         <span class="tag">Latency</span>
         <h4>Real-time means milliseconds count</h4>
-        <p>Detection is only useful if it's fast. I converted the models to <strong>ONNX</strong> and optimised the
-        inference path, cutting inference latency by roughly <strong>20%</strong> and keeping the pipeline responsive on live video.</p>
+        <p>Detection is only useful if it's fast. I converted the fall-detection model to <strong>ONNX</strong> and
+        optimised the inference path, cutting inference latency by roughly <strong>20%</strong> and keeping the pipeline
+        responsive on live video.</p>
       </div>
       <div class="challenge">
         <span class="tag">Product</span>
         <h4>One alert doesn't fit everyone</h4>
-        <p>A parent, a teacher, and a manager need different information and different permissions. I designed
-        <strong>role-based access and alerting</strong> so each stakeholder sees exactly what's relevant to them —
+        <p>A parent, a teacher, and a manager need different information and different permissions. I built
+        <strong>role-based access and alerting</strong> so each stakeholder sees exactly what's relevant to them,
         secured end-to-end with JWT and RBAC.</p>
       </div>
     </section>
@@ -246,11 +255,11 @@
       <div class="metrics">
         <div class="metric"><div class="num"><span data-count="0.81" data-dec="2">0.81</span></div><div class="lbl">mAP@50 · fall detection</div></div>
         <div class="metric"><div class="num"><span data-count="0.66" data-dec="2">0.66</span></div><div class="lbl">mAP@50 · violence</div></div>
-        <div class="metric"><div class="num"><span data-count="2" data-dec="0">2</span><small>–3×</small></div><div class="lbl">gain over baselines</div></div>
+        <div class="metric"><div class="num"><span data-count="2" data-dec="0">2</span><small>-3×</small></div><div class="lbl">gain over baselines</div></div>
         <div class="metric"><div class="num"><small>~</small><span data-count="20" data-dec="0">20</span><small>%</small></div><div class="lbl">lower inference latency</div></div>
       </div>
       <p>The result is a full, secured, real-time platform that takes live video and turns it into timely, actionable
-        alerts — demonstrating an end-to-end path from custom model training through optimisation to a deployed,
+        alerts, demonstrating an end-to-end path from custom model training through optimisation to a deployed,
         multi-user application.</p>
       <div class="prow__links" style="margin-top:1.4rem">
         <a class="link-arrow solid" href="https://github.com/Yaqidh-Project/Yaqidh" target="_blank" rel="noopener">View repository
