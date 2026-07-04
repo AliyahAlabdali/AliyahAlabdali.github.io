@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brain Tumor MRI Classifier — In-browser AI · Aliyah Alabdali</title>
-<meta name="description" content="A privacy-first web app that classifies brain-MRI scans into four tumor types entirely in the browser via ONNX Runtime Web — ~79% accuracy, ~9ms inference, ~1.5MB model, no patient data leaving the device. Case study by Aliyah Alabdali.">
+<title>Brain Tumor MRI Classifier · In-browser AI · Aliyah Alabdali</title>
+<meta name="description" content="A privacy-first web app that classifies brain-MRI scans into four tumor types entirely in the browser via ONNX Runtime Web. ~79% accuracy, ~9ms inference, ~1.5MB model, no patient data leaving the device. Case study by Aliyah Alabdali.">
 <meta name="theme-color" content="#FBF8F7">
 <link rel="canonical" href="https://aliyahalabdali.github.io/projects/brain-tumor.html">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Brain Tumor MRI Classifier — In-browser, Privacy-first">
+<meta property="og:title" content="Brain Tumor MRI Classifier · In-browser, Privacy-first">
 <meta property="og:description" content="Four-class brain-MRI classification running fully in-browser via ONNX Runtime Web. ~9ms inference, ~1.5MB model.">
 <meta property="og:image" content="../assets/media/btcs-poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -53,7 +53,7 @@
     <div class="case-hero__meta" data-load data-delay="1">
       <span class="badge">AI System Design</span><span class="badge">2025</span><span class="badge">Deep Learning</span>
     </div>
-    <h1 class="case-hero__title" data-load data-delay="2">Brain tumor MRI classifier — <em>in your browser</em></h1>
+    <h1 class="case-hero__title" data-load data-delay="2">Brain tumor MRI classifier: <em>in your browser</em></h1>
     <p class="case-hero__lede" data-load data-delay="3">A privacy-first web app that sorts brain-MRI scans into four tumor types
       entirely on-device. The scan never leaves your machine, and a ~1.5&nbsp;MB model returns an answer in about nine
       milliseconds.</p>
@@ -67,7 +67,7 @@
         <source src="../assets/media/btcs-demo.mp4" type="video/mp4">
         Your browser doesn't support embedded video.
       </video>
-      <figcaption>Upload a scan, get a classification with live confidence scores — computed entirely in the browser.</figcaption>
+      <figcaption>Upload a scan, get a classification with live confidence scores, computed entirely in the browser.</figcaption>
     </figure>
   </div>
 </section>
@@ -91,15 +91,15 @@
       <p>This is a web application that classifies a brain-MRI scan into one of <strong>four tumor types</strong> and
         shows real-time confidence for each. The twist: it runs the deep-learning model <strong>entirely in the
         browser</strong> using ONNX Runtime Web, so the image is analysed locally and <strong>never uploaded anywhere</strong>.</p>
-      <p>It's a study in doing more with less — a lightweight <strong>~1.5&nbsp;MB</strong> model delivering
+      <p>It's a study in doing more with less: a lightweight <strong>~1.5&nbsp;MB</strong> model delivering
         <strong>~9&nbsp;ms</strong> inference, deployed as a live app anyone can try.</p>
     </section>
 
     <section class="case-block" id="problem" data-reveal>
       <span class="eyebrow">Problem</span>
       <h2>Sensitive scans shouldn't have to travel.</h2>
-      <p>Medical images are among the most private data there is. The usual pattern — upload a scan to a server for
-        a model to analyse — introduces privacy exposure, compliance overhead, network latency, and hosting cost.
+      <p>Medical images are among the most private data there is. The usual pattern, uploading a scan to a server for
+        a model to analyse, introduces privacy exposure, compliance overhead, network latency, and hosting cost.
         For a tool meant to be quick and trustworthy, that's a lot of friction.</p>
       <p>The challenge: deliver real deep-learning classification <strong>without any patient data leaving the
         device</strong>, while staying fast and light enough to run comfortably in a normal web browser.</p>
@@ -109,7 +109,7 @@
       <span class="eyebrow">My role</span>
       <h2>Model, app, and deployment.</h2>
       <div class="role-grid">
-        <div class="role-card"><h4>Modelling</h4><p>Trained a compact classifier and exported it to ONNX, trading size against accuracy deliberately.</p></div>
+        <div class="role-card"><h4>Modelling</h4><p>Trained the compact classifier and converted the model to ONNX, trading size against accuracy deliberately.</p></div>
         <div class="role-card"><h4>On-device inference</h4><p>Wired up ONNX Runtime Web so the model executes fully client-side.</p></div>
         <div class="role-card"><h4>App</h4><p>Built the React + Vite interface with upload, prediction, and real-time confidence scoring.</p></div>
         <div class="role-card"><h4>Deployment</h4><p>Shipped it as a live, shareable app on Vercel.</p></div>
@@ -130,7 +130,7 @@
     <section class="case-block" id="architecture" data-reveal>
       <span class="eyebrow">Architecture</span>
       <h2>Everything happens on your side of the wire.</h2>
-      <p>The entire pipeline — from the moment a scan is selected to the confidence bars — executes inside the
+      <p>The entire pipeline, from the moment a scan is selected to the confidence bars, executes inside the
         browser tab. There's no inference server to send data to.</p>
       <figure class="diagram">
         <svg viewBox="0 0 1240 250" role="img" aria-label="In-browser pipeline: upload MRI, client-side preprocess, ONNX Runtime Web running a 1.5MB model, four-class softmax with confidence. A server is shown crossed out to indicate no data is uploaded.">
@@ -167,7 +167,7 @@
           </g>
           <line x1="1026" y1="140" x2="1060" y2="140" stroke="#E0CFCE" stroke-width="2" stroke-dasharray="4 4"/>
         </svg>
-        <figcaption>A fully client-side inference pipeline — private by design.</figcaption>
+        <figcaption>A fully client-side inference pipeline, private by design.</figcaption>
       </figure>
     </section>
 
@@ -176,35 +176,35 @@
       <h2>What it does.</h2>
       <ul class="ticks">
         <li><strong>Four-class classification</strong> of brain-MRI scans with a clear predicted type.</li>
-        <li><strong>Fully in-browser</strong> — inference runs on-device through ONNX Runtime Web.</li>
-        <li><strong>Privacy-first</strong> — scans are processed locally and never sent to a server.</li>
+        <li><strong>Fully in-browser</strong>: inference runs on-device through ONNX Runtime Web.</li>
+        <li><strong>Privacy-first</strong>: scans are processed locally and never sent to a server.</li>
         <li><strong>Real-time confidence scoring</strong> so users see how sure the model is per class.</li>
-        <li><strong>Featherweight &amp; fast</strong> — a ~1.5&nbsp;MB model returning results in about 9&nbsp;ms.</li>
-        <li><strong>Live &amp; shareable</strong> — deployed on Vercel, no install required.</li>
+        <li><strong>Featherweight &amp; fast</strong>: a ~1.5&nbsp;MB model returning results in about 9&nbsp;ms.</li>
+        <li><strong>Live &amp; shareable</strong>: deployed on Vercel, no install required.</li>
       </ul>
     </section>
 
     <section class="case-block" id="challenges" data-reveal>
       <span class="eyebrow">Challenges</span>
-      <h2>The hard parts — and how I solved them.</h2>
+      <h2>The hard parts, and how I solved them.</h2>
       <div class="challenge">
         <span class="tag">On-device ML</span>
         <h4>Running a neural net inside a browser tab</h4>
         <p>Browsers aren't built for deep learning. I used <strong>ONNX Runtime Web</strong> with a model exported and
         trimmed to a <strong>~1.5&nbsp;MB</strong> footprint, which loads quickly and runs at roughly
-        <strong>9&nbsp;ms</strong> per inference — fast enough to feel instant.</p>
+        <strong>9&nbsp;ms</strong> per inference, fast enough to feel instant.</p>
       </div>
       <div class="challenge">
         <span class="tag">Privacy</span>
         <h4>Keeping data on the device</h4>
-        <p>By moving inference to the client, the architecture removes the need to upload sensitive scans at all —
+        <p>By moving inference to the client, the architecture removes the need to upload sensitive scans at all,
         privacy becomes a property of the design, not a policy bolted on afterwards.</p>
       </div>
       <div class="challenge">
         <span class="tag">Trade-offs</span>
         <h4>Small model, honest accuracy</h4>
         <p>Shrinking a model always costs something. I balanced size and speed against accuracy to land at a
-        practical <strong>~79%</strong> — a deliberate engineering trade-off for a tool that has to load and run
+        practical <strong>~79%</strong>, a deliberate engineering trade-off for a tool that has to load and run
         anywhere, on any device, with no backend.</p>
       </div>
     </section>
@@ -233,7 +233,7 @@
 <section class="section next-proj">
   <div class="wrap">
     <a href="yaqidh.html" data-reveal>
-      <div><div class="t">Next project</div><div class="n">Yaqidh — AI Child-Safety Monitoring</div></div>
+      <div><div class="t">Next project</div><div class="n">Yaqidh: AI Child-Safety Monitoring</div></div>
       <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
     </a>
   </div>
