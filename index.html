@@ -129,19 +129,15 @@
 
     <aside class="hero__aside" data-load data-delay="4" aria-label="At a glance">
       <div class="spec-card">
-        <svg class="medallion" viewBox="0 0 120 120" aria-hidden="true">
-          <defs><linearGradient id="med" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#D8E2DC"/><stop offset=".5" stop-color="#FFCAD4"/><stop offset="1" stop-color="#F4ACB7"/>
-          </linearGradient></defs>
-          <circle cx="60" cy="60" r="58" fill="url(#med)"/>
-          <circle cx="60" cy="60" r="47" fill="none" stroke="#fff" stroke-width="1.5" opacity=".7"/>
-          <text x="60" y="79" font-family="Fraunces,Georgia,serif" font-size="56" fill="#6E545B" text-anchor="middle">AA</text>
-        </svg>
+        <picture>
+          <source srcset="assets/img/avatar.webp" type="image/webp">
+          <img class="medallion" src="assets/img/avatar.png" alt="Aliyah Alabdali monogram logo" width="460" height="460">
+        </picture>
         <div class="spec-card__head"><span>Profile</span><span>2026</span></div>
         <div class="spec-row"><span class="k">Degree</span><span class="v" style="font-size:1.05rem;font-family:var(--f-body);font-weight:600;">BSc Artificial Intelligence</span></div>
         <div class="spec-row"><span class="k">Honors</span><span class="v"><span data-count="1" data-dec="0">1</span><small> ST CLASS</small></span></div>
         <div class="spec-row"><span class="k">GPA</span><span class="v"><span data-count="4" data-dec="1">4.0</span><small> / 4.0</small></span></div>
-        <div class="spec-row"><span class="k">Shipped projects</span><span class="v"><span data-count="3">3</span><small> END-TO-END</small></span></div>
+        <div class="spec-row"><span class="k">Projects</span><span class="v"><span data-count="3">3</span><small> FEATURED</small></span></div>
       </div>
     </aside>
   </div>
@@ -257,7 +253,7 @@
     <div class="sec-head--split sec-head" data-reveal>
       <div class="txt">
         <span class="eyebrow">Selected work</span>
-        <h2 class="section-title" id="work-h">Three systems, each shipped end-to-end.</h2>
+        <h2 class="section-title" id="work-h">Three projects, from deep models to shipped products.</h2>
       </div>
       <p class="mono muted" style="font-size:.8rem">03 case studies</p>
     </div>
@@ -451,13 +447,26 @@
     </div>
 
     <div class="gh__stats" data-reveal>
-      <div class="gh__card">
-        <img loading="lazy" width="490" height="195" alt="Aliyah Alabdali's GitHub statistics"
-          src="https://github-readme-stats.vercel.app/api?username=AliyahAlabdali&show_icons=true&hide_border=true&hide_title=true&card_width=490&bg_color=FFFFFF&icon_color=9D8189&text_color=2A2023&title_color=6E545B&ring_color=F4ACB7">
+      <div class="gh-panel">
+        <div class="gh-panel__head"><span>Profile</span><span class="mono">@AliyahAlabdali</span></div>
+        <div class="gh-stat-row">
+          <div class="gh-stat"><div class="n"><span data-count="4">4</span></div><div class="l">Public repos</div></div>
+          <div class="gh-stat"><div class="n"><span data-count="3">3</span></div><div class="l">Featured projects</div></div>
+          <div class="gh-stat"><div class="n"><span data-count="2">2</span></div><div class="l">Followers</div></div>
+        </div>
       </div>
-      <div class="gh__card">
-        <img loading="lazy" width="350" height="195" alt="Aliyah Alabdali's most used programming languages"
-          src="https://github-readme-stats.vercel.app/api/top-langs/?username=AliyahAlabdali&layout=compact&hide_border=true&hide_title=true&bg_color=FFFFFF&text_color=2A2023&title_color=6E545B">
+      <div class="gh-panel">
+        <div class="gh-panel__head"><span>Most used languages</span></div>
+        <div class="lang-bar" role="img" aria-label="Language mix: Jupyter Notebook, JavaScript, Python">
+          <span style="width:58%;background:#DA5B0B"></span>
+          <span style="width:28%;background:#F1B32B"></span>
+          <span style="width:14%;background:#3572A5"></span>
+        </div>
+        <div class="lang-legend">
+          <span><i style="background:#DA5B0B"></i>Jupyter Notebook</span>
+          <span><i style="background:#F1B32B"></i>JavaScript</span>
+          <span><i style="background:#3572A5"></i>Python</span>
+        </div>
       </div>
     </div>
 
@@ -557,9 +566,6 @@
 <footer class="footer">
   <div class="wrap footer__inner">
     <span>© <span data-year>2026</span> Aliyah Alabdali · Built with care.</span>
-    <a class="to-top" href="#top">Back to top
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg>
-    </a>
   </div>
 </footer>
 
