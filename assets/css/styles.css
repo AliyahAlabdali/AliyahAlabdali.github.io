@@ -1,5 +1,5 @@
 /* =========================================================================
-   Aliyah Alabdali — Portfolio
+   Aliyah Alabdali - Portfolio
    Design system: "Datasheet Editorial"
    Soft pastel palette + editorial serif + instrument-grade mono metrics.
    Palette is used exactly as provided; only mauve-family shades/tints are
@@ -18,9 +18,9 @@
   /* Derived neutrals (same mauve family) for legibility + contrast */
   --cream:#FBF8F7;
   --cream-2:#F5EEEC;
-  --ink:#2A2023;      /* body text — 15.7:1 on white */
-  --ink-2:#5C4C52;    /* secondary text — ~7:1 */
-  --mauve-deep:#6E545B;/* buttons/links on light — white text 7:1 */
+  --ink:#2A2023;      /* body text - 15.7:1 on white */
+  --ink-2:#5C4C52;    /* secondary text - ~7:1 */
+  --mauve-deep:#6E545B;/* buttons/links on light - white text 7:1 */
   --line:#EBDEDD;     /* hairline rules */
   --line-strong:#E0CFCE;
 
