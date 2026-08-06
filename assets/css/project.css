@@ -7,7 +7,7 @@
 
 .case-hero{position:relative;overflow:hidden;padding-top:clamp(7rem,13vh,9rem);
   padding-bottom:clamp(2.5rem,5vw,4rem)}
-.case-hero__orbs{position:absolute;inset:0;z-index:0;filter:blur(50px);opacity:.8;pointer-events:none}
+.case-hero__orbs{position:absolute;inset:0;z-index:0;filter:blur(64px);opacity:.45;pointer-events:none}
 .case-hero .wrap{position:relative;z-index:1}
 .crumbs{display:flex;align-items:center;gap:.6rem;font-family:var(--f-mono);font-size:.76rem;
   color:var(--ink-2);margin-bottom:1.8rem;flex-wrap:wrap}
@@ -89,7 +89,7 @@
 .next-proj a{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;
   padding:clamp(1.5rem,4vw,2.5rem);background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
   box-shadow:var(--shadow-sm);transition:transform .4s var(--ease),box-shadow .4s}
-.next-proj a:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.next-proj a:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
 .next-proj .t{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mauve-deep)}
 .next-proj .n{font-family:var(--f-display);font-size:var(--step-2);margin-top:.3rem}
 .next-proj .go{width:52px;height:52px;border-radius:50%;background:var(--mauve-deep);color:#fff;
