@@ -15,8 +15,8 @@
 .crumbs a:hover{color:var(--ink)}
 .crumbs span{opacity:.5}
 .case-hero__meta{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.3rem}
-.case-hero__title{font-size:var(--step-4);max-width:16ch;margin-bottom:.7rem;font-weight:340}
-.case-hero__title em{font-style:italic;color:var(--mauve-deep)}
+.case-hero__title{font-size:var(--step-4);max-width:16ch;margin-bottom:.7rem;font-weight:800}
+.case-hero__title em{font-style:normal;color:var(--mauve-deep)}
 .case-hero__lede{font-size:var(--step-1);color:var(--ink-2);max-width:60ch;line-height:1.5}
 .case-hero__cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
 
@@ -54,7 +54,7 @@
 /* Role split */
 .role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin-top:.5rem}
 .role-card{background:var(--cream);border:1px solid var(--line);border-radius:var(--radius-sm);padding:1.2rem}
-.role-card h4{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+.role-card h4{font-family:var(--f-mono);font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--mauve-deep);margin-bottom:.5rem}
 .role-card p{font-size:.92rem;margin:0;color:var(--ink-2)}
 
@@ -62,7 +62,7 @@
 .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;
   background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .tech-col{background:var(--cream);padding:1.2rem 1.3rem}
-.tech-col h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+.tech-col h4{font-family:var(--f-mono);font-weight:700;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--mauve-deep);margin-bottom:.8rem}
 .tech-col .chips{gap:.4rem}
 
@@ -70,7 +70,7 @@
 .challenge{background:var(--cream);border:1px solid var(--line);border-left:3px solid var(--cherry);
   border-radius:var(--radius-sm);padding:1.3rem 1.4rem;margin-bottom:1rem}
 .challenge h4{font-size:1.05rem;font-family:var(--f-display);margin-bottom:.5rem;color:var(--ink)}
-.challenge .tag{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+.challenge .tag{font-family:var(--f-mono);font-weight:700;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--mauve-deep);display:block;margin-bottom:.5rem}
 .challenge p{margin:0;font-size:.95rem}
 .challenge p + p{margin-top:.6rem}
@@ -90,8 +90,8 @@
   padding:clamp(1.5rem,4vw,2.5rem);background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
   box-shadow:var(--shadow-sm);transition:transform .4s var(--ease),box-shadow .4s}
 .next-proj a:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
-.next-proj .t{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mauve-deep)}
-.next-proj .n{font-family:var(--f-display);font-size:var(--step-2);margin-top:.3rem}
+.next-proj .t{font-family:var(--f-mono);font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mauve-deep)}
+.next-proj .n{font-family:var(--f-display);font-weight:700;font-size:var(--step-2);margin-top:.3rem}
 .next-proj .go{width:52px;height:52px;border-radius:50%;background:var(--mauve-deep);color:#fff;
   display:grid;place-items:center;flex:0 0 auto;transition:transform .35s var(--ease)}
 .next-proj a:hover .go{transform:translateX(5px)}
