@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SMS Scam &amp; Spam Detection · Transformer NLP · Aliyah Alabdali</title>
 <meta name="description" content="A Transformer encoder built from scratch in PyTorch that classifies SMS as scam/spam or legitimate at 98% accuracy and 0.95 macro-F1 on a heavily imbalanced dataset. Case study by Aliyah Alabdali.">
-<meta name="theme-color" content="#F4F4F9">
+<meta name="theme-color" content="#FAF4F4">
 <link rel="canonical" href="https://aliyahalabdali.github.io/projects/sms-scam-detection.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SMS Scam & Spam Detection · Transformer NLP">
 <meta property="og:description" content="A from-scratch Transformer encoder in PyTorch. 98% accuracy, 0.95 macro-F1 on imbalanced data.">
 <meta property="og:image" content="../assets/media/sms-inference.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%23B1747F'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%23B97A88'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -131,28 +131,28 @@
         representation that a small head turns into a scam probability.</p>
       <figure class="diagram">
         <svg viewBox="0 0 1240 210" role="img" aria-label="Pipeline: raw SMS, tokenize, token and positional embeddings, N transformer encoder blocks with multi-head attention and feed-forward, pooling and linear classifier, output LEGIT or SCAM with probability">
-          <text x="16" y="24" font-family="Manrope,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#7C4F5C">TRANSFORMER ENCODER · TEXT CLASSIFICATION</text>
+          <text x="16" y="24" font-family="Manrope,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#7C4A52">TRANSFORMER ENCODER · TEXT CLASSIFICATION</text>
           <line x1="16" y1="36" x2="1224" y2="36" stroke="#E6E2E9"/>
           <g font-family="Manrope,sans-serif">
-            <rect x="16" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="16" y="70" width="5" height="92" rx="2.5" fill="#B1747F"/>
+            <rect x="16" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="16" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
             <text x="40" y="104" font-size="14" fill="#29252A">Raw SMS</text><text x="40" y="126" font-size="11" fill="#5A525C">incoming</text><text x="40" y="142" font-size="11" fill="#5A525C">message</text>
 
-            <rect x="224" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="224" y="70" width="5" height="92" rx="2.5" fill="#B1747F"/>
+            <rect x="224" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="224" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
             <text x="248" y="104" font-size="14" fill="#29252A">Tokenise</text><text x="248" y="126" font-size="11" fill="#5A525C">tokens +</text><text x="248" y="142" font-size="11" fill="#5A525C">vocabulary</text>
 
-            <rect x="432" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="432" y="70" width="5" height="92" rx="2.5" fill="#B1747F"/>
+            <rect x="432" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="432" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
             <text x="456" y="104" font-size="14" fill="#29252A">Embeddings</text><text x="456" y="126" font-size="11" fill="#5A525C">token +</text><text x="456" y="142" font-size="11" fill="#5A525C">positional</text>
 
             <rect x="640" y="66" width="168" height="100" rx="14" fill="#F6EEF3" stroke="#D98FA0"/><rect x="640" y="66" width="5" height="100" rx="2.5" fill="#D98FA0"/>
             <text x="664" y="100" font-size="14" fill="#29252A">Encoder ×N</text><text x="664" y="122" font-size="11" fill="#5A525C">multi-head</text><text x="664" y="138" font-size="11" fill="#5A525C">attention + FFN</text>
 
-            <rect x="848" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="848" y="70" width="5" height="92" rx="2.5" fill="#B1747F"/>
+            <rect x="848" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="848" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
             <text x="872" y="104" font-size="14" fill="#29252A">Pool + Head</text><text x="872" y="126" font-size="11" fill="#5A525C">linear</text><text x="872" y="142" font-size="11" fill="#5A525C">classifier</text>
 
-            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#7C4F5C"/>
+            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#7C4A52"/>
             <text x="1080" y="104" font-size="14" fill="#29252A">Output</text><text x="1080" y="126" font-size="11" fill="#5A525C">LEGIT / SCAM</text><text x="1080" y="142" font-size="11" fill="#5A525C">+ p(scam)</text>
           </g>
-          <g stroke="#B1747F" stroke-width="2" fill="#B1747F">
+          <g stroke="#B97A88" stroke-width="2" fill="#B97A88">
             <line x1="184" y1="116" x2="216" y2="116"/><path d="M216 116l-8-4v8z"/>
             <line x1="392" y1="116" x2="424" y2="116"/><path d="M424 116l-8-4v8z"/>
             <line x1="600" y1="116" x2="632" y2="116"/><path d="M632 116l-8-4v8z"/>
