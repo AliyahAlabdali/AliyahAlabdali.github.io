@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brain Tumor MRI Classifier · In-browser AI · Aliyah Alabdali</title>
 <meta name="description" content="A privacy-first web app that classifies brain-MRI scans into four tumor types entirely in the browser via ONNX Runtime Web. ~79% accuracy, ~9ms inference, ~1.5MB model, no patient data leaving the device. Case study by Aliyah Alabdali.">
-<meta name="theme-color" content="#F4F4F9">
+<meta name="theme-color" content="#FAF4F4">
 <link rel="canonical" href="https://aliyahalabdali.github.io/projects/brain-tumor.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Brain Tumor MRI Classifier · In-browser, Privacy-first">
 <meta property="og:description" content="Four-class brain-MRI classification running fully in-browser via ONNX Runtime Web. ~9ms inference, ~1.5MB model.">
 <meta property="og:image" content="../assets/media/btcs-poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%23B1747F'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%23B97A88'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -130,32 +130,32 @@
       <figure class="diagram">
         <svg viewBox="0 0 1240 250" role="img" aria-label="In-browser pipeline: upload MRI, client-side preprocess, ONNX Runtime Web running a 1.5MB model, four-class softmax with confidence. A server is shown crossed out to indicate no data is uploaded.">
           <!-- browser boundary -->
-          <rect x="16" y="52" width="1010" height="168" rx="18" fill="#F4F4F9" stroke="#B1747F" stroke-dasharray="7 6"/>
-          <text x="34" y="44" font-family="Manrope,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#7C4F5C">IN THE BROWSER · NOTHING LEAVES THE DEVICE</text>
+          <rect x="16" y="52" width="1010" height="168" rx="18" fill="#FAF4F4" stroke="#B97A88" stroke-dasharray="7 6"/>
+          <text x="34" y="44" font-family="Manrope,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#7C4A52">IN THE BROWSER · NOTHING LEAVES THE DEVICE</text>
           <g font-family="Manrope,sans-serif">
-            <rect x="44" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#E6E2E9"/><rect x="44" y="96" width="5" height="88" rx="2.5" fill="#B1747F"/>
+            <rect x="44" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#E6E2E9"/><rect x="44" y="96" width="5" height="88" rx="2.5" fill="#B97A88"/>
             <text x="68" y="128" font-size="14" fill="#29252A">Upload MRI</text><text x="68" y="150" font-size="11" fill="#5A525C">local file,</text><text x="68" y="166" font-size="11" fill="#5A525C">in-memory</text>
 
-            <rect x="260" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#E6E2E9"/><rect x="260" y="96" width="5" height="88" rx="2.5" fill="#B1747F"/>
+            <rect x="260" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#E6E2E9"/><rect x="260" y="96" width="5" height="88" rx="2.5" fill="#B97A88"/>
             <text x="284" y="128" font-size="14" fill="#29252A">Preprocess</text><text x="284" y="150" font-size="11" fill="#5A525C">resize &amp;</text><text x="284" y="166" font-size="11" fill="#5A525C">normalise</text>
 
             <rect x="476" y="92" width="176" height="96" rx="13" fill="#F6EEF3" stroke="#D98FA0"/><rect x="476" y="92" width="5" height="96" rx="2.5" fill="#D98FA0"/>
             <text x="500" y="124" font-size="14" fill="#29252A">ONNX RT Web</text><text x="500" y="146" font-size="11" fill="#5A525C">~1.5MB model</text><text x="500" y="162" font-size="11" fill="#5A525C">~9ms inference</text>
 
-            <rect x="692" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#E6E2E9"/><rect x="692" y="96" width="5" height="88" rx="2.5" fill="#7C4F5C"/>
+            <rect x="692" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#E6E2E9"/><rect x="692" y="96" width="5" height="88" rx="2.5" fill="#7C4A52"/>
             <text x="716" y="128" font-size="14" fill="#29252A">4-class + conf.</text><text x="716" y="150" font-size="11" fill="#5A525C">softmax &amp;</text><text x="716" y="166" font-size="11" fill="#5A525C">confidence UI</text>
           </g>
           <!-- server crossed out -->
           <g font-family="Manrope,sans-serif">
             <rect x="1066" y="96" width="150" height="88" rx="13" fill="#fff" stroke="#E6E2E9" opacity=".6"/>
-            <text x="1141" y="132" font-size="13" fill="#B1747F" text-anchor="middle" opacity=".8">Server</text>
-            <text x="1141" y="150" font-size="11" fill="#B1747F" text-anchor="middle" opacity=".8">/ cloud</text>
+            <text x="1141" y="132" font-size="13" fill="#B97A88" text-anchor="middle" opacity=".8">Server</text>
+            <text x="1141" y="150" font-size="11" fill="#B97A88" text-anchor="middle" opacity=".8">/ cloud</text>
             <line x1="1076" y1="106" x2="1206" y2="174" stroke="#D98FA0" stroke-width="3"/>
             <line x1="1206" y1="106" x2="1076" y2="174" stroke="#D98FA0" stroke-width="3"/>
           </g>
-          <text x="1141" y="210" font-family="Manrope,sans-serif" font-weight="700" font-size="11" fill="#7C4F5C" text-anchor="middle">no upload</text>
+          <text x="1141" y="210" font-family="Manrope,sans-serif" font-weight="700" font-size="11" fill="#7C4A52" text-anchor="middle">no upload</text>
           <!-- arrows -->
-          <g stroke="#B1747F" stroke-width="2" fill="#B1747F">
+          <g stroke="#B97A88" stroke-width="2" fill="#B97A88">
             <line x1="220" y1="140" x2="252" y2="140"/><path d="M252 140l-8-4v8z"/>
             <line x1="436" y1="140" x2="468" y2="140"/><path d="M468 140l-8-4v8z"/>
             <line x1="652" y1="140" x2="684" y2="140"/><path d="M684 140l-8-4v8z"/>
