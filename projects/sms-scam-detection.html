@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SMS Scam &amp; Spam Detection · Transformer NLP · Aliyah Alabdali</title>
 <meta name="description" content="A Transformer encoder built from scratch in PyTorch that classifies SMS as scam/spam or legitimate at 98% accuracy and 0.95 macro-F1 on a heavily imbalanced dataset. Case study by Aliyah Alabdali.">
-<meta name="theme-color" content="#FAF4F4">
+<meta name="theme-color" content="#363D44">
 <link rel="canonical" href="https://aliyahalabdali.github.io/projects/sms-scam-detection.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SMS Scam & Spam Detection · Transformer NLP">
 <meta property="og:description" content="A from-scratch Transformer encoder in PyTorch. 98% accuracy, 0.95 macro-F1 on imbalanced data.">
 <meta property="og:image" content="../assets/media/sms-inference.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%23B97A88'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239B6A6C'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/styles.css">
 <link rel="stylesheet" href="../assets/css/project.css">
 <script type="application/ld+json">
@@ -23,6 +23,7 @@
 </script>
 </head>
 <body>
+<div class="scroll-progress" aria-hidden="true"></div>
 <a class="skip-link" href="#overview">Skip to content</a>
 
 <header class="nav" id="top">
@@ -40,7 +41,8 @@
 
 <main>
 <section class="case-hero">
-  <div class="case-hero__orbs" aria-hidden="true"><div class="orb orb--1"></div><div class="orb orb--2"></div></div>
+  <div class="hero__beam" aria-hidden="true"></div>
+  <div class="case-hero__orbs" aria-hidden="true"><div class="orb orb--1"></div><div class="orb orb--2"></div><div class="spotlight" aria-hidden="true"></div></div>
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb" data-load data-delay="1">
       <a href="../index.html">Home</a><span>/</span><a href="../index.html#work">Work</a><span>/</span>SMS Scam Detection
@@ -48,7 +50,7 @@
     <div class="case-hero__meta" data-load data-delay="1">
       <span class="badge">Advanced Deep Learning</span><span class="badge">2026</span><span class="badge">NLP</span>
     </div>
-    <h1 class="case-hero__title" data-load data-delay="2">SMS scam &amp; <em>spam detection</em></h1>
+    <h1 class="case-hero__title" data-load data-delay="2" data-split="words">SMS scam &amp; <em>spam detection</em></h1>
     <p class="case-hero__lede" data-load data-delay="3">A Transformer encoder, built from scratch in PyTorch, that separates
       scam and spam messages from legitimate ones on a heavily imbalanced dataset, and gets brand-new, hand-written
       messages right too.</p>
@@ -70,6 +72,7 @@
 <div class="wrap case-body">
   <nav class="case-nav" aria-label="Sections">
     <a href="#overview" class="active">Overview</a>
+    <a href="#live-demo">Live demo</a>
     <a href="#problem">Problem</a>
     <a href="#role">My role</a>
     <a href="#tech">Tech stack</a>
@@ -89,6 +92,22 @@
         and a classification head, to understand the architecture end to end.</p>
       <p>On a highly imbalanced dataset it reaches <strong>98% accuracy and a 0.95 macro-F1</strong>, and, the part
         that matters most, it correctly labels fresh messages I wrote by hand that never appeared in training.</p>
+    </section>
+
+    <section class="case-block" id="live-demo" data-reveal>
+      <span class="eyebrow">Live demo</span>
+      <h2>Try to trick it.</h2>
+      <p>The clip above is a recording. Below is the real model, embedded live: type any message and the
+        Transformer encoder — the one built from scratch in PyTorch — classifies it in real time and shows you
+        which words drove the decision.</p>
+      <div class="live-embed" data-embed-src="https://aliyahalabdali-sms-scam-detector.hf.space" data-embed-title="SMS Scam &amp; Spam Detector — live demo">
+        <button type="button" class="live-embed__launch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
+          <strong>Launch live demo</strong>
+          <span>Loads Aliyah's real Hugging Face Space inline. Nothing runs until you click.</span>
+        </button>
+      </div>
+      <p class="live-embed__note">This is her own public Space — <a href="https://huggingface.co/spaces/AliyahAlabdali/sms-scam-detector" target="_blank" rel="noopener">open it in a new tab instead ↗</a></p>
     </section>
 
     <section class="case-block" id="problem" data-reveal>
@@ -131,28 +150,28 @@
         representation that a small head turns into a scam probability.</p>
       <figure class="diagram">
         <svg viewBox="0 0 1240 210" role="img" aria-label="Pipeline: raw SMS, tokenize, token and positional embeddings, N transformer encoder blocks with multi-head attention and feed-forward, pooling and linear classifier, output LEGIT or SCAM with probability">
-          <text x="16" y="24" font-family="Manrope,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#7C4A52">TRANSFORMER ENCODER · TEXT CLASSIFICATION</text>
-          <line x1="16" y1="36" x2="1224" y2="36" stroke="#E6E2E9"/>
-          <g font-family="Manrope,sans-serif">
-            <rect x="16" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="16" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
-            <text x="40" y="104" font-size="14" fill="#29252A">Raw SMS</text><text x="40" y="126" font-size="11" fill="#5A525C">incoming</text><text x="40" y="142" font-size="11" fill="#5A525C">message</text>
+          <text x="16" y="24" font-family="DM Sans,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">TRANSFORMER ENCODER · TEXT CLASSIFICATION</text>
+          <line x1="16" y1="36" x2="1224" y2="36" stroke="#5C6670"/>
+          <g font-family="DM Sans,sans-serif">
+            <rect x="16" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="16" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="40" y="104" font-size="14" fill="#F6F3F1">Raw SMS</text><text x="40" y="126" font-size="11" fill="#93A8AC">incoming</text><text x="40" y="142" font-size="11" fill="#93A8AC">message</text>
 
-            <rect x="224" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="224" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
-            <text x="248" y="104" font-size="14" fill="#29252A">Tokenise</text><text x="248" y="126" font-size="11" fill="#5A525C">tokens +</text><text x="248" y="142" font-size="11" fill="#5A525C">vocabulary</text>
+            <rect x="224" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="224" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="248" y="104" font-size="14" fill="#F6F3F1">Tokenise</text><text x="248" y="126" font-size="11" fill="#93A8AC">tokens +</text><text x="248" y="142" font-size="11" fill="#93A8AC">vocabulary</text>
 
-            <rect x="432" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="432" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
-            <text x="456" y="104" font-size="14" fill="#29252A">Embeddings</text><text x="456" y="126" font-size="11" fill="#5A525C">token +</text><text x="456" y="142" font-size="11" fill="#5A525C">positional</text>
+            <rect x="432" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="432" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="456" y="104" font-size="14" fill="#F6F3F1">Embeddings</text><text x="456" y="126" font-size="11" fill="#93A8AC">token +</text><text x="456" y="142" font-size="11" fill="#93A8AC">positional</text>
 
-            <rect x="640" y="66" width="168" height="100" rx="14" fill="#F6EEF3" stroke="#D98FA0"/><rect x="640" y="66" width="5" height="100" rx="2.5" fill="#D98FA0"/>
-            <text x="664" y="100" font-size="14" fill="#29252A">Encoder ×N</text><text x="664" y="122" font-size="11" fill="#5A525C">multi-head</text><text x="664" y="138" font-size="11" fill="#5A525C">attention + FFN</text>
+            <rect x="640" y="66" width="168" height="100" rx="14" fill="#4C3A3C" stroke="#E2B4BD"/><rect x="640" y="66" width="5" height="100" rx="2.5" fill="#E2B4BD"/>
+            <text x="664" y="100" font-size="14" fill="#F6F3F1">Encoder ×N</text><text x="664" y="122" font-size="11" fill="#93A8AC">multi-head</text><text x="664" y="138" font-size="11" fill="#93A8AC">attention + FFN</text>
 
-            <rect x="848" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="848" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
-            <text x="872" y="104" font-size="14" fill="#29252A">Pool + Head</text><text x="872" y="126" font-size="11" fill="#5A525C">linear</text><text x="872" y="142" font-size="11" fill="#5A525C">classifier</text>
+            <rect x="848" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="848" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="872" y="104" font-size="14" fill="#F6F3F1">Pool + Head</text><text x="872" y="126" font-size="11" fill="#93A8AC">linear</text><text x="872" y="142" font-size="11" fill="#93A8AC">classifier</text>
 
-            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/><rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#7C4A52"/>
-            <text x="1080" y="104" font-size="14" fill="#29252A">Output</text><text x="1080" y="126" font-size="11" fill="#5A525C">LEGIT / SCAM</text><text x="1080" y="142" font-size="11" fill="#5A525C">+ p(scam)</text>
+            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="1080" y="104" font-size="14" fill="#F6F3F1">Output</text><text x="1080" y="126" font-size="11" fill="#93A8AC">LEGIT / SCAM</text><text x="1080" y="142" font-size="11" fill="#93A8AC">+ p(scam)</text>
           </g>
-          <g stroke="#B97A88" stroke-width="2" fill="#B97A88">
+          <g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C">
             <line x1="184" y1="116" x2="216" y2="116"/><path d="M216 116l-8-4v8z"/>
             <line x1="392" y1="116" x2="424" y2="116"/><path d="M424 116l-8-4v8z"/>
             <line x1="600" y1="116" x2="632" y2="116"/><path d="M632 116l-8-4v8z"/>

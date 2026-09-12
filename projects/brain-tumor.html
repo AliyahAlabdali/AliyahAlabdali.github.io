@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brain Tumor MRI Classifier · In-browser AI · Aliyah Alabdali</title>
 <meta name="description" content="A privacy-first web app that classifies brain-MRI scans into four tumor types entirely in the browser via ONNX Runtime Web. ~79% accuracy, ~9ms inference, ~1.5MB model, no patient data leaving the device. Case study by Aliyah Alabdali.">
-<meta name="theme-color" content="#FAF4F4">
+<meta name="theme-color" content="#363D44">
 <link rel="canonical" href="https://aliyahalabdali.github.io/projects/brain-tumor.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Brain Tumor MRI Classifier · In-browser, Privacy-first">
 <meta property="og:description" content="Four-class brain-MRI classification running fully in-browser via ONNX Runtime Web. ~9ms inference, ~1.5MB model.">
 <meta property="og:image" content="../assets/media/btcs-poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%23B97A88'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239B6A6C'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/styles.css">
 <link rel="stylesheet" href="../assets/css/project.css">
 <script type="application/ld+json">
@@ -23,6 +23,7 @@
 </script>
 </head>
 <body>
+<div class="scroll-progress" aria-hidden="true"></div>
 <a class="skip-link" href="#overview">Skip to content</a>
 
 <header class="nav" id="top">
@@ -40,7 +41,8 @@
 
 <main>
 <section class="case-hero">
-  <div class="case-hero__orbs" aria-hidden="true"><div class="orb orb--1"></div><div class="orb orb--2"></div></div>
+  <div class="hero__beam" aria-hidden="true"></div>
+  <div class="case-hero__orbs" aria-hidden="true"><div class="orb orb--1"></div><div class="orb orb--2"></div><div class="spotlight" aria-hidden="true"></div></div>
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb" data-load data-delay="1">
       <a href="../index.html">Home</a><span>/</span><a href="../index.html#work">Work</a><span>/</span>Brain Tumor Classifier
@@ -48,7 +50,7 @@
     <div class="case-hero__meta" data-load data-delay="1">
       <span class="badge">AI System Design</span><span class="badge">2025</span><span class="badge">Deep Learning</span>
     </div>
-    <h1 class="case-hero__title" data-load data-delay="2">Brain tumor MRI classifier: <em>in your browser</em></h1>
+    <h1 class="case-hero__title" data-load data-delay="2" data-split="words">Brain tumor MRI classifier: <em>in your browser</em></h1>
     <p class="case-hero__lede" data-load data-delay="3">A privacy-first web app that sorts brain-MRI scans into four tumor types
       entirely on-device. The scan never leaves your machine, and a ~1.5&nbsp;MB model returns an answer in about nine
       milliseconds.</p>
@@ -70,6 +72,7 @@
 <div class="wrap case-body">
   <nav class="case-nav" aria-label="Sections">
     <a href="#overview" class="active">Overview</a>
+    <a href="#live-demo">Live demo</a>
     <a href="#problem">Problem</a>
     <a href="#role">My role</a>
     <a href="#tech">Tech stack</a>
@@ -88,6 +91,22 @@
         browser</strong> using ONNX Runtime Web, so the image is analysed locally and <strong>never uploaded anywhere</strong>.</p>
       <p>It's a study in doing more with less: a lightweight <strong>~1.5&nbsp;MB</strong> model delivering
         <strong>~9&nbsp;ms</strong> inference, deployed as a live app anyone can try.</p>
+    </section>
+
+    <section class="case-block" id="live-demo" data-reveal>
+      <span class="eyebrow">Live demo</span>
+      <h2>This isn't a recording — it's the real model.</h2>
+      <p>The player above is a walkthrough. Below is the actual deployed app, embedded live: upload an MRI slice
+        (or use a sample) and the same ~1.5&nbsp;MB ONNX model classifies it in your browser, right now, with no
+        server in between.</p>
+      <div class="live-embed" data-embed-src="https://btcs-project.vercel.app/" data-embed-title="Brain Tumor Classifier — live demo">
+        <button type="button" class="live-embed__launch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
+          <strong>Launch live demo</strong>
+          <span>Loads Aliyah's real deployed app inline. Nothing runs until you click.</span>
+        </button>
+      </div>
+      <p class="live-embed__note">This is her own public app — <a href="https://btcs-project.vercel.app/" target="_blank" rel="noopener">open it in a new tab instead ↗</a></p>
     </section>
 
     <section class="case-block" id="problem" data-reveal>
@@ -130,37 +149,37 @@
       <figure class="diagram">
         <svg viewBox="0 0 1240 250" role="img" aria-label="In-browser pipeline: upload MRI, client-side preprocess, ONNX Runtime Web running a 1.5MB model, four-class softmax with confidence. A server is shown crossed out to indicate no data is uploaded.">
           <!-- browser boundary -->
-          <rect x="16" y="52" width="1010" height="168" rx="18" fill="#FAF4F4" stroke="#B97A88" stroke-dasharray="7 6"/>
-          <text x="34" y="44" font-family="Manrope,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#7C4A52">IN THE BROWSER · NOTHING LEAVES THE DEVICE</text>
-          <g font-family="Manrope,sans-serif">
-            <rect x="44" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#E6E2E9"/><rect x="44" y="96" width="5" height="88" rx="2.5" fill="#B97A88"/>
-            <text x="68" y="128" font-size="14" fill="#29252A">Upload MRI</text><text x="68" y="150" font-size="11" fill="#5A525C">local file,</text><text x="68" y="166" font-size="11" fill="#5A525C">in-memory</text>
+          <rect x="16" y="52" width="1010" height="168" rx="18" fill="#363D44" stroke="#9B6A6C" stroke-dasharray="7 6"/>
+          <text x="34" y="44" font-family="DM Sans,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">IN THE BROWSER · NOTHING LEAVES THE DEVICE</text>
+          <g font-family="DM Sans,sans-serif">
+            <rect x="44" y="96" width="176" height="88" rx="13" fill="#424B54" stroke="#5C6670"/><rect x="44" y="96" width="5" height="88" rx="2.5" fill="#9B6A6C"/>
+            <text x="68" y="128" font-size="14" fill="#F6F3F1">Upload MRI</text><text x="68" y="150" font-size="11" fill="#93A8AC">local file,</text><text x="68" y="166" font-size="11" fill="#93A8AC">in-memory</text>
 
-            <rect x="260" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#E6E2E9"/><rect x="260" y="96" width="5" height="88" rx="2.5" fill="#B97A88"/>
-            <text x="284" y="128" font-size="14" fill="#29252A">Preprocess</text><text x="284" y="150" font-size="11" fill="#5A525C">resize &amp;</text><text x="284" y="166" font-size="11" fill="#5A525C">normalise</text>
+            <rect x="260" y="96" width="176" height="88" rx="13" fill="#424B54" stroke="#5C6670"/><rect x="260" y="96" width="5" height="88" rx="2.5" fill="#9B6A6C"/>
+            <text x="284" y="128" font-size="14" fill="#F6F3F1">Preprocess</text><text x="284" y="150" font-size="11" fill="#93A8AC">resize &amp;</text><text x="284" y="166" font-size="11" fill="#93A8AC">normalise</text>
 
-            <rect x="476" y="92" width="176" height="96" rx="13" fill="#F6EEF3" stroke="#D98FA0"/><rect x="476" y="92" width="5" height="96" rx="2.5" fill="#D98FA0"/>
-            <text x="500" y="124" font-size="14" fill="#29252A">ONNX RT Web</text><text x="500" y="146" font-size="11" fill="#5A525C">~1.5MB model</text><text x="500" y="162" font-size="11" fill="#5A525C">~9ms inference</text>
+            <rect x="476" y="92" width="176" height="96" rx="13" fill="#4C3A3C" stroke="#E2B4BD"/><rect x="476" y="92" width="5" height="96" rx="2.5" fill="#E2B4BD"/>
+            <text x="500" y="124" font-size="14" fill="#F6F3F1">ONNX RT Web</text><text x="500" y="146" font-size="11" fill="#93A8AC">~1.5MB model</text><text x="500" y="162" font-size="11" fill="#93A8AC">~9ms inference</text>
 
-            <rect x="692" y="96" width="176" height="88" rx="13" fill="#fff" stroke="#E6E2E9"/><rect x="692" y="96" width="5" height="88" rx="2.5" fill="#7C4A52"/>
-            <text x="716" y="128" font-size="14" fill="#29252A">4-class + conf.</text><text x="716" y="150" font-size="11" fill="#5A525C">softmax &amp;</text><text x="716" y="166" font-size="11" fill="#5A525C">confidence UI</text>
+            <rect x="692" y="96" width="176" height="88" rx="13" fill="#424B54" stroke="#5C6670"/><rect x="692" y="96" width="5" height="88" rx="2.5" fill="#E2B4BD"/>
+            <text x="716" y="128" font-size="14" fill="#F6F3F1">4-class + conf.</text><text x="716" y="150" font-size="11" fill="#93A8AC">softmax &amp;</text><text x="716" y="166" font-size="11" fill="#93A8AC">confidence UI</text>
           </g>
           <!-- server crossed out -->
-          <g font-family="Manrope,sans-serif">
-            <rect x="1066" y="96" width="150" height="88" rx="13" fill="#fff" stroke="#E6E2E9" opacity=".6"/>
-            <text x="1141" y="132" font-size="13" fill="#B97A88" text-anchor="middle" opacity=".8">Server</text>
-            <text x="1141" y="150" font-size="11" fill="#B97A88" text-anchor="middle" opacity=".8">/ cloud</text>
-            <line x1="1076" y1="106" x2="1206" y2="174" stroke="#D98FA0" stroke-width="3"/>
-            <line x1="1206" y1="106" x2="1076" y2="174" stroke="#D98FA0" stroke-width="3"/>
+          <g font-family="DM Sans,sans-serif">
+            <rect x="1066" y="96" width="150" height="88" rx="13" fill="#424B54" stroke="#5C6670" opacity=".6"/>
+            <text x="1141" y="132" font-size="13" fill="#9B6A6C" text-anchor="middle" opacity=".8">Server</text>
+            <text x="1141" y="150" font-size="11" fill="#9B6A6C" text-anchor="middle" opacity=".8">/ cloud</text>
+            <line x1="1076" y1="106" x2="1206" y2="174" stroke="#E2B4BD" stroke-width="3"/>
+            <line x1="1206" y1="106" x2="1076" y2="174" stroke="#E2B4BD" stroke-width="3"/>
           </g>
-          <text x="1141" y="210" font-family="Manrope,sans-serif" font-weight="700" font-size="11" fill="#7C4A52" text-anchor="middle">no upload</text>
+          <text x="1141" y="210" font-family="DM Sans,sans-serif" font-weight="700" font-size="11" fill="#E2B4BD" text-anchor="middle">no upload</text>
           <!-- arrows -->
-          <g stroke="#B97A88" stroke-width="2" fill="#B97A88">
+          <g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C">
             <line x1="220" y1="140" x2="252" y2="140"/><path d="M252 140l-8-4v8z"/>
             <line x1="436" y1="140" x2="468" y2="140"/><path d="M468 140l-8-4v8z"/>
             <line x1="652" y1="140" x2="684" y2="140"/><path d="M684 140l-8-4v8z"/>
           </g>
-          <line x1="1026" y1="140" x2="1060" y2="140" stroke="#D8D2DC" stroke-width="2" stroke-dasharray="4 4"/>
+          <line x1="1026" y1="140" x2="1060" y2="140" stroke="#7A8A8E" stroke-width="2" stroke-dasharray="4 4"/>
         </svg>
         <figcaption>A fully client-side inference pipeline, private by design.</figcaption>
       </figure>

@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yaqidh: AI Child-Safety Monitoring · Aliyah Alabdali</title>
 <meta name="description" content="Yaqidh: a real-time computer-vision system that detects child falls and violence from live CCTV using custom YOLOv8 models, delivering role-based alerts through a FastAPI + React stack. Case study by Aliyah Alabdali.">
-<meta name="theme-color" content="#FAF4F4">
+<meta name="theme-color" content="#363D44">
 <link rel="canonical" href="https://aliyahalabdali.github.io/projects/yaqidh.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Yaqidh: AI Child-Safety Monitoring System">
 <meta property="og:description" content="Real-time fall & violence detection from live CCTV with custom YOLOv8 models and role-based alerts.">
 <meta property="og:image" content="../assets/media/yaqidh-poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%23B97A88'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239B6A6C'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/styles.css">
 <link rel="stylesheet" href="../assets/css/project.css">
 <script type="application/ld+json">
@@ -23,6 +23,7 @@
 </script>
 </head>
 <body>
+<div class="scroll-progress" aria-hidden="true"></div>
 <a class="skip-link" href="#overview">Skip to content</a>
 
 <header class="nav" id="top">
@@ -41,8 +42,10 @@
 <main>
 <!-- HERO -->
 <section class="case-hero">
+  <div class="hero__beam" aria-hidden="true"></div>
   <div class="case-hero__orbs" aria-hidden="true">
     <div class="orb orb--1"></div><div class="orb orb--2"></div>
+    <div class="spotlight" aria-hidden="true"></div>
   </div>
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb" data-load data-delay="1">
@@ -51,7 +54,7 @@
     <div class="case-hero__meta" data-load data-delay="1">
       <span class="badge">Graduation Project</span><span class="badge">2025 to 2026</span><span class="badge">Computer Vision</span>
     </div>
-    <h1 class="case-hero__title" data-load data-delay="2">Yaqidh: <em>AI child-safety</em> monitoring</h1>
+    <h1 class="case-hero__title" data-load data-delay="2" data-split="words">Yaqidh: <em>AI child-safety</em> monitoring</h1>
     <p class="case-hero__lede" data-load data-delay="3">A real-time system that watches live CCTV, detects child falls and
       violence with custom YOLOv8 models, and sends instant, role-based alerts to the people responsible, wrapped in a
       secure, full-stack product with live analytics.</p>
@@ -143,50 +146,50 @@
       <figure class="diagram">
         <svg viewBox="0 0 1240 210" role="img" aria-label="Yaqidh architecture: CCTV feed to OpenCV frame capture to YOLOv8 ONNX detection to event logic to FastAPI and PostgreSQL to React dashboards with role-based alerts">
           <!-- group labels -->
-          <text x="240" y="24" font-family="Manrope,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#7C4A52">01 · VISION PIPELINE</text>
-          <text x="880" y="24" font-family="Manrope,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#7C4A52">02 · BACKEND &amp; DELIVERY</text>
-          <line x1="16" y1="36" x2="640" y2="36" stroke="#E6E2E9"/><line x1="648" y1="36" x2="1224" y2="36" stroke="#E6E2E9"/>
+          <text x="240" y="24" font-family="DM Sans,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">01 · VISION PIPELINE</text>
+          <text x="880" y="24" font-family="DM Sans,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">02 · BACKEND &amp; DELIVERY</text>
+          <line x1="16" y1="36" x2="640" y2="36" stroke="#5C6670"/><line x1="648" y1="36" x2="1224" y2="36" stroke="#5C6670"/>
           <!-- nodes -->
-          <g font-family="Manrope,sans-serif">
+          <g font-family="DM Sans,sans-serif">
             <!-- n1 -->
-            <rect x="16" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/>
-            <rect x="16" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
-            <text x="40" y="104" font-size="14" fill="#29252A">CCTV Feed</text>
-            <text x="40" y="126" font-size="11" fill="#5A525C">Live IP camera</text>
-            <text x="40" y="142" font-size="11" fill="#5A525C">video stream</text>
+            <rect x="16" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="16" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="40" y="104" font-size="14" fill="#F6F3F1">CCTV Feed</text>
+            <text x="40" y="126" font-size="11" fill="#93A8AC">Live IP camera</text>
+            <text x="40" y="142" font-size="11" fill="#93A8AC">video stream</text>
             <!-- n2 -->
-            <rect x="224" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/>
-            <rect x="224" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
-            <text x="248" y="104" font-size="14" fill="#29252A">OpenCV</text>
-            <text x="248" y="126" font-size="11" fill="#5A525C">Frame capture</text>
-            <text x="248" y="142" font-size="11" fill="#5A525C">&amp; pre-process</text>
+            <rect x="224" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="224" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="248" y="104" font-size="14" fill="#F6F3F1">OpenCV</text>
+            <text x="248" y="126" font-size="11" fill="#93A8AC">Frame capture</text>
+            <text x="248" y="142" font-size="11" fill="#93A8AC">&amp; pre-process</text>
             <!-- n3 -->
-            <rect x="432" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/>
-            <rect x="432" y="70" width="5" height="92" rx="2.5" fill="#B97A88"/>
-            <text x="456" y="104" font-size="14" fill="#29252A">YOLOv8 ×2</text>
-            <text x="456" y="126" font-size="11" fill="#5A525C">ONNX inference</text>
-            <text x="456" y="142" font-size="11" fill="#5A525C">fall + violence</text>
+            <rect x="432" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="432" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="456" y="104" font-size="14" fill="#F6F3F1">YOLOv8 ×2</text>
+            <text x="456" y="126" font-size="11" fill="#93A8AC">ONNX inference</text>
+            <text x="456" y="142" font-size="11" fill="#93A8AC">fall + violence</text>
             <!-- n4 -->
-            <rect x="640" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/>
-            <rect x="640" y="70" width="5" height="92" rx="2.5" fill="#D98FA0"/>
-            <text x="664" y="104" font-size="14" fill="#29252A">Event Logic</text>
-            <text x="664" y="126" font-size="11" fill="#5A525C">Incident</text>
-            <text x="664" y="142" font-size="11" fill="#5A525C">classification</text>
+            <rect x="640" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="640" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="664" y="104" font-size="14" fill="#F6F3F1">Event Logic</text>
+            <text x="664" y="126" font-size="11" fill="#93A8AC">Incident</text>
+            <text x="664" y="142" font-size="11" fill="#93A8AC">classification</text>
             <!-- n5 -->
-            <rect x="848" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/>
-            <rect x="848" y="70" width="5" height="92" rx="2.5" fill="#D98FA0"/>
-            <text x="872" y="104" font-size="14" fill="#29252A">FastAPI · DB</text>
-            <text x="872" y="126" font-size="11" fill="#5A525C">PostgreSQL</text>
-            <text x="872" y="142" font-size="11" fill="#5A525C">JWT / RBAC</text>
+            <rect x="848" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="848" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="872" y="104" font-size="14" fill="#F6F3F1">FastAPI · DB</text>
+            <text x="872" y="126" font-size="11" fill="#93A8AC">PostgreSQL</text>
+            <text x="872" y="142" font-size="11" fill="#93A8AC">JWT / RBAC</text>
             <!-- n6 -->
-            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#fff" stroke="#E6E2E9"/>
-            <rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#D98FA0"/>
-            <text x="1080" y="104" font-size="14" fill="#29252A">Dashboards</text>
-            <text x="1080" y="126" font-size="11" fill="#5A525C">React · role</text>
-            <text x="1080" y="142" font-size="11" fill="#5A525C">based alerts</text>
+            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="1080" y="104" font-size="14" fill="#F6F3F1">Dashboards</text>
+            <text x="1080" y="126" font-size="11" fill="#93A8AC">React · role</text>
+            <text x="1080" y="142" font-size="11" fill="#93A8AC">based alerts</text>
           </g>
           <!-- arrows -->
-          <g stroke="#B97A88" stroke-width="2" fill="#B97A88">
+          <g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C">
             <line x1="184" y1="116" x2="216" y2="116"/><path d="M216 116l-8-4v8z"/>
             <line x1="392" y1="116" x2="424" y2="116"/><path d="M424 116l-8-4v8z"/>
             <line x1="600" y1="116" x2="632" y2="116"/><path d="M632 116l-8-4v8z"/>
@@ -225,7 +228,8 @@
         <span class="tag">Accuracy</span>
         <h4>Baseline detectors weren't good enough</h4>
         <p>Off-the-shelf baselines struggled to reliably distinguish real incidents from ordinary movement.
-        I trained the custom YOLOv8 fall-detection model to <strong>0.81 mAP@50</strong>, a
+        I collected, preprocessed, and augmented <strong>3,800+ images</strong>, then trained the custom
+        YOLOv8 fall-detection model to <strong>0.81 mAP@50</strong>, a
         <strong>2-3× improvement over the baseline</strong>.</p>
       </div>
       <div class="challenge">
