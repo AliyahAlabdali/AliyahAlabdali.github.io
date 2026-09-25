@@ -263,11 +263,11 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .chip:hover{background:var(--cherry);border-color:var(--cherry);color:var(--ink-on-light)}
 
 /* ----- Projects (sticky stacking cards) --------------------------------- */
-/* Near-black slab with heavy rounded top corners, pulled up over the
-   section above it so the corners overlap rather than butt against it. */
+/* A deeper slate slab with heavy rounded top corners, pulled up over the
+   section above so the corners overlap rather than butt against it. */
 .projects{
   position:relative;z-index:10;
-  background:#0C0C0C;
+  background:var(--cream-2);
   border-radius:clamp(40px,5vw,60px) clamp(40px,5vw,60px) 0 0;
   margin-top:calc(-1 * clamp(2.5rem,4vw,3.5rem));
   padding-block:clamp(3.5rem,7vw,6rem) clamp(1.5rem,3vw,2.5rem)
@@ -281,19 +281,18 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
   -webkit-text-fill-color:transparent;color:transparent
 }
 
-/* Each item supplies the scroll distance; the card inside it sticks. Cards
-   are offset in 28px steps so the stacked edges stay readable. */
-/* The trailing padding keeps every card inside .pstack's sticky range a beat
-   longer, so the finished stack holds instead of lifting off at the end. */
-.pstack{--pstack-top:clamp(5.5rem,8vw,7rem);padding-bottom:12vh}
 /* Every item sticks at the same offset and is held by .pstack (not by its own
-   box), so earlier cards stay pinned behind the ones that scroll over them. */
+   box), so earlier cards stay pinned behind the ones that scroll over them.
+   The trailing padding keeps them in range a beat longer, so the finished
+   stack holds instead of lifting off at the end. */
+.pstack{--pstack-top:clamp(5.5rem,8vw,7rem);padding-bottom:12vh}
 .pstack__item{position:sticky;top:var(--pstack-top);height:85vh}
 .pstack__card{
   position:relative;
   display:flex;flex-direction:column;gap:clamp(.9rem,1.8vw,1.4rem);
-  border:2px solid #D7E2EA;border-radius:clamp(40px,5vw,60px);
-  background:#0C0C0C;padding:clamp(1rem,2.4vw,2rem);
+  border:1.5px solid var(--line-strong);border-radius:clamp(40px,5vw,60px);
+  background:var(--surface);padding:clamp(1rem,2.4vw,2rem);
+  box-shadow:var(--shadow-md);
   transform-origin:top center;will-change:transform
 }
 
@@ -301,11 +300,11 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .pcard__head{display:grid;grid-template-columns:auto 1fr auto;
   gap:clamp(.9rem,2.2vw,2rem);align-items:start}
 .pcard__n{font-family:var(--f-hero);font-weight:400;line-height:.78;
-  font-size:clamp(2.4rem,6vw,5rem);color:#D7E2EA;opacity:.85}
+  font-size:clamp(2.4rem,6vw,5rem);color:var(--alabaster);opacity:.85}
 .pcard__cat{display:block;font-family:var(--f-mono);font-size:.68rem;
   letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
-.pcard__title{font-size:var(--step-2);margin:.4rem 0 .45rem;color:#fff}
-.pcard__desc{color:#A7B4BC;font-size:.92rem;line-height:1.55;max-width:64ch}
+.pcard__title{font-size:var(--step-2);margin:.4rem 0 .45rem;color:var(--ink)}
+.pcard__desc{color:var(--ink-2);font-size:.92rem;line-height:1.55;max-width:64ch}
 
 /* Middle row: metrics on the left, tech chips + case-study link on the right. */
 .pcard__facts{display:grid;grid-template-columns:auto 1fr;
@@ -315,43 +314,33 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
   gap:.7rem 1rem}
 .pcard__tags{display:flex;flex-wrap:wrap;gap:.4rem}
 /* Chips normally fade in from a [data-reveal] ancestor; project cards have
-   their own scroll choreography, so show them outright and retint them for
-   the near-black card. */
-.pstack__card .chip{opacity:1;transform:none;background:transparent;
-  border-color:rgba(215,226,234,.3);color:#D7E2EA}
-.pstack__card .chip:hover{background:rgba(215,226,234,.12);border-color:#D7E2EA;color:#fff}
+   their own scroll choreography, so show them outright. */
+.pstack__card .chip{opacity:1;transform:none}
 
-/* Bottom row: 40/60 two-column grid - two stacked shots left, one tall right.
-   --pm drives every height, and is capped in vh so a card always fits the
-   sticky viewport instead of running off the bottom of the screen. */
-.pcard__media{
-  --pm:min(clamp(260px,32vw,520px),34vh);
-  --pmg:clamp(.55rem,1.2vw,1rem);
-  display:grid;grid-template-columns:40% 1fr;gap:var(--pmg);
-  height:calc(var(--pm) + var(--pmg));margin-top:auto
-}
-.pcard__col{display:grid;grid-template-rows:2fr 3fr;gap:var(--pmg);min-height:0}
-.pcard__shot{position:relative;overflow:hidden;min-height:0;margin:0;
-  border-radius:clamp(26px,3.2vw,50px);background:#141414;
-  border:1px solid rgba(215,226,234,.14)}
+/* Bottom row: one demo panel. The clips are all wide (roughly 2:1), so the
+   band is capped in vh to keep the whole card inside the sticky viewport and
+   crops from the centre, where the UI sits. */
+.pcard__media{--pm:min(clamp(200px,26vw,390px),38vh);height:var(--pm);margin-top:auto}
+.pcard__shot{position:relative;overflow:hidden;height:100%;margin:0;
+  border-radius:clamp(26px,3.2vw,50px);background:var(--cream-2);
+  border:1px solid var(--line)}
 .pcard__shot > img,.pcard__shot > video{width:100%;height:100%;object-fit:cover;display:block}
-/* Placeholder tile for a project with nothing shippable to show yet. */
+/* Placeholder panel for a project with nothing shippable to show yet. */
 .pcard__shot--soon{display:grid;place-items:center;text-align:center;padding:1rem;
-  background:linear-gradient(150deg,#1a1419,#0f0f11);
-  border-style:dashed;border-color:rgba(215,226,234,.28)}
-.pcard__shot--soon span{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;
+  background:linear-gradient(150deg,rgba(155,106,108,.18),var(--cream-2));
+  border-style:dashed;border-color:var(--line-strong)}
+.pcard__shot--soon span{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;
   text-transform:uppercase;color:var(--ink-2)}
 
 /* Ghost pill: outline, uppercase, wide tracking. */
 .btn-live{display:inline-flex;align-items:center;gap:.55em;white-space:nowrap;
   font-family:var(--f-mono);font-weight:500;font-size:.76rem;letter-spacing:.14em;
-  text-transform:uppercase;color:#D7E2EA;
-  border:2px solid #D7E2EA;border-radius:100px;padding:.8em 1.7em;
-  transition:background .3s var(--ease),color .3s}
+  text-transform:uppercase;color:var(--ink);
+  border:1.5px solid var(--line-strong);border-radius:100px;padding:.8em 1.7em;
+  transition:border-color .3s var(--ease),color .3s,background .3s}
 .btn-live svg{width:1em;height:1em;transition:transform .35s var(--ease)}
-.btn-live:hover{background:rgba(215,226,234,.1)}
+.btn-live:hover{border-color:var(--pink);color:var(--pink);background:rgba(226,180,189,.08)}
 .btn-live:hover svg{transform:translate(2px,-2px)}
-
 .pstat .n{font-family:var(--f-display);font-weight:700;font-size:var(--step-2);line-height:1;color:var(--ink)}
 .pstat .n small{font-family:var(--f-mono);font-size:.42em;color:var(--pink)}
 .pstat .l{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
@@ -547,17 +536,14 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
   .nav__menu .nav__links a{font-size:1.4rem;font-family:var(--f-display);color:var(--ink)}
   .nav__pill{display:none}
   .nav__menu .btn{display:inline-flex}
-  /* No sticky stacking on phones: cards flow, media becomes one column. */
+  /* No sticky stacking on phones: cards flow in normal order. */
   .pstack__item{position:static;height:auto;margin-bottom:clamp(1rem,4vw,1.6rem)}
   .pstack__card{top:auto;transform:none!important}
   .pcard__head{grid-template-columns:auto 1fr;row-gap:.9rem}
   .pcard__head .btn-live{grid-column:1/-1;justify-self:start}
   .pcard__facts{grid-template-columns:1fr}
   .pcard__aside{justify-content:flex-start}
-  .pcard__media{grid-template-columns:1fr;height:auto}
-  .pcard__col{grid-template-rows:none}
-  .pcard__shot{height:clamp(150px,44vw,260px)}
-  .pcard__shot--tall{height:clamp(200px,58vw,340px)}
+  .pcard__media{height:clamp(170px,48vw,260px)}
   .pipeline{flex-direction:column}
   .pipe-arrow{width:100%;height:20px}
   .pipe-arrow svg{transform:rotate(90deg)}
