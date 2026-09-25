@@ -244,139 +244,212 @@
 </section>
 
 <!-- ================= WORK / PROJECTS ================= -->
+<!-- Sticky-stacking cards: each .pstack__item supplies the scroll distance,
+     its .pstack__card sticks below the nav, and main.js scales it down as the
+     next card rises over it. Cards flow normally on small screens and for
+     prefers-reduced-motion. -->
 <section class="section projects" id="work" aria-labelledby="work-h">
   <div class="wrap">
-    <div class="sec-head--split sec-head" data-reveal>
+    <div class="pstack-head sec-head--split sec-head" data-reveal>
       <div class="txt">
         <span class="eyebrow">Selected work</span>
-        <h2 class="section-title" id="work-h">Three projects, from deep models to shipped products.</h2>
+        <h2 class="pstack-heading" id="work-h">Project</h2>
       </div>
-      <p class="mono muted" style="font-size:.8rem">03 case studies</p>
+      <p class="mono muted" style="font-size:.8rem">04 — deep models to shipped products</p>
     </div>
 
-    <!-- Project 1 : Yaqidh -->
-    <article class="prow" data-reveal>
-      <div class="prow__media" data-reveal-wipe>
-        <div class="prow__screen">
-          <span class="prow__badge">Graduation Project</span>
-          <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/yaqidh-poster.jpg" aria-label="Yaqidh real-time detection demo">
-            <source src="assets/media/yaqidh-preview.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="prow__base" aria-hidden="true"></div>
-      </div>
-      <div class="prow__body">
-        <span class="prow__idx">01 / 03</span>
-        <h3 class="prow__title">Yaqidh: AI Child-Safety Monitoring</h3>
-        <p class="prow__sub">Computer Vision · Real-time CCTV · Full-stack</p>
-        <p class="prow__desc">A real-time system that watches live CCTV, detects child falls and violence with custom
-          YOLOv8 models trained on 3,800+ collected and augmented images, and pushes instant, role-based alerts to
-          parents, teachers, and managers, backed by a full FastAPI + React stack with live dashboards.</p>
-        <div class="prow__stats">
-          <div class="pstat"><div class="n"><span data-count="0.81" data-dec="2">0.81</span></div><div class="l">mAP@50 · fall</div></div>
-          <div class="pstat"><div class="n"><span data-count="0.66" data-dec="2">0.66</span></div><div class="l">mAP@50 · violence</div></div>
-          <div class="pstat"><div class="n"><span data-count="2" data-dec="0">2</span><small>-3×</small></div><div class="l">over baseline</div></div>
-          <div class="pstat"><div class="n"><small>~</small><span data-count="20" data-dec="0">20</span><small>%</small></div><div class="l">latency ↓ (ONNX)</div></div>
-        </div>
-        <div class="prow__tags chips">
-          <span class="chip">YOLOv8</span><span class="chip">PyTorch</span><span class="chip">ONNX</span><span class="chip">OpenCV</span>
-          <span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">React</span>
-        </div>
-        <div class="prow__links">
-          <a class="link-arrow solid" href="projects/yaqidh.html">Read case study
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
-          <a class="link-arrow" href="https://github.com/Yaqidh-Project/Yaqidh" target="_blank" rel="noopener">GitHub
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
-        </div>
-      </div>
-    </article>
+    <div class="pstack">
 
-    <!-- Project 2 : SMS Scam Detection -->
-    <article class="prow prow--flip" data-reveal>
-      <div class="prow__media" data-reveal-wipe>
-        <div class="prow__screen" style="aspect-ratio:1280/632">
-          <span class="prow__badge">Advanced Deep Learning</span>
-          <video src="assets/media/scam-detector-demo.mp4" poster="assets/media/scam-detector-demo.jpg"
-                 autoplay loop muted playsinline preload="metadata"
-                 aria-label="Screen recording of the SMS scam detector classifying messages in real time"></video>
-        </div>
-        <div class="prow__base" aria-hidden="true"></div>
-      </div>
-      <div class="prow__body">
-        <span class="prow__idx">02 / 03</span>
-        <h3 class="prow__title">SMS Scam &amp; Spam Detection</h3>
-        <p class="prow__sub">NLP · Transformer encoder built from scratch</p>
-        <p class="prow__desc">A Transformer-based classifier, implemented from the ground up in PyTorch, that flags
-          scam and spam SMS on a heavily imbalanced dataset, and correctly labels brand-new, hand-written messages
-          it has never seen before.</p>
-        <div class="prow__stats">
-          <div class="pstat"><div class="n"><span data-count="98" data-dec="0">98</span><small>%</small></div><div class="l">accuracy</div></div>
-          <div class="pstat"><div class="n"><span data-count="0.95" data-dec="2">0.95</span></div><div class="l">macro F1</div></div>
-        </div>
-        <div class="prow__tags chips">
-          <span class="chip">Transformers</span><span class="chip">PyTorch</span><span class="chip">Scikit-learn</span><span class="chip">NLP</span>
-        </div>
-        <div class="prow__links">
-          <a class="link-arrow solid" href="projects/sms-scam-detection.html">Read case study
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
-          <a class="link-arrow" href="https://huggingface.co/spaces/AliyahAlabdali/sms-scam-detector" target="_blank" rel="noopener">Live demo
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
-          <a class="link-arrow" href="https://github.com/AliyahAlabdali/SMS-Scam-Detection-Transformer" target="_blank" rel="noopener">GitHub
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
-        </div>
-      </div>
-    </article>
+      <!-- Project 01 : Yaqidh -->
+      <div class="pstack__item">
+        <article class="pstack__card" style="top:0px">
+          <div class="pcard__head">
+            <span class="pcard__n" aria-hidden="true">01</span>
+            <div class="pcard__meta">
+              <span class="pcard__cat">Graduation Project · Computer Vision</span>
+              <h3 class="pcard__title">Yaqidh: AI Child-Safety Monitoring</h3>
+              <p class="pcard__desc">A real-time system that watches live CCTV, detects child falls and violence with
+                custom YOLOv8 models trained on 3,800+ collected and augmented images, and pushes instant, role-based
+                alerts to parents, teachers, and managers, backed by a full FastAPI + React stack with live dashboards.</p>
+            </div>
+            <a class="btn-live" href="https://github.com/Yaqidh-Project/Yaqidh" target="_blank" rel="noopener" data-magnet>View Repo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+          </div>
 
-    <!-- Project 3 : Brain Tumor -->
-    <article class="prow" data-reveal>
-      <div class="prow__media" data-reveal-wipe>
-        <div class="prow__screen">
-          <span class="prow__badge">AI System Design</span>
-          <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/btcs-poster.jpg" aria-label="Brain tumor classifier in-browser demo">
-            <source src="assets/media/btcs-preview.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="prow__base" aria-hidden="true"></div>
-      </div>
-      <div class="prow__body">
-        <span class="prow__idx">03 / 03</span>
-        <h3 class="prow__title">Brain Tumor MRI Classifier</h3>
-        <p class="prow__sub">Deep Learning · In-browser · Privacy-first</p>
-        <p class="prow__desc">A privacy-first web app that classifies brain-MRI scans into four tumor types entirely
-          in the browser, with no image ever leaving the device. A lightweight ~1.5&nbsp;MB model runs via ONNX Runtime Web
-          with real-time confidence scoring.</p>
-        <div class="prow__stats">
-          <div class="pstat"><div class="n"><small>~</small><span data-count="79" data-dec="0">79</span><small>%</small></div><div class="l">accuracy</div></div>
-          <div class="pstat"><div class="n"><small>~</small><span data-count="9" data-dec="0">9</span><small>ms</small></div><div class="l">inference</div></div>
-          <div class="pstat"><div class="n"><small>~</small><span data-count="1.5" data-dec="1">1.5</span><small>MB</small></div><div class="l">model size</div></div>
-        </div>
-        <div class="prow__tags chips">
-          <span class="chip">YOLOv8</span><span class="chip">ONNX Runtime Web</span><span class="chip">React</span><span class="chip">Vite</span>
-        </div>
-        <div class="prow__links">
-          <a class="link-arrow solid" href="projects/brain-tumor.html">Read case study
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
-          <a class="link-arrow" href="https://btcs-project.vercel.app/" target="_blank" rel="noopener">Live demo
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
-          <a class="link-arrow" href="https://github.com/AliyahAlabdali/BTCS-Project" target="_blank" rel="noopener">GitHub
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
-        </div>
-      </div>
-    </article>
+          <div class="pcard__facts">
+            <div class="pcard__stats">
+              <div class="pstat"><div class="n"><span data-count="0.81" data-dec="2">0.81</span></div><div class="l">mAP@50 · fall</div></div>
+              <div class="pstat"><div class="n"><span data-count="0.66" data-dec="2">0.66</span></div><div class="l">mAP@50 · violence</div></div>
+              <div class="pstat"><div class="n"><span data-count="2" data-dec="0">2</span><small>-3×</small></div><div class="l">over baseline</div></div>
+              <div class="pstat"><div class="n"><small>~</small><span data-count="20" data-dec="0">20</span><small>%</small></div><div class="l">latency ↓ (ONNX)</div></div>
+            </div>
+            <div class="pcard__aside">
+              <div class="pcard__tags chips">
+                <span class="chip">YOLOv8</span><span class="chip">PyTorch</span><span class="chip">ONNX</span><span class="chip">OpenCV</span>
+                <span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">React</span>
+              </div>
+              <a class="link-arrow solid" href="projects/yaqidh.html">Read case study
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+            </div>
+          </div>
 
-    <!-- Teaser: in-progress project -->
-    <div class="prow-teaser" data-reveal>
-      <span class="prow-teaser__badge">In progress</span>
-      <h3>InterMind: Autonomous AI Interviewer</h3>
-      <p>An AI system that reads a job description, builds a role-specific interview plan, conducts an adaptive
-        interview, evaluates responses against evidence, and generates a structured HR report. Currently in
-        development. Details coming soon.</p>
-      <a class="prow-teaser__link" href="https://github.com/AliyahAlabdali/InterMind" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.22.66-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.57.67.48A10 10 0 0022 12 10 10 0 0012 2z"/></svg>
-        View repo
-      </a>
+          <div class="pcard__media">
+            <div class="pcard__col">
+              <figure class="pcard__shot">
+                <img src="assets/media/yaqidh-poster.jpg" alt="Yaqidh dashboard showing a live camera feed with detection overlays" loading="lazy" decoding="async">
+              </figure>
+              <figure class="pcard__shot">
+                <video data-autoplay muted loop playsinline preload="none" poster="assets/media/yaqidh-poster.jpg" aria-label="Yaqidh alert workflow walkthrough">
+                  <source src="assets/media/yaqidh-demo.mp4" type="video/mp4">
+                </video>
+              </figure>
+            </div>
+            <figure class="pcard__shot pcard__shot--tall">
+              <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/yaqidh-poster.jpg" aria-label="Yaqidh real-time fall and violence detection demo">
+                <source src="assets/media/yaqidh-preview.mp4" type="video/mp4">
+              </video>
+            </figure>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 02 : SMS Scam Detection -->
+      <div class="pstack__item">
+        <article class="pstack__card" style="top:28px">
+          <div class="pcard__head">
+            <span class="pcard__n" aria-hidden="true">02</span>
+            <div class="pcard__meta">
+              <span class="pcard__cat">Advanced Deep Learning · NLP</span>
+              <h3 class="pcard__title">SMS Scam &amp; Spam Detection</h3>
+              <p class="pcard__desc">A Transformer-based classifier, implemented from the ground up in PyTorch, that
+                flags scam and spam SMS on a heavily imbalanced dataset, and correctly labels brand-new, hand-written
+                messages it has never seen before.</p>
+            </div>
+            <a class="btn-live" href="https://huggingface.co/spaces/AliyahAlabdali/sms-scam-detector" target="_blank" rel="noopener" data-magnet>Live Project
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+          </div>
+
+          <div class="pcard__facts">
+            <div class="pcard__stats">
+              <div class="pstat"><div class="n"><span data-count="98" data-dec="0">98</span><small>%</small></div><div class="l">accuracy</div></div>
+              <div class="pstat"><div class="n"><span data-count="0.95" data-dec="2">0.95</span></div><div class="l">macro F1</div></div>
+            </div>
+            <div class="pcard__aside">
+              <div class="pcard__tags chips">
+                <span class="chip">Transformers</span><span class="chip">PyTorch</span><span class="chip">Scikit-learn</span><span class="chip">NLP</span>
+              </div>
+              <a class="link-arrow solid" href="projects/sms-scam-detection.html">Read case study
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+            </div>
+          </div>
+
+          <div class="pcard__media">
+            <div class="pcard__col">
+              <figure class="pcard__shot">
+                <img src="assets/media/scam-detector-demo.jpg" alt="SMS scam detector interface classifying a message" loading="lazy" decoding="async">
+              </figure>
+              <figure class="pcard__shot">
+                <img src="assets/media/sms-inference.png" alt="Inference output showing predicted labels and confidence scores" loading="lazy" decoding="async">
+              </figure>
+            </div>
+            <figure class="pcard__shot pcard__shot--tall">
+              <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/scam-detector-demo.jpg" aria-label="Screen recording of the SMS scam detector classifying messages in real time">
+                <source src="assets/media/scam-detector-demo.mp4" type="video/mp4">
+              </video>
+            </figure>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 03 : Brain Tumor MRI Classifier -->
+      <div class="pstack__item">
+        <article class="pstack__card" style="top:56px">
+          <div class="pcard__head">
+            <span class="pcard__n" aria-hidden="true">03</span>
+            <div class="pcard__meta">
+              <span class="pcard__cat">AI System Design · Privacy-first</span>
+              <h3 class="pcard__title">Brain Tumor MRI Classifier</h3>
+              <p class="pcard__desc">A privacy-first web app that classifies brain-MRI scans into four tumor types
+                entirely in the browser, with no image ever leaving the device. A lightweight ~1.5&nbsp;MB model runs via
+                ONNX Runtime Web with real-time confidence scoring.</p>
+            </div>
+            <a class="btn-live" href="https://btcs-project.vercel.app/" target="_blank" rel="noopener" data-magnet>Live Project
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+          </div>
+
+          <div class="pcard__facts">
+            <div class="pcard__stats">
+              <div class="pstat"><div class="n"><small>~</small><span data-count="79" data-dec="0">79</span><small>%</small></div><div class="l">accuracy</div></div>
+              <div class="pstat"><div class="n"><small>~</small><span data-count="9" data-dec="0">9</span><small>ms</small></div><div class="l">inference</div></div>
+              <div class="pstat"><div class="n"><small>~</small><span data-count="1.5" data-dec="1">1.5</span><small>MB</small></div><div class="l">model size</div></div>
+            </div>
+            <div class="pcard__aside">
+              <div class="pcard__tags chips">
+                <span class="chip">YOLOv8</span><span class="chip">ONNX Runtime Web</span><span class="chip">React</span><span class="chip">Vite</span>
+              </div>
+              <a class="link-arrow solid" href="projects/brain-tumor.html">Read case study
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+            </div>
+          </div>
+
+          <div class="pcard__media">
+            <div class="pcard__col">
+              <figure class="pcard__shot">
+                <img src="assets/media/btcs-poster.jpg" alt="Brain tumor classifier web app with an MRI scan loaded" loading="lazy" decoding="async">
+              </figure>
+              <figure class="pcard__shot">
+                <video data-autoplay muted loop playsinline preload="none" poster="assets/media/btcs-poster.jpg" aria-label="Brain tumor classifier confidence scoring walkthrough">
+                  <source src="assets/media/btcs-demo.mp4" type="video/mp4">
+                </video>
+              </figure>
+            </div>
+            <figure class="pcard__shot pcard__shot--tall">
+              <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/btcs-poster.jpg" aria-label="Brain tumor classifier running entirely in the browser">
+                <source src="assets/media/btcs-preview.mp4" type="video/mp4">
+              </video>
+            </figure>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 04 : InterMind (in progress) -->
+      <div class="pstack__item">
+        <article class="pstack__card" style="top:84px">
+          <div class="pcard__head">
+            <span class="pcard__n" aria-hidden="true">04</span>
+            <div class="pcard__meta">
+              <span class="pcard__cat">Agentic AI · In progress</span>
+              <h3 class="pcard__title">InterMind: Autonomous AI Interviewer</h3>
+              <p class="pcard__desc">An AI system that reads a job description, builds a role-specific interview plan,
+                conducts an adaptive interview, evaluates responses against evidence, and generates a structured HR
+                report. Currently in development. Details coming soon.</p>
+            </div>
+            <a class="btn-live" href="https://github.com/AliyahAlabdali/InterMind" target="_blank" rel="noopener" data-magnet>View Repo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+          </div>
+
+          <div class="pcard__facts">
+            <div class="pcard__stats">
+              <div class="pstat"><div class="n"><small>In progress</small></div><div class="l">metrics pending</div></div>
+            </div>
+            <div class="pcard__aside">
+              <div class="pcard__tags chips">
+                <span class="chip">LLM Agents</span><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Evaluation</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pcard__media">
+            <div class="pcard__col">
+              <figure class="pcard__shot pcard__shot--soon"><span>Interview plan</span></figure>
+              <figure class="pcard__shot pcard__shot--soon"><span>Evidence scoring</span></figure>
+            </div>
+            <figure class="pcard__shot pcard__shot--tall pcard__shot--soon"><span>HR report · coming soon</span></figure>
+          </div>
+        </article>
+      </div>
+
     </div>
-
   </div>
 </section>
 

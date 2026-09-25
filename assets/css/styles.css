@@ -262,29 +262,100 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .skill-card:hover .chip{background:var(--surface-2)}
 .chip:hover{background:var(--cherry);border-color:var(--cherry);color:var(--ink-on-light)}
 
-/* ----- Projects (feature rows) ----------------------------------------- */
-.projects{background:linear-gradient(180deg,var(--cream-2),var(--cream))}
-.prow{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4vw,3.5rem);align-items:center;
-  padding-block:clamp(2.5rem,5vw,4rem);border-top:1px solid var(--line)}
-.prow:first-of-type{border-top:0;padding-top:0}
-.prow--flip .prow__media{order:2}
-.prow__media{position:relative;border-radius:var(--radius-lg);overflow:hidden;
-  box-shadow:var(--shadow-md);background:var(--surface);
-  transform-style:preserve-3d;will-change:transform;transition:transform .2s ease-out}
-.prow__media video,.prow__media img{width:100%;height:100%;object-fit:cover}
-.prow__badge{position:absolute;top:1rem;left:1rem;z-index:2;font-family:var(--f-mono);
-  font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(30,34,38,.78);
-  color:#fff;padding:.4em .8em;border-radius:100px;backdrop-filter:blur(4px)}
-.prow__idx{font-family:var(--f-mono);font-weight:700;font-size:.8rem;letter-spacing:.1em;color:var(--pink)}
-.prow__title{font-size:var(--step-3);margin:.6rem 0 .3rem}
-.prow__sub{font-family:var(--f-mono);font-size:.82rem;color:var(--ink-2);letter-spacing:.03em;margin-bottom:1.1rem}
-.prow__desc{color:var(--ink-2);font-size:var(--step-0);margin-bottom:1.3rem;max-width:48ch}
-.prow__stats{display:flex;flex-wrap:wrap;gap:1.8rem;margin-bottom:1.4rem}
+/* ----- Projects (sticky stacking cards) --------------------------------- */
+/* Near-black slab with heavy rounded top corners, pulled up over the
+   section above it so the corners overlap rather than butt against it. */
+.projects{
+  position:relative;z-index:10;
+  background:#0C0C0C;
+  border-radius:clamp(40px,5vw,60px) clamp(40px,5vw,60px) 0 0;
+  margin-top:calc(-1 * clamp(2.5rem,4vw,3.5rem));
+  padding-block:clamp(3.5rem,7vw,6rem) clamp(1.5rem,3vw,2.5rem)
+}
+.pstack-head{margin-bottom:clamp(1.6rem,3.5vw,2.6rem)}
+.pstack-heading{
+  font-family:var(--f-hero);font-weight:400;text-transform:uppercase;
+  line-height:.86;letter-spacing:.005em;font-size:clamp(3rem,11vw,7.5rem);
+  background:linear-gradient(103deg,var(--white) 4%,var(--pink) 36%,var(--mauve) 68%,var(--sage) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent
+}
+
+/* Each item supplies the scroll distance; the card inside it sticks. Cards
+   are offset in 28px steps so the stacked edges stay readable. */
+/* The trailing padding keeps every card inside .pstack's sticky range a beat
+   longer, so the finished stack holds instead of lifting off at the end. */
+.pstack{--pstack-top:clamp(5.5rem,8vw,7rem);padding-bottom:12vh}
+/* Every item sticks at the same offset and is held by .pstack (not by its own
+   box), so earlier cards stay pinned behind the ones that scroll over them. */
+.pstack__item{position:sticky;top:var(--pstack-top);height:85vh}
+.pstack__card{
+  position:relative;
+  display:flex;flex-direction:column;gap:clamp(.9rem,1.8vw,1.4rem);
+  border:2px solid #D7E2EA;border-radius:clamp(40px,5vw,60px);
+  background:#0C0C0C;padding:clamp(1rem,2.4vw,2rem);
+  transform-origin:top center;will-change:transform
+}
+
+/* Top row: number, category + name + blurb, live/repo button. */
+.pcard__head{display:grid;grid-template-columns:auto 1fr auto;
+  gap:clamp(.9rem,2.2vw,2rem);align-items:start}
+.pcard__n{font-family:var(--f-hero);font-weight:400;line-height:.78;
+  font-size:clamp(2.4rem,6vw,5rem);color:#D7E2EA;opacity:.85}
+.pcard__cat{display:block;font-family:var(--f-mono);font-size:.68rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
+.pcard__title{font-size:var(--step-2);margin:.4rem 0 .45rem;color:#fff}
+.pcard__desc{color:#A7B4BC;font-size:.92rem;line-height:1.55;max-width:64ch}
+
+/* Middle row: metrics on the left, tech chips + case-study link on the right. */
+.pcard__facts{display:grid;grid-template-columns:auto 1fr;
+  gap:clamp(1rem,2.5vw,2.2rem);align-items:end}
+.pcard__stats{display:flex;flex-wrap:wrap;gap:clamp(.9rem,2vw,1.8rem)}
+.pcard__aside{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;
+  gap:.7rem 1rem}
+.pcard__tags{display:flex;flex-wrap:wrap;gap:.4rem}
+/* Chips normally fade in from a [data-reveal] ancestor; project cards have
+   their own scroll choreography, so show them outright and retint them for
+   the near-black card. */
+.pstack__card .chip{opacity:1;transform:none;background:transparent;
+  border-color:rgba(215,226,234,.3);color:#D7E2EA}
+.pstack__card .chip:hover{background:rgba(215,226,234,.12);border-color:#D7E2EA;color:#fff}
+
+/* Bottom row: 40/60 two-column grid - two stacked shots left, one tall right.
+   --pm drives every height, and is capped in vh so a card always fits the
+   sticky viewport instead of running off the bottom of the screen. */
+.pcard__media{
+  --pm:min(clamp(260px,32vw,520px),34vh);
+  --pmg:clamp(.55rem,1.2vw,1rem);
+  display:grid;grid-template-columns:40% 1fr;gap:var(--pmg);
+  height:calc(var(--pm) + var(--pmg));margin-top:auto
+}
+.pcard__col{display:grid;grid-template-rows:2fr 3fr;gap:var(--pmg);min-height:0}
+.pcard__shot{position:relative;overflow:hidden;min-height:0;margin:0;
+  border-radius:clamp(26px,3.2vw,50px);background:#141414;
+  border:1px solid rgba(215,226,234,.14)}
+.pcard__shot > img,.pcard__shot > video{width:100%;height:100%;object-fit:cover;display:block}
+/* Placeholder tile for a project with nothing shippable to show yet. */
+.pcard__shot--soon{display:grid;place-items:center;text-align:center;padding:1rem;
+  background:linear-gradient(150deg,#1a1419,#0f0f11);
+  border-style:dashed;border-color:rgba(215,226,234,.28)}
+.pcard__shot--soon span{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-2)}
+
+/* Ghost pill: outline, uppercase, wide tracking. */
+.btn-live{display:inline-flex;align-items:center;gap:.55em;white-space:nowrap;
+  font-family:var(--f-mono);font-weight:500;font-size:.76rem;letter-spacing:.14em;
+  text-transform:uppercase;color:#D7E2EA;
+  border:2px solid #D7E2EA;border-radius:100px;padding:.8em 1.7em;
+  transition:background .3s var(--ease),color .3s}
+.btn-live svg{width:1em;height:1em;transition:transform .35s var(--ease)}
+.btn-live:hover{background:rgba(215,226,234,.1)}
+.btn-live:hover svg{transform:translate(2px,-2px)}
+
 .pstat .n{font-family:var(--f-display);font-weight:700;font-size:var(--step-2);line-height:1;color:var(--ink)}
 .pstat .n small{font-family:var(--f-mono);font-size:.42em;color:var(--pink)}
 .pstat .l{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;
   color:var(--ink-2);margin-top:.4rem}
-.prow__tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.5rem}
 .prow__links{display:flex;flex-wrap:wrap;gap:.7rem}
 .link-arrow{display:inline-flex;align-items:center;gap:.5em;font-family:var(--f-mono);
   font-size:.82rem;letter-spacing:.03em;color:var(--pink);transition:gap .3s var(--ease)}
@@ -293,19 +364,6 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .link-arrow.solid{background:var(--grad-primary);color:#fff;padding:.7em 1.15em;border-radius:100px}
 .link-arrow.solid:hover{filter:brightness(1.06)}
 
-/* Teaser row: deliberately lighter-weight than a finished case study */
-.prow-teaser{border:1.5px dashed var(--line-strong);border-radius:var(--radius-lg);
-  padding:clamp(1.6rem,4vw,2.4rem);margin-top:clamp(2rem,4vw,3rem);text-align:center;
-  max-width:52ch;margin-inline:auto}
-.prow-teaser__badge{display:inline-block;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--ink-2);border:1px solid var(--line-strong);border-radius:100px;
-  padding:.3em .8em;margin-bottom:.9rem}
-.prow-teaser h3{font-size:var(--step-1);margin-bottom:.6rem}
-.prow-teaser p{color:var(--ink-2);font-size:.95rem;line-height:1.6}
-.prow-teaser__link{display:inline-flex;align-items:center;gap:.5em;margin-top:1.1rem;
-  font-family:var(--f-mono);font-size:.78rem;letter-spacing:.02em;color:var(--ink-2);transition:color .25s}
-.prow-teaser__link svg{width:1em;height:1em}
-.prow-teaser__link:hover{color:var(--pink)}
 
 /* ----- Experience / timeline ------------------------------------------- */
 .timeline{position:relative;margin-left:.5rem;padding-left:2.2rem;
@@ -489,9 +547,17 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
   .nav__menu .nav__links a{font-size:1.4rem;font-family:var(--f-display);color:var(--ink)}
   .nav__pill{display:none}
   .nav__menu .btn{display:inline-flex}
-  .prow,.prow--flip{grid-template-columns:1fr}
-  .prow--flip .prow__media{order:0}
-  .prow__screen{aspect-ratio:16/11}
+  /* No sticky stacking on phones: cards flow, media becomes one column. */
+  .pstack__item{position:static;height:auto;margin-bottom:clamp(1rem,4vw,1.6rem)}
+  .pstack__card{top:auto;transform:none!important}
+  .pcard__head{grid-template-columns:auto 1fr;row-gap:.9rem}
+  .pcard__head .btn-live{grid-column:1/-1;justify-self:start}
+  .pcard__facts{grid-template-columns:1fr}
+  .pcard__aside{justify-content:flex-start}
+  .pcard__media{grid-template-columns:1fr;height:auto}
+  .pcard__col{grid-template-rows:none}
+  .pcard__shot{height:clamp(150px,44vw,260px)}
+  .pcard__shot--tall{height:clamp(200px,58vw,340px)}
   .pipeline{flex-direction:column}
   .pipe-arrow{width:100%;height:20px}
   .pipe-arrow svg{transform:rotate(90deg)}
@@ -544,18 +610,6 @@ button.hero__avatar:hover{transform:scale(1.06)}
   transition:opacity .3s}
 .hero:hover .hero__avatar-hint{opacity:1}
 
-/* ----- Project laptop mockup --------------------------------------------- */
-.prow__media{background:linear-gradient(155deg,#2b2e33,#17181b);padding:3.2% 3.2% 0;
-  display:flex;flex-direction:column}
-.prow__media::before{content:"";position:absolute;top:1.4%;left:50%;transform:translateX(-50%);
-  width:6px;height:6px;border-radius:50%;background:#4b5058;z-index:3}
-.prow__screen{position:relative;overflow:hidden;border-radius:6px 6px 2px 2px;background:#000;
-  flex:1 1 auto;aspect-ratio:16/10}
-.prow__screen video,.prow__screen img{width:100%;height:100%;object-fit:cover}
-.prow__base{height:12px;margin:0 -6%;flex:0 0 auto;position:relative;
-  background:linear-gradient(180deg,#3c4046,#202226);border-radius:0 0 10px 10px}
-.prow__base::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:16%;height:4px;background:rgba(0,0,0,.4);border-radius:0 0 6px 6px}
 
 /* ----- Skills pipeline ---------------------------------------------------- */
 .pipeline{display:flex;align-items:stretch;gap:.4rem}
@@ -638,5 +692,7 @@ button.hero__avatar:hover{transform:scale(1.06)}
   .dot{animation:none}
   .hero__beam{animation:none;opacity:.5}
   .intro{display:none}
+  .pstack__item{position:static;height:auto;margin-bottom:1.4rem}
+  .pstack__card{top:auto;transform:none!important}
   .hero__avatar-inner,.hero__avatar-ping,.bot-eye,.bot-antenna-tip,.pipe-arrow svg,.ai-msg--typing span{animation:none}
 }

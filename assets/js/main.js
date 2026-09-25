@@ -2,7 +2,8 @@
    Portfolio interactions: vanilla JS, no dependencies.
    Nav state · mobile menu · scroll reveal · scrollspy · metric count-up ·
    lazy video autoplay · hero load · word-stagger headlines · scroll
-   progress · magnetic tilt · nav pill · cursor spotlight.
+   progress · magnetic tilt · nav pill · cursor spotlight ·
+   sticky stacking project cards · magnetic buttons.
    Respects prefers-reduced-motion.
    ========================================================================= */
 (function(){
@@ -118,8 +119,8 @@
 
   /* ---- Magnetic tilt on cards / media ---- */
   if(!reduce && canHover){
-    document.querySelectorAll(".skill-card, .prow__media, .role-card").forEach(function(el){
-      var max = el.classList.contains("prow__media") ? 4 : 6;
+    document.querySelectorAll(".skill-card, .pcard__shot, .role-card").forEach(function(el){
+      var max = el.classList.contains("pcard__shot") ? 4 : 6;
       el.addEventListener("mousemove", function(e){
         var r = el.getBoundingClientRect();
         var px = (e.clientX-r.left)/r.width - .5;
@@ -128,6 +129,79 @@
       });
       el.addEventListener("mouseleave", function(){ el.style.transform = ""; });
     });
+  }
+
+  /* ---- Projects: sticky stacking cards ----
+     Each card scales down as the ones after it scroll over the top, so the
+     stack reads as a deck. Progress is measured across the whole .pstack
+     (its top hitting the viewport top = 0, its bottom hitting the viewport
+     bottom = 1); card i animates over [i/n, 1] from scale 1 down to
+     1 - (n - 1 - i) * 0.03, so the oldest card ends up smallest. */
+  var pstack = document.querySelector(".pstack");
+  var pcards = pstack ? Array.prototype.slice.call(pstack.querySelectorAll(".pstack__card")) : [];
+  if(pstack && pcards.length){
+    var pn = pcards.length;
+    var pTargets = pcards.map(function(_, i){ return 1 - (pn - 1 - i) * 0.03; });
+    var pWide = window.matchMedia("(min-width:761px)");
+    var pTicking = false;
+
+    function pstackUpdate(){
+      pTicking = false;
+      if(reduce || !pWide.matches){
+        pcards.forEach(function(c){ c.style.transform = ""; });
+        return;
+      }
+      var r = pstack.getBoundingClientRect();
+      var span = r.height - window.innerHeight;
+      var p = span > 0 ? (-r.top) / span : 0;
+      p = p < 0 ? 0 : (p > 1 ? 1 : p);
+      for(var i = 0; i < pn; i++){
+        var start = i / pn;
+        var local = (p - start) / (1 - start);
+        local = local < 0 ? 0 : (local > 1 ? 1 : local);
+        var s = 1 + (pTargets[i] - 1) * local;
+        pcards[i].style.transform = "scale(" + s.toFixed(4) + ")";
+      }
+    }
+    function pstackOnScroll(){
+      if(!pTicking){ pTicking = true; requestAnimationFrame(pstackUpdate); }
+    }
+    window.addEventListener("scroll", pstackOnScroll, {passive:true});
+    window.addEventListener("resize", pstackOnScroll);
+    pstackUpdate();
+  }
+
+  /* ---- Magnetic pull on the project buttons ----
+     While the cursor is within PAD of the button, it leans toward the cursor
+     by offset/STRENGTH; it eases back on the way out. ---- */
+  if(!reduce && canHover){
+    var magnets = Array.prototype.slice.call(document.querySelectorAll("[data-magnet]"));
+    if(magnets.length){
+      var MAG_PAD = 70, MAG_STRENGTH = 4;
+      var magTicking = false, magX = 0, magY = 0;
+      function magUpdate(){
+        magTicking = false;
+        magnets.forEach(function(el){
+          var r = el.getBoundingClientRect();
+          var inRange = magX > r.left - MAG_PAD && magX < r.right + MAG_PAD &&
+                        magY > r.top - MAG_PAD && magY < r.bottom + MAG_PAD;
+          if(inRange){
+            var dx = (magX - (r.left + r.width / 2)) / MAG_STRENGTH;
+            var dy = (magY - (r.top + r.height / 2)) / MAG_STRENGTH;
+            el.style.transition = "transform .3s ease-out";
+            el.style.transform = "translate3d(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px,0)";
+          } else if(el.style.transform){
+            el.style.transition = "transform .6s ease-in-out";
+            el.style.transform = "";
+          }
+        });
+      }
+      magnets.forEach(function(el){ el.style.willChange = "transform"; });
+      window.addEventListener("mousemove", function(e){
+        magX = e.clientX; magY = e.clientY;
+        if(!magTicking){ magTicking = true; requestAnimationFrame(magUpdate); }
+      }, {passive:true});
+    }
   }
 
   /* ---- Mobile menu ---- */
@@ -268,7 +342,7 @@
      the JSON {reply} it gets back instead of mockReply(). That's the only
      integration point - nothing else needs to change.
      ======================================================================= */
-  var ASSISTANT_ENDPOINT = "https://aliyah-alabdali.app.n8n.cloud/webhook/aliyah-assistant";
+  var ASSISTANT_ENDPOINT = "https://aliyahalabdali.app.n8n.cloud/webhook/aliyah-assistant";
 
   function getAssistantReply(message){
     if(ASSISTANT_ENDPOINT){
