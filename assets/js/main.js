@@ -132,16 +132,17 @@
   }
 
   /* ---- Projects: sticky stacking cards ----
-     Each card scales down as the ones after it scroll over the top, so the
-     stack reads as a deck. Progress is measured across the whole .pstack
-     (its top hitting the viewport top = 0, its bottom hitting the viewport
-     bottom = 1); card i animates over [i/n, 1] from scale 1 down to
-     1 - (n - 1 - i) * 0.03, so the oldest card ends up smallest. */
+     Each card scales down only while the NEXT card is physically travelling over it,
+     never before. Overlap for card i+1 is measured straight off its own top edge:
+     0 when that edge is at the fold, 1 when it has reached its pinned offset and is
+     fully covering what's underneath. A card's depth in the deck is the sum of every
+     overlap above it, so the oldest card ends up smallest - the same deck look as
+     before, but nothing moves during a card's own reading phase. */
   var pstack = document.querySelector(".pstack");
   var pcards = pstack ? Array.prototype.slice.call(pstack.querySelectorAll(".pstack__card")) : [];
   if(pstack && pcards.length){
     var pn = pcards.length;
-    var pTargets = pcards.map(function(_, i){ return 1 - (pn - 1 - i) * 0.03; });
+    var pSteps = 0.03;
     var pWide = window.matchMedia("(min-width:761px)");
     var pTicking = false;
 
@@ -151,16 +152,21 @@
         pcards.forEach(function(c){ c.style.transform = ""; });
         return;
       }
-      var r = pstack.getBoundingClientRect();
-      var span = r.height - window.innerHeight;
-      var p = span > 0 ? (-r.top) / span : 0;
-      p = p < 0 ? 0 : (p > 1 ? 1 : p);
+      var vh = window.innerHeight;
+      /* Read the resolved sticky offset off an item (a custom property would come back
+         as an unresolved clamp() string). */
+      var top = parseFloat(getComputedStyle(pcards[0].parentNode).top) || 0;
+      var travel = vh - top;
+      var overlap = [];
+      for(var j = 0; j < pn; j++){
+        var t = pcards[j].getBoundingClientRect().top;
+        var q = travel > 0 ? (vh - t) / travel : 0;
+        overlap[j] = q < 0 ? 0 : (q > 1 ? 1 : q);
+      }
       for(var i = 0; i < pn; i++){
-        var start = i / pn;
-        var local = (p - start) / (1 - start);
-        local = local < 0 ? 0 : (local > 1 ? 1 : local);
-        var s = 1 + (pTargets[i] - 1) * local;
-        pcards[i].style.transform = "scale(" + s.toFixed(4) + ")";
+        var depth = 0;
+        for(var k = i + 1; k < pn; k++){ depth += overlap[k]; }
+        pcards[i].style.transform = "scale(" + (1 - depth * pSteps).toFixed(4) + ")";
       }
     }
     function pstackOnScroll(){
@@ -323,7 +329,35 @@
       iframe.loading = "lazy";
       iframe.allow = "clipboard-write";
       box.innerHTML = "";
-      box.appendChild(iframe);
+      if(box.classList.contains("live-embed--desktop")){
+        /* Give the page a laptop viewport and scale it to fit, so the embed shows the
+           desktop layout rather than the mobile one a column-width iframe would get. */
+        var bar = document.createElement("div");
+        bar.className = "live-embed__bar";
+        bar.innerHTML = '<span class="live-embed__dots"><i></i><i></i><i></i></span>' +
+                        '<span class="live-embed__url"></span>';
+        bar.querySelector(".live-embed__url").textContent = src.replace(/^https?:\/\//, "");
+        var vp = document.createElement("div");
+        vp.className = "live-embed__viewport";
+        vp.appendChild(iframe);
+        box.appendChild(bar);
+        box.appendChild(vp);
+        var fit = function(){
+          /* A narrower virtual viewport on phones: still the desktop layout, but scaled
+             down less brutally than a 1280px page would be. */
+          var vw = window.innerWidth <= 700 ? 1024 : 1280;
+          var vh = Math.round(vw * 0.625);
+          var s = vp.clientWidth / vw;
+          iframe.style.width = vw + "px";
+          iframe.style.height = vh + "px";
+          iframe.style.transform = "scale(" + s + ")";
+          vp.style.height = Math.round(vh * s) + "px";
+        };
+        fit();
+        window.addEventListener("resize", fit);
+      } else {
+        box.appendChild(iframe);
+      }
     });
   });
 
@@ -365,6 +399,9 @@
     if(/scam|spam|sms/.test(q)){
       return "Her SMS Scam & Spam Detection project is a Transformer encoder built entirely from scratch in PyTorch — tokenisation, embeddings, self-attention, classifier head — reaching 98% accuracy and 0.95 macro-F1 on a heavily imbalanced dataset.";
     }
+    if(/intermind|interviewer|adaptive interview/.test(q)){
+      return "InterMind is an autonomous AI interviewer: it turns a job description into an adaptive interview, evaluates each answer as the conversation unfolds, asks targeted follow-ups, and produces an evidence-based report for the recruiter to act on. It's built on LangGraph and OpenAI with a FastAPI + PostgreSQL backend, a React front end, and optional voice through Azure AI Speech. It's live at intermind-ai.vercel.app.";
+    }
     if(/tumor|tumour|brain|mri/.test(q)){
       return "The Brain Tumor MRI Classifier runs fully in the browser via ONNX Runtime Web — no patient scan ever leaves the device. It's a lightweight ~1.5MB model delivering ~79% accuracy at ~9ms inference.";
     }
@@ -372,7 +409,7 @@
       return "Aliyah Alabdali is an AI/ML engineer and First Class Honors AI graduate (GPA 4.0/4.0) from Umm Al-Qura University, based in Saudi Arabia. She specialises in Computer Vision, NLP, and Generative AI, building end-to-end systems from model development through production deployment.";
     }
     if(/project|built|shipped|portfolio/.test(q)){
-      return "She's built three main projects: Yaqidh (real-time CCTV child-safety monitoring), an SMS Scam & Spam Detection Transformer built from scratch, and a privacy-first Brain Tumor MRI Classifier that runs entirely in-browser. Ask me about any of them by name!";
+      return "She's built four main projects: Yaqidh (real-time CCTV child-safety monitoring), InterMind (an autonomous AI interviewer that runs adaptive interviews and writes evidence-based reports), an SMS Scam & Spam Detection Transformer built from scratch, and a privacy-first Brain Tumor MRI Classifier that runs entirely in-browser. Ask me about any of them by name!";
     }
     if(/skill|stack|technolog|tool/.test(q)){
       return "Her strongest AI/ML skills are PyTorch, YOLOv8, Transformers, OpenCV, and ONNX for optimisation/deployment, plus a full-stack layer of FastAPI, React, and cloud (AWS, Azure AI). She also works with Roboflow, Power BI, and n8n — see the Skills pipeline below for the full picture.";
@@ -389,7 +426,7 @@
     if(/contact|reach|email|hire|linkedin|github/.test(q)){
       return "The fastest way to reach her is by email at AliyahAlabdali24@gmail.com, or through the LinkedIn and GitHub links in the Contact section below.";
     }
-    return "I'm a placeholder assistant for now — real answers will be live here soon. In the meantime, try asking who Aliyah is, about her projects (Yaqidh, the SMS detector, the brain-tumor classifier), her skills, or her experience.";
+    return "I'm a placeholder assistant for now — real answers will be live here soon. In the meantime, try asking who Aliyah is, about her projects (Yaqidh, InterMind, the SMS detector, the brain-tumor classifier), her skills, or her experience.";
   }
 
   /* ---- Robot launcher + chat panel wiring ---- */

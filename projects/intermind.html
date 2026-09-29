@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InterMind: Autonomous AI Interviewer · Aliyah Alabdali</title>
+<meta name="description" content="InterMind: an autonomous AI interviewer that turns a job description into an adaptive interview, evaluates candidate responses as the conversation unfolds, and produces an evidence-based report. Built with LangGraph, OpenAI, FastAPI, React, and PostgreSQL. Case study by Aliyah Alabdali.">
+<meta name="theme-color" content="#363D44">
+<link rel="canonical" href="https://aliyahalabdali.github.io/projects/intermind.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InterMind: Autonomous AI Interviewer">
+<meta property="og:description" content="A job description becomes an adaptive interview, an evaluation of every answer, and an evidence-based report.">
+<meta property="og:image" content="../assets/img/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239B6A6C'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CreativeWork","name":"InterMind: Autonomous AI Interviewer","author":{"@type":"Person","name":"Aliyah Alabdali"},"about":["Agentic AI","Large Language Models","Full-stack engineering"],"keywords":"LangGraph, OpenAI, FastAPI, React, TypeScript, PostgreSQL, Azure AI Speech, O*NET","url":"https://intermind-ai.vercel.app"}
+</script>
+</head>
+<body>
+<div class="scroll-progress" aria-hidden="true"></div>
+<a class="skip-link" href="#overview">Skip to content</a>
+
+<header class="nav" id="top">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../index.html" aria-label="Back to Aliyah Alabdali home">
+      <span>Aliyah&nbsp;Alabdali</span>
+    </a>
+    <div class="nav__cta">
+      <a class="btn btn--ghost" href="../index.html#work">All work</a>
+      <a class="btn btn--primary" href="https://intermind-ai.vercel.app" target="_blank" rel="noopener">Live product
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="case-hero">
+  <div class="hero__beam" aria-hidden="true"></div>
+  <div class="case-hero__orbs" aria-hidden="true">
+    <div class="orb orb--1"></div><div class="orb orb--2"></div>
+    <div class="spotlight" aria-hidden="true"></div>
+  </div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" data-load data-delay="1">
+      <a href="../index.html">Home</a><span>/</span><a href="../index.html#work">Work</a><span>/</span>InterMind
+    </nav>
+    <div class="case-hero__meta" data-load data-delay="1">
+      <span class="badge">Agentic AI</span><span class="badge">2026</span><span class="badge">Full-Stack AI</span>
+    </div>
+    <h1 class="case-hero__title" data-load data-delay="2" data-split="words">InterMind: <em>autonomous AI</em> interviewer</h1>
+    <p class="case-hero__lede" data-load data-delay="3">An autonomous AI interviewer that turns a job description into
+      an adaptive interview, evaluates candidate responses as the conversation unfolds, and produces an
+      evidence-based report.</p>
+    <div class="case-hero__cta" data-load data-delay="4">
+      <a class="btn btn--primary" href="https://intermind-ai.vercel.app" target="_blank" rel="noopener">Try the live product
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+      <a class="btn btn--ghost" href="https://github.com/AliyahAlabdali/InterMind" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+
+    <figure class="case-figure" data-load data-delay="4">
+      <video controls muted loop playsinline preload="metadata" poster="../assets/media/intermind-poster.jpg">
+        <source src="../assets/media/intermind-demo.mp4" type="video/mp4">
+        Your browser doesn't support embedded video.
+      </video>
+      <figcaption>One real run: a job description becomes a role, a candidate sits the interview, InterMind follows up on an answer that left something out, and the report shows the evidence behind each competency.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- BODY -->
+<div class="wrap case-body">
+  <nav class="case-nav" aria-label="Sections">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#live-demo">Live demo</a>
+    <a href="#problem">Problem</a>
+    <a href="#role">My role</a>
+    <a href="#tech">Tech stack</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#features">Key features</a>
+    <a href="#challenges">Challenges</a>
+    <a href="#results">Results</a>
+  </nav>
+
+  <div class="case-content">
+
+    <section class="case-block" id="overview" data-reveal>
+      <span class="eyebrow">Overview</span>
+      <h2>An interview that is written while it happens.</h2>
+      <p>InterMind reads a job description, works out what the role is really asking for, and turns that into a
+        plan of assessment areas. Then it runs the interview itself, one exchange at a time. What comes back at the
+        end is not a transcript but a report where every assessment points to something the candidate said.</p>
+      <p>The interesting part is the middle. Each answer is evaluated as it arrives, evidence builds up across the
+        exchange, and that state is what decides the next move: a <strong>targeted follow-up</strong> on something
+        still unclear, or the next assessment area. <strong>The hiring decision stays with the recruiter.</strong>
+        InterMind's job is to gather the evidence that decision gets made on.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 1240 300" role="img" aria-label="InterMind's interview flow: job description, role understanding, interview plan, question, candidate answer, evaluation, then either a targeted follow-up or the next assessment area, ending in an evidence-based report">
+          <g font-family="DM Sans,sans-serif">
+            <text x="16" y="26" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">01 · BEFORE THE INTERVIEW</text>
+            <text x="470" y="26" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">02 · DURING THE INTERVIEW</text>
+            <text x="1010" y="26" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">03 · AFTER</text>
+            <line x1="16" y1="38" x2="440" y2="38" stroke="#5C6670"/>
+            <line x1="470" y1="38" x2="980" y2="38" stroke="#5C6670"/>
+            <line x1="1010" y1="38" x2="1224" y2="38" stroke="#5C6670"/>
+            <rect x="16" y="70" width="190" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="16" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="40" y="104" font-size="14" fill="#F6F3F1">Job description</text>
+            <text x="40" y="126" font-size="11" fill="#93A8AC">The role, as the</text>
+            <text x="40" y="142" font-size="11" fill="#93A8AC">recruiter wrote it</text>
+            <rect x="250" y="70" width="190" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="250" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="274" y="104" font-size="14" fill="#F6F3F1">Role understanding</text>
+            <text x="274" y="126" font-size="11" fill="#93A8AC">Requirements, plus</text>
+            <text x="274" y="142" font-size="11" fill="#93A8AC">O*NET when matched</text>
+            <rect x="470" y="70" width="190" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="470" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="494" y="104" font-size="14" fill="#F6F3F1">Interview plan</text>
+            <text x="494" y="126" font-size="11" fill="#93A8AC">Assessment areas</text>
+            <text x="494" y="142" font-size="11" fill="#93A8AC">for this role</text>
+            <rect x="704" y="70" width="190" height="92" rx="14" fill="#424B54" stroke="#E2B4BD"/>
+            <rect x="704" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="728" y="104" font-size="14" fill="#F6F3F1">Question · answer</text>
+            <text x="728" y="126" font-size="11" fill="#93A8AC">Text or voice, one</text>
+            <text x="728" y="142" font-size="11" fill="#93A8AC">exchange at a time</text>
+            <rect x="704" y="188" width="190" height="82" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="704" y="188" width="5" height="82" rx="2.5" fill="#E2B4BD"/>
+            <text x="728" y="218" font-size="14" fill="#F6F3F1">Evaluation</text>
+            <text x="728" y="240" font-size="11" fill="#93A8AC">Evidence accumulates</text>
+            <text x="728" y="256" font-size="11" fill="#93A8AC">across the exchange</text>
+            <rect x="1010" y="70" width="214" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="1010" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="1034" y="104" font-size="14" fill="#F6F3F1">Evidence-based report</text>
+            <text x="1034" y="126" font-size="11" fill="#93A8AC">Handed to a person,</text>
+            <text x="1034" y="142" font-size="11" fill="#93A8AC">who decides</text>
+          </g>
+          <g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C">
+            <line x1="206" y1="116" x2="238" y2="116"/><path d="M238 116l-8-4v8z"/>
+            <line x1="440" y1="116" x2="462" y2="116"/><path d="M462 116l-8-4v8z"/>
+            <line x1="660" y1="116" x2="696" y2="116"/><path d="M696 116l-8-4v8z"/>
+            <line x1="894" y1="116" x2="1002" y2="116"/><path d="M1002 116l-8-4v8z"/>
+          </g>
+          <g fill="none" stroke="#E2B4BD" stroke-width="1.8">
+            <path d="M770 162v18"/>
+            <path d="M830 188v-8h-60"/>
+            <path d="M894 229h40a12 12 0 0 0 12-12v-89a12 12 0 0 0-12-12h-38"/>
+          </g>
+          <path d="M770 188l-4-8h8z" fill="#E2B4BD"/>
+          <path d="M896 104l8-4v8z" fill="#E2B4BD"/>
+          <text x="906" y="252" font-family="JetBrains Mono,monospace" font-size="11" fill="#E2B4BD">follow-up or</text>
+          <text x="906" y="268" font-family="JetBrains Mono,monospace" font-size="11" fill="#E2B4BD">next area</text>
+        </svg>
+        <figcaption>The loop the interview actually runs: every answer is evaluated before InterMind decides whether to push further or move on.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-block" id="live-demo" data-reveal>
+      <span class="eyebrow">Live demo</span>
+      <h2>Open the product itself.</h2>
+      <p>InterMind is deployed and public. Below is the app, embedded: the same one a recruiter uses to set up a
+        role, and the same one a candidate is sent into.</p>
+      <div class="live-embed live-embed--desktop" data-embed-src="https://intermind-ai.vercel.app" data-embed-title="InterMind live product">
+        <button type="button" class="live-embed__launch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
+          <strong>Launch live product</strong>
+          <span>Loads my real deployed app inline. Nothing runs until you click.</span>
+        </button>
+      </div>
+      <p class="live-embed__note">This is my own deployed app, or <a href="https://intermind-ai.vercel.app" target="_blank" rel="noopener">open it in a new tab instead ↗</a></p>
+    </section>
+
+    <section class="case-block" id="problem" data-reveal>
+      <span class="eyebrow">Problem</span>
+      <h2>A fixed question list can't tell the difference.</h2>
+      <p>A scripted screening interview asks every candidate the same things in the same order. It cannot push on
+        an answer that talked around the question, and it cannot skip ground the candidate has already covered well.
+        What it leaves behind is a transcript, or somebody's impression of one, for a reviewer to interpret later.</p>
+      <p>I wanted to close both gaps: let the <strong>questions depend on the answers</strong>, and make the
+        <strong>output checkable</strong>, with every claim in the report anchored to something the candidate
+        actually said.</p>
+    </section>
+
+    <section class="case-block" id="role" data-reveal>
+      <span class="eyebrow">My role</span>
+      <h2>The whole system, end to end.</h2>
+      <p>InterMind is mine from the agent graph through to the deployed product:</p>
+      <div class="role-grid">
+        <div class="role-card"><h4>Interview agent</h4><p>Designed and built the LangGraph flow that plans, asks, evaluates, and decides what comes next.</p></div>
+        <div class="role-card"><h4>Job-description analysis</h4><p>Turned free-text job descriptions into structured role understanding and an interview plan.</p></div>
+        <div class="role-card"><h4>Evaluation &amp; reporting</h4><p>Built the structured answer evaluation and the evidence-based report it produces.</p></div>
+        <div class="role-card"><h4>Backend</h4><p>Developed the FastAPI service and the PostgreSQL persistence behind interview sessions.</p></div>
+        <div class="role-card"><h4>Frontend</h4><p>Built the React and TypeScript app covering both the recruiter and candidate workflows.</p></div>
+        <div class="role-card"><h4>Voice</h4><p>Integrated Azure AI Speech so an interview can be spoken instead of typed.</p></div>
+        <div class="role-card"><h4>Deployment</h4><p>Shipped it to production: the React app on Vercel, the API on Azure App Service.</p></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="tech" data-reveal>
+      <span class="eyebrow">Tech stack</span>
+      <h2>What it's built with.</h2>
+      <div class="tech-grid">
+        <div class="tech-col"><h4>Agent &amp; LLM</h4><div class="chips"><span class="chip">LangGraph</span><span class="chip">OpenAI</span></div></div>
+        <div class="tech-col"><h4>Backend</h4><div class="chips"><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">PostgreSQL</span></div></div>
+        <div class="tech-col"><h4>Frontend</h4><div class="chips"><span class="chip">React</span><span class="chip">TypeScript</span></div></div>
+        <div class="tech-col"><h4>Voice &amp; context</h4><div class="chips"><span class="chip">Azure AI Speech</span><span class="chip">O*NET</span></div></div>
+        <div class="tech-col"><h4>Deployment</h4><div class="chips"><span class="chip">Vercel</span><span class="chip">Azure App Service</span></div></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="architecture" data-reveal>
+      <span class="eyebrow">Architecture</span>
+      <h2>Where the decisions are made.</h2>
+      <p>The React client covers both workflows (a recruiter setting up a role, a candidate sitting the interview)
+        and talks to a FastAPI service. Behind that service, a <strong>LangGraph</strong> graph holds the interview
+        state and calls <strong>OpenAI</strong> for the language work: reading the role, phrasing the next question,
+        evaluating each answer. <strong>PostgreSQL</strong> stores the session, so an interview is a durable record
+        rather than a chat window.</p>
+      <p>Two inputs sit to the side of that path. <strong>Azure AI Speech</strong> is optional and turns the same
+        exchange into a spoken one. <strong>O*NET</strong> is supplementary occupational context, used only when the
+        role matches an occupation reliably. When it doesn't, the plan comes from the job description alone rather
+        than from a bad match.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 1240 230" role="img" aria-label="InterMind architecture: a React and TypeScript client for recruiter and candidate workflows calls a FastAPI service, which runs a LangGraph interview graph backed by OpenAI and persisted in PostgreSQL, with Azure AI Speech and O*NET as optional side inputs, producing an evidence-based report">
+          <g font-family="DM Sans,sans-serif">
+            <text x="230" y="24" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">01 · PRODUCT SURFACE</text>
+            <text x="800" y="24" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">02 · INTERVIEW ENGINE</text>
+            <line x1="16" y1="36" x2="600" y2="36" stroke="#5C6670"/><line x1="612" y1="36" x2="1224" y2="36" stroke="#5C6670"/>
+
+            <rect x="16" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="16" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="40" y="104" font-size="14" fill="#F6F3F1">React · TS</text>
+            <text x="40" y="126" font-size="11" fill="#93A8AC">Recruiter and</text>
+            <text x="40" y="142" font-size="11" fill="#93A8AC">candidate app</text>
+
+            <rect x="224" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="224" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="248" y="104" font-size="14" fill="#F6F3F1">FastAPI</text>
+            <text x="248" y="126" font-size="11" fill="#93A8AC">Session API</text>
+            <text x="248" y="142" font-size="11" fill="#93A8AC">Python service</text>
+
+            <rect x="432" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#E2B4BD"/>
+            <rect x="432" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="456" y="104" font-size="14" fill="#F6F3F1">LangGraph</text>
+            <text x="456" y="126" font-size="11" fill="#93A8AC">Interview state</text>
+            <text x="456" y="142" font-size="11" fill="#93A8AC">plan · ask · judge</text>
+
+            <rect x="640" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#E2B4BD"/>
+            <rect x="640" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="664" y="104" font-size="14" fill="#F6F3F1">OpenAI</text>
+            <text x="664" y="126" font-size="11" fill="#93A8AC">Reads role, asks,</text>
+            <text x="664" y="142" font-size="11" fill="#93A8AC">evaluates answers</text>
+
+            <rect x="848" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="848" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
+            <text x="872" y="104" font-size="14" fill="#F6F3F1">PostgreSQL</text>
+            <text x="872" y="126" font-size="11" fill="#93A8AC">Sessions, answers,</text>
+            <text x="872" y="142" font-size="11" fill="#93A8AC">accumulated evidence</text>
+
+            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/>
+            <rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
+            <text x="1080" y="104" font-size="14" fill="#F6F3F1">Report</text>
+            <text x="1080" y="126" font-size="11" fill="#93A8AC">Evidence-based,</text>
+            <text x="1080" y="142" font-size="11" fill="#93A8AC">for a human call</text>
+
+            <rect x="224" y="178" width="168" height="44" rx="12" fill="#363D44" stroke="#5C6670" stroke-dasharray="5 4"/>
+            <text x="248" y="206" font-size="12" fill="#93A8AC">Azure AI Speech · optional</text>
+            <rect x="432" y="178" width="168" height="44" rx="12" fill="#363D44" stroke="#5C6670" stroke-dasharray="5 4"/>
+            <text x="456" y="206" font-size="12" fill="#93A8AC">O*NET · when matched</text>
+          </g>
+          <g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C">
+            <line x1="184" y1="116" x2="216" y2="116"/><path d="M216 116l-8-4v8z"/>
+            <line x1="392" y1="116" x2="424" y2="116"/><path d="M424 116l-8-4v8z"/>
+            <line x1="600" y1="116" x2="632" y2="116"/><path d="M632 116l-8-4v8z"/>
+            <line x1="808" y1="116" x2="840" y2="116"/><path d="M840 116l-8-4v8z"/>
+            <line x1="1016" y1="116" x2="1048" y2="116"/><path d="M1048 116l-8-4v8z"/>
+          </g>
+          <g stroke="#5C6670" stroke-width="1.6" stroke-dasharray="5 4" fill="none">
+            <path d="M308 178v-16"/><path d="M516 178v-16"/>
+          </g>
+        </svg>
+        <figcaption>Client → API → interview graph → evidence → report, with voice and occupational context to the side.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-block" id="features" data-reveal>
+      <span class="eyebrow">Key features</span>
+      <h2>What it does.</h2>
+      <ul class="ticks">
+        <li><strong>Job-description analysis</strong> that turns a free-text role into structured requirements.</li>
+        <li><strong>Structured interview planning</strong>, so the conversation has assessment areas rather than a fixed script.</li>
+        <li><strong>Adaptive interviewing</strong>: what the candidate says shapes what gets asked next, including a
+          <strong>targeted follow-up</strong> when an answer leaves something important unresolved.</li>
+        <li><strong>Cumulative evidence</strong> carried across a follow-up exchange rather than judged turn by turn.</li>
+        <li><strong>Structured answer evaluation</strong> feeding an <strong>evidence-based report</strong> a recruiter can check.</li>
+        <li><strong>Recruiter and candidate workflows</strong>, two separate paths through the same product.</li>
+        <li><strong>Optional voice interaction</strong> through Azure AI Speech, for a spoken interview instead of a typed one.</li>
+        <li><strong>O*NET occupational context</strong> layered in as supplementary signal when a reliable match exists.</li>
+      </ul>
+    </section>
+
+    <section class="case-block" id="challenges" data-reveal>
+      <span class="eyebrow">Challenges</span>
+      <h2>The hard parts.</h2>
+      <div class="challenge">
+        <span class="tag">Adaptivity</span>
+        <h4>Making the interview actually react</h4>
+        <p>Making the interview genuinely react to each answer was the hardest part. I had to decide when an answer
+        was enough, when to probe deeper, and when to move on, and that routing is what the
+        <strong>LangGraph</strong> flow holds.</p>
+      </div>
+      <div class="challenge">
+        <span class="tag">Reporting</span>
+        <h4>A report that shows its reasoning</h4>
+        <p>I wanted the report to show the reasoning behind an assessment, not just a score. It ties the role
+        requirements to the candidate's answers, the evidence behind them, and what is still missing.</p>
+      </div>
+    </section>
+
+    <section class="case-block" id="results" data-reveal>
+      <span class="eyebrow">Results &amp; impact</span>
+      <h2>InterMind is live.</h2>
+      <div class="prow__links" style="margin-top:1.4rem">
+        <a class="link-arrow solid" href="https://intermind-ai.vercel.app" target="_blank" rel="noopener">Open the live product
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+        <a class="link-arrow" href="https://github.com/AliyahAlabdali/InterMind" target="_blank" rel="noopener">View repository
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- NEXT -->
+<section class="section next-proj">
+  <div class="wrap">
+    <a href="sms-scam-detection.html" data-reveal>
+      <div>
+        <div class="t">Next project</div>
+        <div class="n">SMS Scam &amp; Spam Detection</div>
+      </div>
+      <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span>© <span data-year>2026</span> Aliyah Alabdali</span>
+    <a class="to-top" href="../index.html">Back to portfolio
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js" defer></script>
+</body>
+</html>

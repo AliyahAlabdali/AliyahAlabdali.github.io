@@ -117,5 +117,18 @@
 .live-embed__launch strong{font-family:var(--f-display);font-size:1.15rem}
 .live-embed__launch span{font-family:var(--f-mono);font-size:.78rem;color:var(--ink-2);max-width:44ch}
 .live-embed iframe{width:100%;height:min(70vh,680px);border:0;display:block;background:#fff}
+/* Desktop-framed variant: the embedded page is rendered at a laptop viewport and scaled
+   down to fit the column, so it reads as the desktop product instead of the mobile
+   breakpoint a narrow iframe would otherwise trigger. JS sets the scale and the height. */
+.live-embed--desktop{background:var(--cream-2)}
+.live-embed--desktop .live-embed__bar{display:flex;align-items:center;gap:.7rem;
+  padding:.55rem .9rem;background:var(--surface);border-bottom:1px solid var(--line)}
+.live-embed--desktop .live-embed__dots{display:inline-flex;gap:.35rem}
+.live-embed--desktop .live-embed__dots i{width:9px;height:9px;border-radius:50%;
+  background:var(--line-strong)}
+.live-embed--desktop .live-embed__url{font-family:var(--f-mono);font-size:.7rem;
+  letter-spacing:.02em;color:var(--ink-2);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.live-embed--desktop .live-embed__viewport{position:relative;overflow:hidden}
+.live-embed--desktop iframe{width:1280px;height:800px;transform-origin:0 0;background:#0b0d10}
 .live-embed__note{font-family:var(--f-mono);font-size:.74rem;color:var(--ink-2);margin-top:.7rem}
 .live-embed__note a{color:var(--pink);text-decoration:underline}

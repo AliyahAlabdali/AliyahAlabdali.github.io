@@ -71,7 +71,7 @@
         <li aria-hidden="true"><span class="nav__pill"></span></li>
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
-        <li><a href="#work">Work</a></li>
+        <li><a href="#work">Projects</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -145,14 +145,14 @@
   <div class="wrap about__grid">
     <div class="about__body">
       <span class="eyebrow" data-reveal>About</span>
-      <h2 class="section-title" id="about-h" data-reveal data-delay="1">Turning research-grade models into things people can actually use.</h2>
+      <h2 class="section-title" id="about-h" data-reveal data-delay="1">I build AI systems end to end.</h2>
       <div data-reveal data-delay="2" style="margin-top:1.4rem">
-        <p>My core strength is <strong>Computer Vision and Deep Learning</strong>: training and optimising
-        detection and classification models. I've also built across the stack, from <strong>Transformer-based NLP</strong>
-        to <strong>Generative-AI</strong> work during an AI venture-studio co-op.</p>
-        <p>What I care about is the behind-the-scenes work that makes AI usable: latency, model size, privacy, and clean
-        engineering. I'm now looking for an <strong>AI or Machine Learning role</strong>
-        where I can ship production-ready systems.</p>
+        <p>I'm an Artificial Intelligence graduate from Umm Al-Qura University, with
+        <strong>First Class Honors</strong> and a <strong>4.0/4.0 GPA</strong>. My strongest areas are
+        <strong>Computer Vision, NLP, and Generative AI</strong>.</p>
+        <p>I enjoy building AI projects end to end, from model development and evaluation to APIs, interfaces,
+        and deployment. I'm looking for an <strong>AI or Machine Learning role</strong> where I can continue
+        building complete AI systems.</p>
       </div>
     </div>
 
@@ -179,7 +179,7 @@
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <span class="eyebrow">Skills</span>
-      <h2 class="section-title" id="skills-h">How the stack fits together: data to deployed product.</h2>
+      <h2 class="section-title" id="skills-h">The tools and technologies I use across AI development.</h2>
     </div>
 
     <div class="pipeline">
@@ -252,10 +252,10 @@
   <div class="wrap">
     <div class="pstack-head sec-head--split sec-head" data-reveal>
       <div class="txt">
-        <span class="eyebrow">Selected work</span>
-        <h2 class="pstack-heading" id="work-h">Project</h2>
+        <span class="eyebrow">Projects</span>
+        <h2 class="section-title" id="work-h">A selection of projects I've built.</h2>
       </div>
-      <p class="mono muted" style="font-size:.8rem">04 — deep models to shipped products</p>
+      <p class="mono muted" style="font-size:.8rem">04 case studies</p>
     </div>
 
     <div class="pstack">
@@ -303,11 +303,47 @@
         </article>
       </div>
 
-      <!-- Project 02 : SMS Scam Detection -->
+      <!-- Project 02 : InterMind -->
       <div class="pstack__item">
         <article class="pstack__card" style="top:28px">
           <div class="pcard__head">
             <span class="pcard__n" aria-hidden="true">02</span>
+            <div class="pcard__meta">
+              <span class="pcard__cat">Agentic AI · Full-Stack AI</span>
+              <h3 class="pcard__title">InterMind: Autonomous AI Interviewer</h3>
+              <p class="pcard__desc">An autonomous AI interviewer that turns a job description into an adaptive
+                interview, asks targeted follow-ups, and produces an evidence-based report.</p>
+            </div>
+            <a class="btn-live" href="https://intermind-ai.vercel.app" target="_blank" rel="noopener" data-magnet>Live Project
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+          </div>
+
+          <div class="pcard__facts">
+            <div class="pcard__aside">
+              <div class="pcard__tags chips">
+                <span class="chip">LangGraph</span><span class="chip">OpenAI</span><span class="chip">FastAPI</span>
+                <span class="chip">PostgreSQL</span><span class="chip">React</span><span class="chip">Azure AI Speech</span>
+              </div>
+              <a class="link-arrow solid" href="projects/intermind.html">Read case study
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+            </div>
+          </div>
+
+          <div class="pcard__media">
+            <figure class="pcard__shot">
+              <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/intermind-poster.jpg" aria-label="InterMind reading a job description, running an adaptive interview, asking a follow-up question, and producing an evidence-based report">
+                <source src="assets/media/intermind-preview.mp4" type="video/mp4">
+              </video>
+            </figure>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 03 : SMS Scam Detection -->
+      <div class="pstack__item">
+        <article class="pstack__card" style="top:56px">
+          <div class="pcard__head">
+            <span class="pcard__n" aria-hidden="true">03</span>
             <div class="pcard__meta">
               <span class="pcard__cat">Advanced Deep Learning · NLP</span>
               <h3 class="pcard__title">SMS Scam &amp; Spam Detection</h3>
@@ -343,11 +379,11 @@
         </article>
       </div>
 
-      <!-- Project 03 : Brain Tumor MRI Classifier -->
+      <!-- Project 04 : Brain Tumor MRI Classifier -->
       <div class="pstack__item">
-        <article class="pstack__card" style="top:56px">
+        <article class="pstack__card" style="top:84px">
           <div class="pcard__head">
-            <span class="pcard__n" aria-hidden="true">03</span>
+            <span class="pcard__n" aria-hidden="true">04</span>
             <div class="pcard__meta">
               <span class="pcard__cat">AI System Design · Privacy-first</span>
               <h3 class="pcard__title">Brain Tumor MRI Classifier</h3>
@@ -384,39 +420,6 @@
         </article>
       </div>
 
-      <!-- Project 04 : InterMind (in progress) -->
-      <div class="pstack__item">
-        <article class="pstack__card" style="top:84px">
-          <div class="pcard__head">
-            <span class="pcard__n" aria-hidden="true">04</span>
-            <div class="pcard__meta">
-              <span class="pcard__cat">Agentic AI · In progress</span>
-              <h3 class="pcard__title">InterMind: Autonomous AI Interviewer</h3>
-              <p class="pcard__desc">An AI system that reads a job description, builds a role-specific interview plan,
-                conducts an adaptive interview, evaluates responses against evidence, and generates a structured HR
-                report. Currently in development. Details coming soon.</p>
-            </div>
-            <a class="btn-live" href="https://github.com/AliyahAlabdali/InterMind" target="_blank" rel="noopener" data-magnet>View Repo
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
-          </div>
-
-          <div class="pcard__facts">
-            <div class="pcard__stats">
-              <div class="pstat"><div class="n"><small>In progress</small></div><div class="l">metrics pending</div></div>
-            </div>
-            <div class="pcard__aside">
-              <div class="pcard__tags chips">
-                <span class="chip">LLM Agents</span><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Evaluation</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="pcard__media">
-            <figure class="pcard__shot pcard__shot--soon"><span>Demo coming soon</span></figure>
-          </div>
-        </article>
-      </div>
-
     </div>
   </div>
 </section>
@@ -426,7 +429,7 @@
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <span class="eyebrow">Experience</span>
-      <h2 class="section-title" id="exp-h">Where I've applied it.</h2>
+      <h2 class="section-title" id="exp-h">Where I've worked.</h2>
     </div>
     <div class="timeline">
       <div class="tl-item" data-reveal>
@@ -457,7 +460,7 @@
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <span class="eyebrow">Education &amp; credentials</span>
-      <h2 class="section-title" id="edu-h">Grounded in strong fundamentals.</h2>
+      <h2 class="section-title" id="edu-h">My degree and certifications.</h2>
     </div>
     <div class="edu-grid">
       <div class="panel" data-reveal>
