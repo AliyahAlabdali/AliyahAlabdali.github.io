@@ -472,12 +472,40 @@
       return frag;
     }
 
+    /* Paired Markdown bold only: **text** -> text. The model is told to return
+       plain text but occasionally emits these. Nothing is rendered as markup
+       and lone asterisks are left alone. Runs before linkify so URLs are
+       matched against already-normalised text. */
+    var BOLD_RE = /\*\*(\S(?:[\s\S]*?\S)?)\*\*/g;
+    function stripBoldMarkers(text){
+      return text.replace(BOLD_RE, "$1");
+    }
+
+    /* Per-message direction, decided from the reply itself. URLs are removed
+       before counting because a long Latin URL would otherwise outweigh the
+       Arabic prose around it. Latin project names inside Arabic text stay a
+       minority, so the bubble still reads as RTL. */
+    var ARABIC_RE = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/g;
+    var LATIN_RE = /[A-Za-z]/g;
+    function isPredominantlyArabic(text){
+      var prose = text.replace(URL_RE, " ");
+      URL_RE.lastIndex = 0;
+      var arabic = (prose.match(ARABIC_RE) || []).length;
+      var latin = (prose.match(LATIN_RE) || []).length;
+      return arabic > 0 && arabic >= latin;
+    }
+
     function addMessage(text, who){
       var el = document.createElement("div");
       el.className = "ai-msg ai-msg--" + who;
-      /* Only assistant replies get linkified; user text stays plain. */
-      if(who === "bot") el.appendChild(linkify(text));
-      else el.textContent = text;
+      if(who === "bot"){
+        /* Only assistant replies are normalised and linkified. */
+        var clean = stripBoldMarkers(text);
+        el.dir = isPredominantlyArabic(clean) ? "rtl" : "ltr";
+        el.appendChild(linkify(clean));
+      } else {
+        el.textContent = text;
+      }
       messages.appendChild(el);
       messages.scrollTop = messages.scrollHeight;
       return el;
