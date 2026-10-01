@@ -672,6 +672,7 @@ button.hero__avatar:hover{transform:scale(1.06)}
 .ai-msg--typing span:nth-child(2){animation-delay:.15s}.ai-msg--typing span:nth-child(3){animation-delay:.3s}
 @keyframes aiTyping{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-2px)}}
 .ai-chat__suggestions{display:flex;flex-wrap:wrap;gap:.4rem;padding:0 1.2rem .9rem}
+.ai-chat__suggestions[hidden]{display:none}
 .ai-chip{font-family:var(--f-mono);font-size:.72rem;color:var(--ink-2);background:var(--cream-2);
   border:1px solid var(--line);border-radius:100px;padding:.4em .8em;transition:.25s}
 .ai-chip:hover{border-color:var(--pink);color:var(--pink)}

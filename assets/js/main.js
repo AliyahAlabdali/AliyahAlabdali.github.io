@@ -415,7 +415,7 @@
       return "Her strongest AI/ML skills are PyTorch, YOLOv8, Transformers, OpenCV, and ONNX for optimisation/deployment, plus a full-stack layer of FastAPI, React, and cloud (AWS, Azure AI). She also works with Roboflow, Power BI, and n8n — see the Skills pipeline below for the full picture.";
     }
     if(/experience|work(ed)?|inpro|intern|co-?op|job/.test(q)){
-      return "She was an AI Trainee (Co-op) at InPro Studio, an AI venture studio, where she contributed to two AI-powered SaaS platforms (***REMOVED*** and ***REMOVED***), benchmarked LLMs, and built a prompt-based classification system — all deployed on Azure AI Foundry.";
+      return "She was an AI Trainee (Co-op) at InPro Studio in Makkah from March to June 2025, contributing to AI-powered SaaS platforms across AI functionality, evaluation, and product integration, with AI workflows deployed on Azure AI Foundry.";
     }
     if(/educat|degree|university|gpa|step\b/.test(q)){
       return "BSc in Artificial Intelligence from Umm Al-Qura University — First Class Honors, GPA 4.0/4.0, STEP English score 88/100, and on the Dean's Honor List.";
@@ -426,7 +426,7 @@
     if(/contact|reach|email|hire|linkedin|github/.test(q)){
       return "The fastest way to reach her is by email at AliyahAlabdali24@gmail.com, or through the LinkedIn and GitHub links in the Contact section below.";
     }
-    return "I'm a placeholder assistant for now — real answers will be live here soon. In the meantime, try asking who Aliyah is, about her projects (Yaqidh, InterMind, the SMS detector, the brain-tumor classifier), her skills, or her experience.";
+    return "I don't have an answer for that one. Try asking who Aliyah is, about her projects (Yaqidh, InterMind, the SMS detector, the brain-tumor classifier), her skills, experience, or education. You can also email her directly at AliyahAlabdali24@gmail.com.";
   }
 
   /* ---- Robot launcher + chat panel wiring ---- */
@@ -437,6 +437,7 @@
     var chatForm = chat.querySelector("#ai-chat-form");
     var chatInput = chat.querySelector("#ai-chat-input");
     var closeBtn = chat.querySelector(".ai-chat__close");
+    var suggestions = chat.querySelector(".ai-chat__suggestions");
     var greeted = false;
 
     function addMessage(text, who){
@@ -457,6 +458,10 @@
     }
     function ask(text){
       if(!text.trim()) return;
+      /* Suggestions are the empty state only: once the conversation has a user
+         message they stay hidden for the rest of it, freeing the space for
+         answers. Nothing re-shows them, so close/reopen keeps them hidden. */
+      if(suggestions) suggestions.hidden = true;
       addMessage(text, "user");
       var typing = addTyping();
       getAssistantReply(text).then(function(reply){
