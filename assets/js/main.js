@@ -391,42 +391,22 @@
     return Promise.resolve(mockReply(message));
   }
 
+  /* Minimal offline fallback. The portfolio knowledge lives in
+     assets/data/portfolio-knowledge.md, which the assistant backend reads on
+     every request; this is only what the widget can say when that request
+     fails, so it stays deliberately small and carries no project detail. */
   function mockReply(message){
     var q = message.toLowerCase();
-    if(/yaqidh/.test(q)){
-      return "Yaqidh is Aliyah's graduation project: a real-time computer-vision system that detects child falls and violence from live CCTV using custom YOLOv8 models (0.81 mAP@50 for falls, 0.66 for violence, a 2–3× gain over baselines). It pushes role-based alerts through a FastAPI + PostgreSQL + React stack, and ONNX optimisation cut inference latency by about 20%.";
-    }
-    if(/scam|spam|sms/.test(q)){
-      return "Her SMS Scam & Spam Detection project is a Transformer encoder built entirely from scratch in PyTorch — tokenisation, embeddings, self-attention, classifier head — reaching 98% accuracy and 0.95 macro-F1 on a heavily imbalanced dataset.";
-    }
-    if(/intermind|interviewer|adaptive interview/.test(q)){
-      return "InterMind is an autonomous AI interviewer: it turns a job description into an adaptive interview, evaluates each answer as the conversation unfolds, asks targeted follow-ups, and produces an evidence-based report for the recruiter to act on. It's built on LangGraph and OpenAI with a FastAPI + PostgreSQL backend, a React front end, and optional voice through Azure AI Speech. It's live at intermind-ai.vercel.app.";
-    }
-    if(/tumor|tumour|brain|mri/.test(q)){
-      return "The Brain Tumor MRI Classifier runs fully in the browser via ONNX Runtime Web — no patient scan ever leaves the device. It's a lightweight ~1.5MB model delivering ~79% accuracy at ~9ms inference.";
-    }
     if(/who (is|are)|about (you|aliyah)|introduce/.test(q)){
-      return "Aliyah Alabdali is an AI/ML engineer and First Class Honors AI graduate (GPA 4.0/4.0) from Umm Al-Qura University, based in Saudi Arabia. She specialises in Computer Vision, NLP, and Generative AI, building end-to-end systems from model development through production deployment.";
+      return "Aliyah Alabdali is an AI/ML engineer and Artificial Intelligence graduate specialising in Computer Vision, NLP, and Generative AI. I can't reach the full assistant right now, so have a look around the portfolio for the details.";
     }
-    if(/project|built|shipped|portfolio/.test(q)){
-      return "She's built four main projects: Yaqidh (real-time CCTV child-safety monitoring), InterMind (an autonomous AI interviewer that runs adaptive interviews and writes evidence-based reports), an SMS Scam & Spam Detection Transformer built from scratch, and a privacy-first Brain Tumor MRI Classifier that runs entirely in-browser. Ask me about any of them by name!";
-    }
-    if(/skill|stack|technolog|tool/.test(q)){
-      return "Her strongest AI/ML skills are PyTorch, YOLOv8, Transformers, OpenCV, and ONNX for optimisation/deployment, plus a full-stack layer of FastAPI, React, and cloud (AWS, Azure AI). She also works with Roboflow, Power BI, and n8n — see the Skills pipeline below for the full picture.";
-    }
-    if(/experience|work(ed)?|inpro|intern|co-?op|job/.test(q)){
-      return "She was an AI Trainee (Co-op) at InPro Studio in Makkah from March to June 2025, contributing to AI-powered SaaS platforms across AI functionality, evaluation, and product integration, with AI workflows deployed on Azure AI Foundry.";
-    }
-    if(/educat|degree|university|gpa|step\b/.test(q)){
-      return "BSc in Artificial Intelligence from Umm Al-Qura University — First Class Honors, GPA 4.0/4.0, STEP English score 88/100, and on the Dean's Honor List.";
-    }
-    if(/certif/.test(q)){
-      return "AWS AI Practitioner Challenge (Udacity), Microsoft Azure AI Fundamentals, Designing & Implementing an Azure AI Solution, and Generative AI with Azure OpenAI Service (the last three via Microsoft & SDAIA).";
+    if(/project|built|shipped|portfolio|intermind|yaqidh|scam|spam|sms|tumor|tumour|brain|mri/.test(q)){
+      return "Her public projects are InterMind, Yaqidh, SMS Scam & Spam Detection, and the Brain Tumor MRI Classifier. I can't reach the full assistant right now, so open any of them in the Projects section for the full case study.";
     }
     if(/contact|reach|email|hire|linkedin|github/.test(q)){
       return "The fastest way to reach her is by email at AliyahAlabdali24@gmail.com, or through the LinkedIn and GitHub links in the Contact section below.";
     }
-    return "I don't have an answer for that one. Try asking who Aliyah is, about her projects (Yaqidh, InterMind, the SMS detector, the brain-tumor classifier), her skills, experience, or education. You can also email her directly at AliyahAlabdali24@gmail.com.";
+    return "I can't reach the full portfolio assistant right now. You can explore the portfolio, or contact Aliyah directly at AliyahAlabdali24@gmail.com.";
   }
 
   /* ---- Robot launcher + chat panel wiring ---- */
@@ -440,10 +420,64 @@
     var suggestions = chat.querySelector(".ai-chat__suggestions");
     var greeted = false;
 
+    /* Turns bare http(s) URLs in assistant text into real <a> nodes. Builds a
+       DocumentFragment from createTextNode/createElement only - the reply is
+       never passed through innerHTML, so any HTML or script in it stays inert
+       literal text. href is always a literal http:// or https:// match, so no
+       javascript: or data: scheme can get through. */
+    var URL_RE = /https?:\/\/[^\s<>"']+/g;
+    var TRAILING = ".,;:!?'’\"";
+    var CLOSERS = { ")": "(", "]": "[", "}": "{" };
+
+    function splitTrailingPunctuation(url){
+      var tail = "";
+      while(url.length){
+        var last = url.charAt(url.length - 1);
+        if(TRAILING.indexOf(last) !== -1){
+          tail = last + tail; url = url.slice(0, -1); continue;
+        }
+        if(CLOSERS[last]){
+          var open = CLOSERS[last];
+          var opens = url.split(open).length - 1;
+          var closes = url.split(last).length - 1;
+          if(closes > opens){ tail = last + tail; url = url.slice(0, -1); continue; }
+        }
+        break;
+      }
+      return [url, tail];
+    }
+
+    function linkify(text){
+      var frag = document.createDocumentFragment();
+      var last = 0, m;
+      URL_RE.lastIndex = 0;
+      while((m = URL_RE.exec(text)) !== null){
+        var parts = splitTrailingPunctuation(m[0]);
+        var url = parts[0], tail = parts[1];
+        if(m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        if(url.length > "https://".length){
+          var a = document.createElement("a");
+          a.href = url;
+          a.textContent = url;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          frag.appendChild(a);
+        } else {
+          frag.appendChild(document.createTextNode(url));
+        }
+        if(tail) frag.appendChild(document.createTextNode(tail));
+        last = m.index + m[0].length;
+      }
+      if(last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      return frag;
+    }
+
     function addMessage(text, who){
       var el = document.createElement("div");
       el.className = "ai-msg ai-msg--" + who;
-      el.textContent = text;
+      /* Only assistant replies get linkified; user text stays plain. */
+      if(who === "bot") el.appendChild(linkify(text));
+      else el.textContent = text;
       messages.appendChild(el);
       messages.scrollTop = messages.scrollHeight;
       return el;
