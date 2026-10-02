@@ -50,10 +50,15 @@ for specifics, say they are not public.
 
 Organised on the portfolio as a four-stage pipeline.
 
-- Data: Python, SQL, PostgreSQL, Roboflow, Power BI, REST APIs
-- Model: PyTorch, YOLOv8, Transformers, Scikit-learn, OpenCV, LLMs & RAG
-- Optimize & Deploy: ONNX, ONNX Runtime Web, AWS, Azure AI, Vercel, JWT / RBAC
-- Also listed: Agile, n8n
+- Data: Python, SQL, PostgreSQL, Data Preprocessing, Roboflow, REST APIs
+- Model: PyTorch, Transformers, Scikit-learn, OpenCV, LLMs & RAG, LangGraph, Fine-tuning
+- Optimize & Deploy: FastAPI, ONNX, ONNX Runtime Web, Model Evaluation, Inference Optimization, Azure, Vercel
+- Application: Yaqidh, InterMind, SMS Scam Detector, Brain Tumor Classifier
+
+Also listed on the portfolio:
+
+- Tools & Workflow: Git / GitHub, Jupyter, Google Colab, Automated Testing, Agile, n8n
+- Strengths: Leadership, Problem-Solving, Teamwork, Communication, Critical Thinking, Time Management, Self-Learning
 
 ## Projects
 
