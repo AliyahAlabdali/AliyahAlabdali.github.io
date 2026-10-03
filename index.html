@@ -272,9 +272,14 @@
             <div class="pcard__meta">
               <span class="pcard__cat">Graduation Project · Computer Vision</span>
               <h3 class="pcard__title">Yaqidh: AI Child-Safety Monitoring</h3>
-              <p class="pcard__desc">A real-time system that watches live CCTV, detects child falls and violence with
+              <!-- Two lengths of the same blurb. Only one is ever in the document at a
+                   time: display:none takes the other out of the accessibility tree as
+                   well as the layout, so nothing is read twice. -->
+              <p class="pcard__desc pcard__desc--long">A real-time system that watches live CCTV, detects child falls and violence with
                 custom YOLOv8 models trained on 3,800+ collected and augmented images, and pushes instant, role-based
                 alerts to parents, teachers, and managers, backed by a full FastAPI + React stack with live dashboards.</p>
+              <p class="pcard__desc pcard__desc--short">Real-time child-safety monitoring that detects falls and violence with custom
+                YOLOv8 models and sends instant role-based alerts through a FastAPI + React platform.</p>
             </div>
             <a class="btn-live" href="https://github.com/Yaqidh-Project/Yaqidh" target="_blank" rel="noopener" data-magnet>View Repo
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
@@ -299,7 +304,7 @@
 
           <div class="pcard__media">
             <figure class="pcard__shot">
-              <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/yaqidh-poster.jpg" aria-label="Yaqidh detecting a fall on a live camera feed and raising an alert">
+              <video data-autoplay autoplay muted loop playsinline preload="metadata" poster="assets/media/yaqidh-poster.jpg" aria-label="Yaqidh detecting a fall on a live camera feed and raising an alert">
                 <source src="assets/media/yaqidh-preview.mp4" type="video/mp4">
               </video>
             </figure>
@@ -335,7 +340,7 @@
 
           <div class="pcard__media">
             <figure class="pcard__shot">
-              <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/intermind-poster.jpg" aria-label="InterMind reading a job description, running an adaptive interview, asking a follow-up question, and producing an evidence-based report">
+              <video data-autoplay autoplay muted loop playsinline preload="metadata" poster="assets/media/intermind-poster.jpg" aria-label="InterMind reading a job description, running an adaptive interview, asking a follow-up question, and producing an evidence-based report">
                 <source src="assets/media/intermind-preview.mp4" type="video/mp4">
               </video>
             </figure>
@@ -375,7 +380,7 @@
 
           <div class="pcard__media">
             <figure class="pcard__shot">
-              <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/scam-detector-demo.jpg" aria-label="The SMS scam detector classifying messages in real time">
+              <video data-autoplay autoplay muted loop playsinline preload="metadata" poster="assets/media/scam-detector-demo.jpg" aria-label="The SMS scam detector classifying messages in real time">
                 <source src="assets/media/scam-detector-demo.mp4" type="video/mp4">
               </video>
             </figure>
@@ -416,7 +421,7 @@
 
           <div class="pcard__media">
             <figure class="pcard__shot">
-              <video data-autoplay muted loop playsinline preload="metadata" poster="assets/media/btcs-poster.jpg" aria-label="The brain tumor classifier scoring an MRI entirely in the browser">
+              <video data-autoplay autoplay muted loop playsinline preload="metadata" poster="assets/media/btcs-poster.jpg" aria-label="The brain tumor classifier scoring an MRI entirely in the browser">
                 <source src="assets/media/btcs-preview.mp4" type="video/mp4">
               </video>
             </figure>

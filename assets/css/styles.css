@@ -288,8 +288,8 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
    box), so earlier cards stay pinned behind the ones that scroll over them.
    The trailing padding keeps them in range a beat longer, so the finished
    stack holds instead of lifting off at the end. */
-.pstack{--pstack-top:clamp(5.5rem,8vw,7rem);--pstack-dwell:clamp(9rem,26vh,17rem);
-  padding-bottom:8vh}
+.pstack{--pstack-nav:clamp(5.5rem,8vw,7rem);--pstack-top:var(--pstack-nav);
+  --pstack-dwell:clamp(9rem,26vh,17rem);padding-bottom:8vh}
 /* Track height = the sticky window (100vh - top) + the dwell. The next card's top edge
    therefore cannot reach the fold until the current card has been fully on screen for
    exactly --pstack-dwell of scrolling, whatever that card's own height is. */
@@ -320,6 +320,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
   letter-spacing:.14em;text-transform:uppercase;color:var(--pink)}
 .pcard__title{font-size:var(--step-2);margin:.4rem 0 .45rem;color:var(--ink)}
 .pcard__desc{color:var(--ink-2);font-size:.92rem;line-height:1.55;max-width:64ch}
+.pcard__desc--short{display:none}
 
 /* Middle row: metrics on the left, tech chips + case-study link on the right. */
 .pcard__facts{display:grid;grid-template-columns:auto 1fr;
@@ -573,43 +574,101 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
   .nav__menu .nav__links a{font-size:1.4rem;font-family:var(--f-display);color:var(--ink)}
   .nav__pill{display:none}
   .nav__menu .btn{display:inline-flex}
-  /* Fallback for viewports too short to pin a whole card (see the sticky block
-     below): cards flow in normal order. main.js clears its scale on these screens,
-     so the transform reset here needs no !important and can't fight the inline style
-     the stacking block relies on. */
-  .pstack__item{position:static;height:auto;margin-bottom:clamp(1rem,4vw,1.6rem)}
-  .pstack__card{top:auto;transform:none}
   .pcard__head{grid-template-columns:auto 1fr;row-gap:.9rem}
   .pcard__head .btn-live{grid-column:1/-1;justify-self:start}
   .pcard__facts{grid-template-columns:1fr}
   .pcard__aside{justify-content:flex-start}
   .pcard__media{height:clamp(170px,48vw,260px)}
+  /* Yaqidh carries the longest blurb of the four and is the only card that cannot
+     fit a phone; the shorter wording keeps every fact and gives the demo back the
+     room it was losing. */
+  .pcard__desc--long{display:none}
+  .pcard__desc--short{display:block}
+  /* Its four metrics are also the only set that wraps to two rows here, so they are
+     tightened a little - still the largest type in the row, just less leading. */
+  .pstack__item:nth-child(1) .pcard__stats{gap:.7rem 1.1rem}
+  .pstack__item:nth-child(1) .pstat .n{font-size:1.15rem}
+  .pstack__item:nth-child(1) .pstat .l{font-size:.63rem}
   .ai-chat{padding:0;align-items:flex-end}
   .ai-chat__panel{width:100%;max-height:82vh;border-radius:20px 20px 0 0}
 }
 
-/* Phones tall enough to pin a card run the same sticky stacking as desktop, just
-   tighter: the window is measured in svh so the mobile URL bar can't resize the track
-   mid-scroll, and the step between pinned cards drops from 28px to 12px. Below
-   ~700px of viewport height there is no room for a card plus its demo band, so the
-   block above leaves those screens on the plain vertical flow. */
+/* ----- Projects stack below the two-column breakpoint ------------------- */
+/* The Projects card stays single column until 1024px, so phones and tablets share
+   one geometry problem and one fix. Each range keeps its own offsets: the desktop
+   28px step down to 761px, a tighter 12px step on phones. The bound is 1023.98px, not
+   1023px, so a fractional viewport width - browser zoom, a fractional device pixel
+   ratio - cannot fall between these blocks and the 1024px two-column rule. */
+
+/* Too short to pin a whole card: drop the interaction and flow the cards instead.
+   main.js clears its scale on these screens, so the transform reset needs no
+   !important and can't fight the inline style the stacking block relies on. */
+@media (max-width:1023.98px) and (max-height:699px){
+  .pstack__item{position:static;height:auto;margin-bottom:clamp(1rem,4vw,1.6rem)}
+  .pstack__card{top:auto;height:auto;transform:none}
+}
+
+/* Coverage is a painting problem, not a sizing one. Every card keeps the height its
+   own content asks for - a card with less copy is simply shorter and ends higher up
+   the screen, with section background below it, exactly as it does above 1024px.
+   What must not happen is an OUTGOING card showing below the incoming one, and
+   because .pcard__media is the last row, anything that does show is always its demo.
+   main.js handles that by clipping each covered card to the bottom edge of whatever
+   is covering it, so the overhang is never painted. Stretching every card to a
+   common height would do the same job, but it buys coverage with hundreds of pixels
+   of dead space inside the shorter cards, which is the wrong currency. */
+@media (max-width:1023.98px) and (min-height:700px){
+  /* Each card is pinned as high as the nav allows, but never so high that its own
+     bottom - and therefore its demo, which is the last row - falls past the fold.
+     A card that fits the screen behaves exactly as before; only one that cannot,
+     like card 01 whose copy alone is ~644px against roughly 663px of usable height
+     on a phone, hangs lower so its demo clears the fold, putting the overhang off
+     the top instead. main.js supplies each card's natural height as --card-h; with
+     it absent this falls back to the nav clearance.
+     The fold here is lvh, the height with the browser chrome hidden, which is the
+     state the page is in while it is being scrolled. Measuring against svh instead
+     pulled the taller cards so far up that their pins stopped ascending, and a card
+     pinned above the one before it swallows that card whole instead of leaving its
+     stacked edge. */
+  .pstack__item{top:min(calc(var(--pstack-nav) + var(--pstack-offset,0px)),
+      calc(100lvh - .5rem - var(--card-h,0px)));
+    height:calc(100svh - var(--pstack-nav) + var(--pstack-dwell))}
+  /* The step now lives in the item's own offset, so the card sits flush inside it. */
+  .pstack__card{top:0}
+  /* No forced height and no redistributed slack: the rows keep their normal rhythm
+     and the card ends where its content ends. */
+  .pstack__card .pcard__head,.pstack__card .pcard__facts,
+  .pstack__card .pcard__media{flex:0 0 auto}
+  .pstack__card .pcard__media{margin-top:0}
+}
+
+/* Phones: the bar is shorter and the cards nearly fill the screen, so the stack sits
+   closer under the nav and steps in 12px rather than 28px. */
 @media (max-width:760px) and (min-height:700px){
   /* Clear the stuck bar by half a rem rather than guessing a round number. */
-  .pstack{--pstack-top:calc(var(--nav-h-stuck) + .5rem);--pstack-dwell:clamp(4rem,12vh,7rem)}
-  .pstack__item{position:sticky;top:var(--pstack-top);margin-bottom:0;
-    height:calc(100svh - var(--pstack-top) + var(--pstack-dwell))}
+  /* The tail after card 04 is the leftover of its own track plus the stack's
+     trailing padding; both are trimmed so Experience follows on more promptly.
+     Card motion is untouched - this is only how much scroll the track spans. */
+  .pstack{--pstack-nav:calc(var(--nav-h-stuck) + .5rem);--pstack-dwell:clamp(3rem,8vh,5rem);
+    padding-bottom:2.5vh}
   .pstack__item:nth-child(2){--pstack-offset:12px}
   .pstack__item:nth-child(3){--pstack-offset:24px}
   .pstack__item:nth-child(4){--pstack-offset:36px}
-  /* Same reason the desktop media band is capped in vh: the whole card has to stay
-     inside the sticky window, or its bottom is pinned off-screen for good. The text
-     rows hold their size and the demo band absorbs the difference, down to a floor
-     that keeps the screenshot legible. The cap counts that card's own step down the
-     stack, so the first card - the tallest - keeps the most of its band. */
-  .pstack__card{top:var(--pstack-offset,0px);
-    max-height:calc(100svh - var(--pstack-top) - var(--pstack-offset,0px) - .5rem)}
-  .pstack__card .pcard__head,.pstack__card .pcard__facts{flex:0 0 auto}
-  .pstack__card .pcard__media{flex:0 1 auto;min-height:clamp(72px,10svh,110px)}
+  /* The section intro and the first card used to come over the fold barely 180px
+     apart, so the heading was already being crowded by card 01 as it arrived. This
+     is scroll distance, not timing: the cards still track the scroll one to one,
+     there is simply more of it to cross before the first one is in range. */
+  .pstack-head{margin-bottom:clamp(1.5rem,9.4vh,5.5rem)}
+  /* The clips are not one shape - 960x540, 1280x720, 1280x632, 962x508 - so a single
+     band height left object-fit cropping three of the four. Giving each figure its
+     own source ratio leaves nothing to crop and lets the demo size itself from the
+     card's width. */
+  .pstack__item:nth-child(1){--shot-ar:960/540}
+  .pstack__item:nth-child(2){--shot-ar:1280/720}
+  .pstack__item:nth-child(3){--shot-ar:1280/632}
+  .pstack__item:nth-child(4){--shot-ar:962/508}
+  .pstack__card .pcard__media{height:auto}
+  .pstack__card .pcard__shot{height:auto;aspect-ratio:var(--shot-ar,16/9)}
 }
 @media (max-width:480px){
   .hero__cta .btn{flex:1 1 auto;justify-content:center}
@@ -752,6 +811,6 @@ button.hero__avatar:hover{transform:scale(1.06)}
   .hero__beam{animation:none;opacity:.5}
   .intro{display:none}
   .pstack__item{position:static;height:auto;margin-bottom:1.4rem}
-  .pstack__card{top:auto;max-height:none;transform:none!important}
+  .pstack__card{top:auto;height:auto;transform:none!important}
   .hero__avatar-inner,.hero__avatar-ping,.bot-eye,.bot-antenna-tip,.pipe-arrow svg,.ai-msg--typing span{animation:none}
 }

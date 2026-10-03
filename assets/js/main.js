@@ -143,40 +143,162 @@
   if(pstack && pcards.length){
     var pn = pcards.length;
     var pSteps = 0.03;
-    /* Phones shorter than the stacking breakpoint fall back to plain vertical flow,
-       so the deck scaling has to stand down with them. */
-    var pStacking = window.matchMedia("(min-width:761px),(min-height:700px)");
+    /* Viewports too short to pin a whole card fall back to plain vertical flow below
+       the two-column breakpoint, so the deck scaling has to stand down with them. */
+    var pStacking = window.matchMedia("(min-width:1024px),(min-height:700px)");
+    /* Below the two-column breakpoint the cards are one column and stack as a deck. */
+    var pSingle = window.matchMedia("(max-width:1023.98px) and (min-height:700px)");
     var pTicking = false;
+    var pRoQueued = false;
+    var pRadius = 0;
+    var pStep = 0;
+    var pPinned = [];
+    var pRung = [];
 
+    /* Each card is anchored by its own height, so the stylesheet needs that height,
+       plus the few constants the per-frame pass reads back. Nothing forces the cards,
+       so these are simply what they measure. */
+    function pstackMeasure(){
+      if(!pSingle.matches){
+        pcards.forEach(function(c){ c.parentNode.style.removeProperty("--card-h"); });
+        return;
+      }
+      pcards.forEach(function(c){
+        c.parentNode.style.setProperty("--card-h", c.offsetHeight + "px");
+      });
+      /* Where each item comes to rest: the denominator for arrival, and the basis
+         for the rung ladder below. */
+      pPinned = pcards.map(function(c){
+        return parseFloat(getComputedStyle(c.parentNode).top) || 0;
+      });
+      pRadius = parseFloat(getComputedStyle(pcards[0]).borderTopLeftRadius) || 0;
+      pStep = pn > 1
+        ? (parseFloat(getComputedStyle(pcards[1].parentNode).getPropertyValue("--pstack-offset")) || 0)
+        : 0;
+      /* Where each card comes to rest once it has been covered: one step above the
+         card in front of it, counted back from the frontmost card's own pin. */
+      pRung = [];
+      pRung[pn - 1] = pPinned[pn - 1] || 0;
+      for(var r = pn - 2; r >= 0; r--){ pRung[r] = pRung[r + 1] - pStep; }
+    }
+
+    /* One invariant drives the whole deck: a card paints from its own effective top
+       down to the effective top of the card above it, and no further. Everything
+       else - the stacked edges, the fact that a covered card's body and demo stay
+       hidden, the behaviour while the deck releases - follows from that.
+
+       A covered card is carried to a fixed rung, P[i] = P[i+1] - step, derived from
+       the pinned positions rather than from where the cards happen to be this frame.
+       How far it has travelled to that rung is just how far the card above it has
+       arrived, so coverage advances with scroll progress and unwinds the same way
+       backwards. Nothing is rediscovered per frame, so nothing can be forgotten when
+       the items unpin - which they do one at a time, in order of their offsets, and
+       which is what let card 01's demo surface again at the end of the run. */
     function pstackUpdate(){
       pTicking = false;
       if(reduce || !pStacking.matches){
-        pcards.forEach(function(c){ c.style.transform = ""; });
+        pcards.forEach(function(c){ c.style.transform = ""; c.style.clipPath = ""; });
         return;
       }
       var vh = window.innerHeight;
-      /* Read the resolved sticky offset off an item (a custom property would come back
-         as an unresolved clamp() string). */
-      var top = parseFloat(getComputedStyle(pcards[0].parentNode).top) || 0;
-      var travel = vh - top;
-      var overlap = [];
-      for(var j = 0; j < pn; j++){
-        var t = pcards[j].getBoundingClientRect().top;
-        var q = travel > 0 ? (vh - t) / travel : 0;
-        overlap[j] = q < 0 ? 0 : (q > 1 ? 1 : q);
+      var single = pSingle.matches;
+      var i, j;
+
+      /* The item is never transformed, so it reports each card's untouched position.
+         Arrival is read straight off the scroll and stays that way: a card sits
+         exactly where the scroll position puts it, with nothing added on top of it. */
+      var natTop = [], arrived = [];
+      for(j = 0; j < pn; j++){
+        natTop[j] = pcards[j].parentNode.getBoundingClientRect().top;
+        var travel = vh - (pPinned[j] || 0);
+        var q = travel > 0 ? (vh - natTop[j]) / travel : 1;
+        arrived[j] = q < 0 ? 0 : (q > 1 ? 1 : q);
       }
-      for(var i = 0; i < pn; i++){
+
+      var scale = [];
+      for(i = 0; i < pn; i++){
         var depth = 0;
-        for(var k = i + 1; k < pn; k++){ depth += overlap[k]; }
-        pcards[i].style.transform = "scale(" + (1 - depth * pSteps).toFixed(4) + ")";
+        for(j = i + 1; j < pn; j++){ depth += arrived[j]; }
+        scale[i] = 1 - depth * pSteps;
+      }
+
+      if(!single){
+        for(i = 0; i < pn; i++){
+          pcards[i].style.transform = "scale(" + scale[i].toFixed(4) + ")";
+          if(pcards[i].style.clipPath) pcards[i].style.clipPath = "";
+        }
+        return;
+      }
+
+      /* How far each card has been taken over: once anything above it has landed, it
+         belongs on its rung. */
+      var covered = [];
+      for(i = 0; i < pn; i++){
+        var c = 0;
+        for(j = i + 1; j < pn; j++){ if(arrived[j] > c) c = arrived[j]; }
+        covered[i] = c;
+      }
+
+      /* Walk front to back. The rung is where a covered card belongs once the deck
+         is at rest; while the card above is still on its way in that rung is the
+         higher of the two, so an arriving card never drags the one behind it down.
+         Once the deck unpins and travels up, the card above is higher than the rung
+         and the edges follow it off the screen together, instead of being stranded
+         at a fixed offset for the front card to slide out from under. */
+      var eff = [];
+      eff[pn - 1] = natTop[pn - 1];
+      for(i = pn - 2; i >= 0; i--){
+        var target = Math.min(pRung[i], eff[i + 1] - pStep);
+        eff[i] = natTop[i] + (target - natTop[i]) * covered[i];
+      }
+      for(i = 0; i < pn; i++){
+        pcards[i].style.transform =
+          "translateY(" + (eff[i] - natTop[i]).toFixed(2) + "px) scale(" + scale[i].toFixed(4) + ")";
+      }
+
+      for(i = 0; i < pn; i++){
+        if(i === pn - 1){
+          if(pcards[i].style.clipPath) pcards[i].style.clipPath = "";
+          continue;
+        }
+        var s = scale[i] || 1;
+        /* a hair of overlap so the seam with the card above cannot show a gap */
+        var keep = (eff[i + 1] + 1 - eff[i]) / s;
+        var cut = pcards[i].offsetHeight - keep;
+        if(cut > 0.5){
+          pcards[i].style.clipPath =
+            "inset(0px 0px " + cut.toFixed(1) + "px 0px round " + pRadius + "px)";
+        } else if(pcards[i].style.clipPath){
+          pcards[i].style.clipPath = "";
+        }
       }
     }
+
     function pstackOnScroll(){
       if(!pTicking){ pTicking = true; requestAnimationFrame(pstackUpdate); }
     }
+    function pstackResize(){ pstackMeasure(); pstackOnScroll(); }
     window.addEventListener("scroll", pstackOnScroll, {passive:true});
-    window.addEventListener("resize", pstackOnScroll);
-    pstackUpdate();
+    window.addEventListener("resize", pstackResize);
+    /* The copy reflows after first paint - web fonts swap in, images settle - and a
+       slot measured before that is too short, which would crush the demo bands. Three
+       independent chances to catch it: the font swap, the load event, and an observer
+       on the two rows whose height the stack never sets, so none of them can loop. */
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(pstackResize); }
+    window.addEventListener("load", pstackResize);
+    if(window.ResizeObserver){
+      var pRo = new ResizeObserver(function(){
+        if(pRoQueued) return;
+        pRoQueued = true;
+        requestAnimationFrame(function(){ pRoQueued = false; pstackResize(); });
+      });
+      pcards.forEach(function(c){
+        var head = c.querySelector(".pcard__head"), facts = c.querySelector(".pcard__facts");
+        if(head) pRo.observe(head);
+        if(facts) pRo.observe(facts);
+      });
+    }
+    pstackResize();
   }
 
   /* ---- Magnetic pull on the project buttons ----
@@ -272,16 +394,30 @@
     counters.forEach(function(el){ co.observe(el); });
   }
 
-  /* ---- Lazy autoplay videos (previews) ---- */
-  var vids = document.querySelectorAll("video[data-autoplay]");
+  /* ---- Autoplay videos (previews) ----
+     The markup carries autoplay/muted/loop/playsinline, so the browser starts these
+     on its own; iOS in particular manages muted inline video from the viewport
+     itself. The observer below is only an optimisation - it pauses a clip that has
+     scrolled away and nudges one that should be running - and is deliberately no
+     longer the thing that makes playback happen. A low threshold matters inside the
+     sticky stack, where a demo sits at the bottom of a long card and may only ever
+     be fractionally within the root. */
+  var vids = Array.prototype.slice.call(document.querySelectorAll("video[data-autoplay]"));
+  function playVideo(v){
+    if(reduce) return;
+    v.muted = true;                       /* property, not just the attribute */
+    var p = v.play();
+    if(p && p.catch) p.catch(function(){});
+  }
+  if(!reduce){ vids.forEach(playVideo); }
   if("IntersectionObserver" in window){
     var vo = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         var v = e.target;
-        if(e.isIntersecting){ if(!reduce){ v.play().catch(function(){}); } }
-        else { v.pause(); }
+        if(e.isIntersecting){ if(v.paused) playVideo(v); }
+        else if(!v.paused){ v.pause(); }
       });
-    }, {threshold:.35});
+    }, {threshold:.01});
     vids.forEach(function(v){ vo.observe(v); });
   }
 
