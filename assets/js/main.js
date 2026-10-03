@@ -161,6 +161,10 @@
     function pstackMeasure(){
       if(!pSingle.matches){
         pcards.forEach(function(c){ c.parentNode.style.removeProperty("--card-h"); });
+        pPinned = [];
+        pRung = [];
+        pStep = 0;
+        pRadius = 0;
         return;
       }
       pcards.forEach(function(c){
@@ -280,6 +284,7 @@
     function pstackResize(){ pstackMeasure(); pstackOnScroll(); }
     window.addEventListener("scroll", pstackOnScroll, {passive:true});
     window.addEventListener("resize", pstackResize);
+    pSingle.addEventListener("change", pstackResize);
     /* The copy reflows after first paint - web fonts swap in, images settle - and a
        slot measured before that is too short, which would crush the demo bands. Three
        independent chances to catch it: the font swap, the load event, and an observer
