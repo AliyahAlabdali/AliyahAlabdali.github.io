@@ -248,8 +248,9 @@
 
 <!-- ================= WORK / PROJECTS ================= -->
 <!-- Sticky-stacking cards: each .pstack__item supplies the scroll distance,
-     its .pstack__card sticks below the nav, and main.js scales it down as the
-     next card rises over it. Cards flow normally on small screens and for
+     its .pstack__card sticks below the nav at a per-card offset set in CSS, and
+     main.js scales it down as the next card rises over it. Phones run the same
+     interaction with a tighter offset; cards flow normally for
      prefers-reduced-motion. -->
 <section class="section projects" id="work" aria-labelledby="work-h">
   <div class="wrap">
@@ -265,7 +266,7 @@
 
       <!-- Project 01 : Yaqidh -->
       <div class="pstack__item">
-        <article class="pstack__card" style="top:0px">
+        <article class="pstack__card">
           <div class="pcard__head">
             <span class="pcard__n" aria-hidden="true">01</span>
             <div class="pcard__meta">
@@ -308,7 +309,7 @@
 
       <!-- Project 02 : InterMind -->
       <div class="pstack__item">
-        <article class="pstack__card" style="top:28px">
+        <article class="pstack__card">
           <div class="pcard__head">
             <span class="pcard__n" aria-hidden="true">02</span>
             <div class="pcard__meta">
@@ -344,7 +345,7 @@
 
       <!-- Project 03 : SMS Scam Detection -->
       <div class="pstack__item">
-        <article class="pstack__card" style="top:56px">
+        <article class="pstack__card">
           <div class="pcard__head">
             <span class="pcard__n" aria-hidden="true">03</span>
             <div class="pcard__meta">
@@ -384,7 +385,7 @@
 
       <!-- Project 04 : Brain Tumor MRI Classifier -->
       <div class="pstack__item">
-        <article class="pstack__card" style="top:84px">
+        <article class="pstack__card">
           <div class="pcard__head">
             <span class="pcard__n" aria-hidden="true">04</span>
             <div class="pcard__meta">

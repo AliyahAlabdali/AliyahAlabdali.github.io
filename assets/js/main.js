@@ -143,12 +143,14 @@
   if(pstack && pcards.length){
     var pn = pcards.length;
     var pSteps = 0.03;
-    var pWide = window.matchMedia("(min-width:761px)");
+    /* Phones shorter than the stacking breakpoint fall back to plain vertical flow,
+       so the deck scaling has to stand down with them. */
+    var pStacking = window.matchMedia("(min-width:761px),(min-height:700px)");
     var pTicking = false;
 
     function pstackUpdate(){
       pTicking = false;
-      if(reduce || !pWide.matches){
+      if(reduce || !pStacking.matches){
         pcards.forEach(function(c){ c.style.transform = ""; });
         return;
       }
