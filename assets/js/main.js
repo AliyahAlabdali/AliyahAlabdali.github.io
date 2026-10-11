@@ -519,7 +519,7 @@
      the JSON {reply} it gets back instead of mockReply(). That's the only
      integration point - nothing else needs to change.
      ======================================================================= */
-  var ASSISTANT_ENDPOINT = "https://aliyahalabdali.app.n8n.cloud/webhook/aliyah-assistant";
+  var ASSISTANT_ENDPOINT = "https://aliyahalabdali2.app.n8n.cloud/webhook/aliyah-assistant";
 
   function getAssistantReply(message){
     if(ASSISTANT_ENDPOINT){
