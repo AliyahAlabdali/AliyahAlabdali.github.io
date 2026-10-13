@@ -24,10 +24,7 @@ update this file; do not add facts that are not on the site.
 ## Certifications
 
 - STEP English Proficiency 88/100 (Education & Training Evaluation Commission, ETEC)
-- AWS AI Practitioner Challenge (Udacity)
-- Microsoft Azure AI Fundamentals (Microsoft & SDAIA)
-- Designing & Implementing an Azure AI Solution (Microsoft & SDAIA)
-- Generative AI with Azure OpenAI Service (Microsoft & SDAIA)
+- AWS AI Practitioner Challenge (Udacity, issued June 2026). Verify: https://www.udacity.com/certificate/e/aacfb158-31d9-11f1-bee7-abbb59e2d8ac
 
 ## Experience
 
