@@ -499,7 +499,7 @@
      rather than on page load, so visitors who don't want it never pay for
      someone else's app bundle. ---- */
   document.querySelectorAll(".live-embed").forEach(function(box){
-    var btn = box.querySelector(".live-embed__launch");
+    var btn = box.querySelector("button.live-embed__launch");
     if(!btn) return;
     btn.addEventListener("click", function(){
       var src = box.getAttribute("data-embed-src");
@@ -510,35 +510,7 @@
       iframe.loading = "lazy";
       iframe.allow = "clipboard-write";
       box.innerHTML = "";
-      if(box.classList.contains("live-embed--desktop")){
-        /* Give the page a laptop viewport and scale it to fit, so the embed shows the
-           desktop layout rather than the mobile one a column-width iframe would get. */
-        var bar = document.createElement("div");
-        bar.className = "live-embed__bar";
-        bar.innerHTML = '<span class="live-embed__dots"><i></i><i></i><i></i></span>' +
-                        '<span class="live-embed__url"></span>';
-        bar.querySelector(".live-embed__url").textContent = src.replace(/^https?:\/\//, "");
-        var vp = document.createElement("div");
-        vp.className = "live-embed__viewport";
-        vp.appendChild(iframe);
-        box.appendChild(bar);
-        box.appendChild(vp);
-        var fit = function(){
-          /* A narrower virtual viewport on phones: still the desktop layout, but scaled
-             down less brutally than a 1280px page would be. */
-          var vw = window.innerWidth <= 700 ? 1024 : 1280;
-          var vh = Math.round(vw * 0.625);
-          var s = vp.clientWidth / vw;
-          iframe.style.width = vw + "px";
-          iframe.style.height = vh + "px";
-          iframe.style.transform = "scale(" + s + ")";
-          vp.style.height = Math.round(vh * s) + "px";
-        };
-        fit();
-        window.addEventListener("resize", fit);
-      } else {
-        box.appendChild(iframe);
-      }
+      box.appendChild(iframe);
     });
   });
 
