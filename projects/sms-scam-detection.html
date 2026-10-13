@@ -29,7 +29,7 @@
 <header class="nav" id="top">
   <div class="wrap nav__inner">
     <a class="brand" href="../index.html" aria-label="Back to Aliyah Alabdali home">
-      <span>Aliyah&nbsp;Alabdali</span>
+      <span class="brand__name"><span>Aliyah</span><span>Alabdali</span></span>
     </a>
     <div class="nav__cta">
       <a class="btn btn--ghost" href="../index.html#work">All work</a>
@@ -72,7 +72,6 @@
 <div class="wrap case-body">
   <nav class="case-nav" aria-label="Sections">
     <a href="#overview" class="active">Overview</a>
-    <a href="#live-demo">Live demo</a>
     <a href="#problem">Problem</a>
     <a href="#role">My role</a>
     <a href="#tech">Tech stack</a>
@@ -92,22 +91,6 @@
         and a classification head, to understand the architecture end to end.</p>
       <p>On a highly imbalanced dataset it reaches <strong>98% accuracy and a 0.95 macro-F1</strong>, and, the part
         that matters most, it correctly labels fresh messages I wrote by hand that never appeared in training.</p>
-    </section>
-
-    <section class="case-block" id="live-demo" data-reveal>
-      <span class="eyebrow">Live demo</span>
-      <h2>Try to trick it.</h2>
-      <p>The clip above is a recording. Below is the real model, embedded live: type any message and the
-        Transformer encoder I built entirely from scratch in PyTorch classifies it in real time and shows you
-        which words drove the decision.</p>
-      <div class="live-embed" data-embed-src="https://aliyahalabdali-sms-scam-detector.hf.space" data-embed-title="SMS Scam &amp; Spam Detector live demo">
-        <button type="button" class="live-embed__launch">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
-          <strong>Launch live demo</strong>
-          <span>Loads my real Hugging Face Space inline. Nothing runs until you click.</span>
-        </button>
-      </div>
-      <p class="live-embed__note">This is my own public Space, or <a href="https://huggingface.co/spaces/AliyahAlabdali/sms-scam-detector" target="_blank" rel="noopener">open it in a new tab instead ↗</a></p>
     </section>
 
     <section class="case-block" id="problem" data-reveal>
@@ -149,36 +132,7 @@
       <p>A message becomes tokens, tokens become embeddings, and stacked self-attention blocks build a
         representation that a small head turns into a scam probability.</p>
       <figure class="diagram">
-        <svg viewBox="0 0 1240 210" role="img" aria-label="Pipeline: raw SMS, tokenize, token and positional embeddings, N transformer encoder blocks with multi-head attention and feed-forward, pooling and linear classifier, output LEGIT or SCAM with probability">
-          <text x="16" y="24" font-family="DM Sans,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">TRANSFORMER ENCODER · TEXT CLASSIFICATION</text>
-          <line x1="16" y1="36" x2="1224" y2="36" stroke="#5C6670"/>
-          <g font-family="DM Sans,sans-serif">
-            <rect x="16" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="16" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
-            <text x="40" y="104" font-size="14" fill="#F6F3F1">Raw SMS</text><text x="40" y="126" font-size="11" fill="#93A8AC">incoming</text><text x="40" y="142" font-size="11" fill="#93A8AC">message</text>
-
-            <rect x="224" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="224" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
-            <text x="248" y="104" font-size="14" fill="#F6F3F1">Tokenise</text><text x="248" y="126" font-size="11" fill="#93A8AC">tokens +</text><text x="248" y="142" font-size="11" fill="#93A8AC">vocabulary</text>
-
-            <rect x="432" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="432" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
-            <text x="456" y="104" font-size="14" fill="#F6F3F1">Embeddings</text><text x="456" y="126" font-size="11" fill="#93A8AC">token +</text><text x="456" y="142" font-size="11" fill="#93A8AC">positional</text>
-
-            <rect x="640" y="66" width="168" height="100" rx="14" fill="#4C3A3C" stroke="#E2B4BD"/><rect x="640" y="66" width="5" height="100" rx="2.5" fill="#E2B4BD"/>
-            <text x="664" y="100" font-size="14" fill="#F6F3F1">Encoder ×N</text><text x="664" y="122" font-size="11" fill="#93A8AC">multi-head</text><text x="664" y="138" font-size="11" fill="#93A8AC">attention + FFN</text>
-
-            <rect x="848" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="848" y="70" width="5" height="92" rx="2.5" fill="#9B6A6C"/>
-            <text x="872" y="104" font-size="14" fill="#F6F3F1">Pool + Head</text><text x="872" y="126" font-size="11" fill="#93A8AC">linear</text><text x="872" y="142" font-size="11" fill="#93A8AC">classifier</text>
-
-            <rect x="1056" y="70" width="168" height="92" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="1056" y="70" width="5" height="92" rx="2.5" fill="#E2B4BD"/>
-            <text x="1080" y="104" font-size="14" fill="#F6F3F1">Output</text><text x="1080" y="126" font-size="11" fill="#93A8AC">LEGIT / SCAM</text><text x="1080" y="142" font-size="11" fill="#93A8AC">+ p(scam)</text>
-          </g>
-          <g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C">
-            <line x1="184" y1="116" x2="216" y2="116"/><path d="M216 116l-8-4v8z"/>
-            <line x1="392" y1="116" x2="424" y2="116"/><path d="M424 116l-8-4v8z"/>
-            <line x1="600" y1="116" x2="632" y2="116"/><path d="M632 116l-8-4v8z"/>
-            <line x1="808" y1="116" x2="840" y2="116"/><path d="M840 116l-8-4v8z"/>
-            <line x1="1016" y1="116" x2="1048" y2="116"/><path d="M1048 116l-8-4v8z"/>
-          </g>
-        </svg>
+        <svg viewBox="0 0 640 360" role="img" aria-label="Pipeline: raw SMS, tokenise, token and positional embeddings, N transformer encoder blocks with multi-head attention and feed-forward, pooling and a linear classifier, output LEGIT or SCAM with a probability"><text x="16" y="26" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">TRANSFORMER ENCODER &middot; TEXT CLASSIFICATION</text><line x1="16" y1="38" x2="624" y2="38" stroke="#5C6670"/><g font-family="DM Sans,sans-serif"><rect x="16" y="58" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="16" y="58" width="5" height="96" rx="2.5" fill="#9B6A6C"/><text x="38" y="92" font-size="15" fill="#F6F3F1">Raw SMS</text><text x="38" y="114" font-size="12" fill="#93A8AC">incoming</text><text x="38" y="130" font-size="12" fill="#93A8AC">message</text><rect x="232" y="58" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="232" y="58" width="5" height="96" rx="2.5" fill="#9B6A6C"/><text x="254" y="92" font-size="15" fill="#F6F3F1">Tokenise</text><text x="254" y="114" font-size="12" fill="#93A8AC">tokens +</text><text x="254" y="130" font-size="12" fill="#93A8AC">vocabulary</text><rect x="448" y="58" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="448" y="58" width="5" height="96" rx="2.5" fill="#9B6A6C"/><text x="470" y="92" font-size="15" fill="#F6F3F1">Embeddings</text><text x="470" y="114" font-size="12" fill="#93A8AC">token +</text><text x="470" y="130" font-size="12" fill="#93A8AC">positional</text><rect x="16" y="248" width="176" height="96" rx="14" fill="#4C3A3C" stroke="#5C6670"/><rect x="16" y="248" width="5" height="96" rx="2.5" fill="#E2B4BD"/><text x="38" y="282" font-size="15" fill="#F6F3F1">Encoder &#215;N</text><text x="38" y="304" font-size="12" fill="#93A8AC">multi-head</text><text x="38" y="320" font-size="12" fill="#93A8AC">attention + FFN</text><rect x="232" y="248" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="232" y="248" width="5" height="96" rx="2.5" fill="#9B6A6C"/><text x="254" y="282" font-size="15" fill="#F6F3F1">Pool + Head</text><text x="254" y="304" font-size="12" fill="#93A8AC">linear</text><text x="254" y="320" font-size="12" fill="#93A8AC">classifier</text><rect x="448" y="248" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="448" y="248" width="5" height="96" rx="2.5" fill="#E2B4BD"/><text x="470" y="282" font-size="15" fill="#F6F3F1">Output</text><text x="470" y="304" font-size="12" fill="#93A8AC">LEGIT / SCAM</text><text x="470" y="320" font-size="12" fill="#93A8AC">+ p(scam)</text></g><g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C"><line x1="192" y1="106" x2="224" y2="106"/><path d="M224 106l-8 -4v8z"/><line x1="408" y1="106" x2="440" y2="106"/><path d="M440 106l-8 -4v8z"/><line x1="192" y1="296" x2="224" y2="296"/><path d="M224 296l-8 -4v8z"/><line x1="408" y1="296" x2="440" y2="296"/><path d="M440 296l-8 -4v8z"/></g><path d="M536 154 V186 H104 V240" fill="none" stroke="#9B6A6C" stroke-width="2"/><path d="M104 248l-4 -8h8z" fill="#9B6A6C"/></svg>
         <figcaption>From raw text to a calibrated scam probability.</figcaption>
       </figure>
     </section>
@@ -213,18 +167,33 @@
       </div>
     </section>
 
+    <!-- The embedded Space used to sit directly under the overview, pulling the reader
+         out of the write-up two paragraphs in, and then the results section covered the
+         same ground. It appears once now, here, where trying it is the natural next step. -->
     <section class="case-block" id="results" data-reveal>
       <span class="eyebrow">Results &amp; impact</span>
       <h2>Strong where it counts.</h2>
       <div class="metrics">
         <div class="metric"><div class="num"><span data-count="98" data-dec="0">98</span><small>%</small></div><div class="lbl">accuracy</div></div>
         <div class="metric"><div class="num"><span data-count="0.95" data-dec="2">0.95</span></div><div class="lbl">macro F1-score</div></div>
-        <div class="metric"><div class="num"><span data-count="100" data-dec="0">100</span><small>%</small></div><div class="lbl">from-scratch encoder</div></div>
+        <div class="metric"><div class="num">Custom</div><div class="lbl">PyTorch encoder</div></div>
       </div>
       <p>The classifier pairs high accuracy with a macro-F1 that shows it isn't cheating on the imbalance, and it
         holds up on unseen, hand-written messages, which is the real test of a scam detector.</p>
+      <p>Try to trick it yourself: below is the real model, embedded. Type any message and the Transformer
+        encoder I built from scratch in PyTorch classifies it in real time.</p>
+      <div class="live-embed" data-embed-src="https://aliyahalabdali-sms-scam-detector.hf.space" data-embed-title="SMS Scam &amp; Spam Detector live demo">
+        <button type="button" class="live-embed__launch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
+          <strong>Launch live demo</strong>
+          <span>Loads my real Hugging Face Space inline. Nothing runs until you click.</span>
+        </button>
+      </div>
+      <p class="live-embed__note">This is my own public Space, or <a href="https://huggingface.co/spaces/AliyahAlabdali/sms-scam-detector" target="_blank" rel="noopener">open it in a new tab instead ↗</a></p>
       <div class="prow__links" style="margin-top:1.4rem">
-        <a class="link-arrow solid" href="https://github.com/AliyahAlabdali/SMS-Scam-Detection-Transformer" target="_blank" rel="noopener">View repository
+        <a class="link-arrow solid" href="https://huggingface.co/spaces/AliyahAlabdali/sms-scam-detector" target="_blank" rel="noopener">Open live demo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+        <a class="link-arrow" href="https://github.com/AliyahAlabdali/SMS-Scam-Detection-Transformer" target="_blank" rel="noopener">View repository
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
       </div>
     </section>

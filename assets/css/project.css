@@ -15,7 +15,9 @@
 .crumbs a:hover{color:var(--ink)}
 .crumbs span{opacity:.5}
 .case-hero__meta{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.3rem}
-.case-hero__title{font-size:var(--step-4);max-width:16ch;margin-bottom:.7rem;font-weight:800}
+/* Wide enough for a short case-study title to sit on one line: at 16ch even
+   "Yaqidh: AI child-safety monitoring" was broken across two. */
+.case-hero__title{font-size:var(--step-4);max-width:34ch;margin-bottom:.7rem;font-weight:800}
 .case-hero__title em{font-style:normal;color:var(--pink)}
 .case-hero__lede{font-size:var(--step-1);color:var(--ink-2);max-width:60ch;line-height:1.5}
 .case-hero__cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
@@ -36,6 +38,8 @@
 .case-nav a.active{color:var(--pink);border-color:var(--pink);background:var(--cream-2)}
 
 .case-content{max-width:70ch}
+.case-content--wide-tech{max-width:none;min-width:0}
+.case-content--wide-tech > .case-block:not(#tech){max-width:70ch}
 .case-block{padding-bottom:clamp(2.6rem,5vw,3.6rem);margin-bottom:clamp(2.6rem,5vw,3.6rem);
   border-bottom:1px solid var(--line);scroll-margin-top:110px}
 .case-block:last-child{border-bottom:0;margin-bottom:0}
@@ -51,8 +55,11 @@
   background-color:var(--pink)}
 .case-block ul.ticks li strong{color:var(--ink)}
 
-/* Role split */
-.role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin-top:.5rem}
+/* Role split. Flex rather than auto-fit grid so the cards on the last row grow to
+   fill it: a grid leaves a ragged gap whenever the count isn't a multiple of the
+   column count, which is what made a lone trailing card look unfinished. */
+.role-grid{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.5rem}
+.role-card{flex:1 1 210px;min-width:0}
 .role-card{background:var(--cream);border:1px solid var(--line);border-radius:var(--radius-sm);padding:1.2rem;
   transform-style:preserve-3d;will-change:transform;transition:transform .2s ease-out,box-shadow .3s}
 .role-card:hover{box-shadow:var(--shadow-sm)}
@@ -61,12 +68,18 @@
 .role-card p{font-size:.92rem;margin:0;color:var(--ink-2)}
 
 /* Tech grid */
-.tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;
+/* Groups fill each row and stay centered across the case studies. */
+.tech-grid{display:flex;flex-wrap:wrap;gap:1px;
   background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.tech-col{background:var(--cream);padding:1.2rem 1.3rem}
+.tech-col{background:var(--cream);padding:1.2rem 1.3rem;flex:1 1 180px;min-width:0;text-align:center}
 .tech-col h4{font-family:var(--f-mono);font-weight:700;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
   color:var(--pink);margin-bottom:.8rem}
-.tech-col .chips{gap:.4rem}
+.tech-col .chips{gap:.4rem;justify-content:center}
+@media (min-width:1180px){
+  .tech-grid--five{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+  .tech-grid--five .tech-col{padding:1.2rem .75rem}
+  .tech-grid--five .chip{max-width:100%;overflow-wrap:break-word}
+}
 
 /* Challenge cards */
 .challenge{background:var(--cream);border:1px solid var(--line);border-left:3px solid var(--cherry);

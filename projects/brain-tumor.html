@@ -29,7 +29,7 @@
 <header class="nav" id="top">
   <div class="wrap nav__inner">
     <a class="brand" href="../index.html" aria-label="Back to Aliyah Alabdali home">
-      <span>Aliyah&nbsp;Alabdali</span>
+      <span class="brand__name"><span>Aliyah</span><span>Alabdali</span></span>
     </a>
     <div class="nav__cta">
       <a class="btn btn--ghost" href="../index.html#work">All work</a>
@@ -72,7 +72,6 @@
 <div class="wrap case-body">
   <nav class="case-nav" aria-label="Sections">
     <a href="#overview" class="active">Overview</a>
-    <a href="#live-demo">Live demo</a>
     <a href="#problem">Problem</a>
     <a href="#role">My role</a>
     <a href="#tech">Tech stack</a>
@@ -91,22 +90,6 @@
         browser</strong> using ONNX Runtime Web, so the image is analysed locally and <strong>never uploaded anywhere</strong>.</p>
       <p>It's a study in doing more with less: a lightweight <strong>~1.5&nbsp;MB</strong> model delivering
         <strong>~9&nbsp;ms</strong> inference, deployed as a live app anyone can try.</p>
-    </section>
-
-    <section class="case-block" id="live-demo" data-reveal>
-      <span class="eyebrow">Live demo</span>
-      <h2>This isn't a recording. It's the real model.</h2>
-      <p>The player above is a walkthrough. Below is the actual deployed app, embedded live: upload an MRI slice
-        (or use a sample) and the same ~1.5&nbsp;MB ONNX model classifies it in your browser, right now, with no
-        server in between.</p>
-      <div class="live-embed" data-embed-src="https://btcs-project.vercel.app/" data-embed-title="Brain Tumor Classifier live demo">
-        <button type="button" class="live-embed__launch">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
-          <strong>Launch live demo</strong>
-          <span>Loads my real deployed app inline. Nothing runs until you click.</span>
-        </button>
-      </div>
-      <p class="live-embed__note">This is my own public app, or <a href="https://btcs-project.vercel.app/" target="_blank" rel="noopener">open it in a new tab instead ↗</a></p>
     </section>
 
     <section class="case-block" id="problem" data-reveal>
@@ -147,40 +130,7 @@
       <p>The entire pipeline, from the moment a scan is selected to the confidence bars, executes inside the
         browser tab. There's no inference server to send data to.</p>
       <figure class="diagram">
-        <svg viewBox="0 0 1240 250" role="img" aria-label="In-browser pipeline: upload MRI, client-side preprocess, ONNX Runtime Web running a 1.5MB model, four-class softmax with confidence. A server is shown crossed out to indicate no data is uploaded.">
-          <!-- browser boundary -->
-          <rect x="16" y="52" width="1010" height="168" rx="18" fill="#363D44" stroke="#9B6A6C" stroke-dasharray="7 6"/>
-          <text x="34" y="44" font-family="DM Sans,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">IN THE BROWSER · NOTHING LEAVES THE DEVICE</text>
-          <g font-family="DM Sans,sans-serif">
-            <rect x="44" y="96" width="176" height="88" rx="13" fill="#424B54" stroke="#5C6670"/><rect x="44" y="96" width="5" height="88" rx="2.5" fill="#9B6A6C"/>
-            <text x="68" y="128" font-size="14" fill="#F6F3F1">Upload MRI</text><text x="68" y="150" font-size="11" fill="#93A8AC">local file,</text><text x="68" y="166" font-size="11" fill="#93A8AC">in-memory</text>
-
-            <rect x="260" y="96" width="176" height="88" rx="13" fill="#424B54" stroke="#5C6670"/><rect x="260" y="96" width="5" height="88" rx="2.5" fill="#9B6A6C"/>
-            <text x="284" y="128" font-size="14" fill="#F6F3F1">Preprocess</text><text x="284" y="150" font-size="11" fill="#93A8AC">resize &amp;</text><text x="284" y="166" font-size="11" fill="#93A8AC">normalise</text>
-
-            <rect x="476" y="92" width="176" height="96" rx="13" fill="#4C3A3C" stroke="#E2B4BD"/><rect x="476" y="92" width="5" height="96" rx="2.5" fill="#E2B4BD"/>
-            <text x="500" y="124" font-size="14" fill="#F6F3F1">ONNX RT Web</text><text x="500" y="146" font-size="11" fill="#93A8AC">~1.5MB model</text><text x="500" y="162" font-size="11" fill="#93A8AC">~9ms inference</text>
-
-            <rect x="692" y="96" width="176" height="88" rx="13" fill="#424B54" stroke="#5C6670"/><rect x="692" y="96" width="5" height="88" rx="2.5" fill="#E2B4BD"/>
-            <text x="716" y="128" font-size="14" fill="#F6F3F1">4-class + conf.</text><text x="716" y="150" font-size="11" fill="#93A8AC">softmax &amp;</text><text x="716" y="166" font-size="11" fill="#93A8AC">confidence UI</text>
-          </g>
-          <!-- server crossed out -->
-          <g font-family="DM Sans,sans-serif">
-            <rect x="1066" y="96" width="150" height="88" rx="13" fill="#424B54" stroke="#5C6670" opacity=".6"/>
-            <text x="1141" y="132" font-size="13" fill="#9B6A6C" text-anchor="middle" opacity=".8">Server</text>
-            <text x="1141" y="150" font-size="11" fill="#9B6A6C" text-anchor="middle" opacity=".8">/ cloud</text>
-            <line x1="1076" y1="106" x2="1206" y2="174" stroke="#E2B4BD" stroke-width="3"/>
-            <line x1="1206" y1="106" x2="1076" y2="174" stroke="#E2B4BD" stroke-width="3"/>
-          </g>
-          <text x="1141" y="210" font-family="DM Sans,sans-serif" font-weight="700" font-size="11" fill="#E2B4BD" text-anchor="middle">no upload</text>
-          <!-- arrows -->
-          <g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C">
-            <line x1="220" y1="140" x2="252" y2="140"/><path d="M252 140l-8-4v8z"/>
-            <line x1="436" y1="140" x2="468" y2="140"/><path d="M468 140l-8-4v8z"/>
-            <line x1="652" y1="140" x2="684" y2="140"/><path d="M684 140l-8-4v8z"/>
-          </g>
-          <line x1="1026" y1="140" x2="1060" y2="140" stroke="#7A8A8E" stroke-width="2" stroke-dasharray="4 4"/>
-        </svg>
+        <svg viewBox="0 0 640 350" role="img" aria-label="In-browser pipeline: upload an MRI, preprocess it client-side, run a ~1.5MB model through ONNX Runtime Web, and show a four-class result with confidence. A server is crossed out to show that nothing is uploaded."><rect x="16" y="52" width="448" height="278" rx="18" fill="#363D44" stroke="#9B6A6C" stroke-dasharray="7 6"/><text x="34" y="44" font-family="DM Sans,sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">IN THE BROWSER &middot; NOTHING LEAVES THE DEVICE</text><g font-family="DM Sans,sans-serif"><rect x="44" y="80" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="44" y="80" width="5" height="96" rx="2.5" fill="#9B6A6C"/><text x="66" y="114" font-size="15" fill="#F6F3F1">Upload MRI</text><text x="66" y="136" font-size="12" fill="#93A8AC">local file,</text><text x="66" y="152" font-size="12" fill="#93A8AC">in-memory</text><rect x="260" y="80" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="260" y="80" width="5" height="96" rx="2.5" fill="#9B6A6C"/><text x="282" y="114" font-size="15" fill="#F6F3F1">Preprocess</text><text x="282" y="136" font-size="12" fill="#93A8AC">resize &amp;</text><text x="282" y="152" font-size="12" fill="#93A8AC">normalise</text><rect x="44" y="208" width="176" height="96" rx="14" fill="#4C3A3C" stroke="#5C6670"/><rect x="44" y="208" width="5" height="96" rx="2.5" fill="#E2B4BD"/><text x="66" y="242" font-size="15" fill="#F6F3F1">ONNX RT Web</text><text x="66" y="264" font-size="12" fill="#93A8AC">~1.5MB model</text><text x="66" y="280" font-size="12" fill="#93A8AC">~9ms inference</text><rect x="260" y="208" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="260" y="208" width="5" height="96" rx="2.5" fill="#E2B4BD"/><text x="282" y="242" font-size="15" fill="#F6F3F1">4-class + conf.</text><text x="282" y="264" font-size="12" fill="#93A8AC">softmax &amp;</text><text x="282" y="280" font-size="12" fill="#93A8AC">confidence UI</text></g><g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C"><line x1="220" y1="128" x2="252" y2="128"/><path d="M252 128l-8 -4v8z"/><line x1="220" y1="256" x2="252" y2="256"/><path d="M252 256l-8 -4v8z"/></g><path d="M348 176 V190 H132 V200" fill="none" stroke="#9B6A6C" stroke-width="2"/><path d="M132 200l-4 -8h8z" fill="#9B6A6C"/><g font-family="DM Sans,sans-serif"><text x="566" y="136" font-size="14" fill="#93A8AC" text-anchor="middle">Server / cloud</text><rect x="508" y="150" width="116" height="90" rx="13" fill="#424B54" stroke="#5C6670" opacity=".6"/><line x1="518" y1="160" x2="614" y2="230" stroke="#E2B4BD" stroke-width="3"/><line x1="614" y1="160" x2="518" y2="230" stroke="#E2B4BD" stroke-width="3"/><text x="566" y="270" font-weight="700" font-size="13" fill="#E2B4BD" text-anchor="middle">no upload</text></g><line x1="464" y1="192" x2="500" y2="192" stroke="#7A8A8E" stroke-width="2" stroke-dasharray="4 4"/></svg>
         <figcaption>A fully client-side inference pipeline, private by design.</figcaption>
       </figure>
     </section>
@@ -223,6 +173,9 @@
       </div>
     </section>
 
+    <!-- The embedded app used to sit directly under the overview, interrupting the
+         read two paragraphs in, and then the results section said the same thing again.
+         It now appears once, here, where trying it is the natural next step. -->
     <section class="case-block" id="results" data-reveal>
       <span class="eyebrow">Results &amp; impact</span>
       <h2>Fast, private, and live.</h2>
@@ -230,10 +183,20 @@
         <div class="metric"><div class="num"><small>~</small><span data-count="79" data-dec="0">79</span><small>%</small></div><div class="lbl">accuracy</div></div>
         <div class="metric"><div class="num"><small>~</small><span data-count="9" data-dec="0">9</span><small>ms</small></div><div class="lbl">inference time</div></div>
         <div class="metric"><div class="num"><small>~</small><span data-count="1.5" data-dec="1">1.5</span><small>MB</small></div><div class="lbl">model size</div></div>
-        <div class="metric"><div class="num"><span data-count="0" data-dec="0">0</span></div><div class="lbl">bytes of data uploaded</div></div>
+        <div class="metric"><div class="num">Local</div><div class="lbl">MRI processing</div></div>
       </div>
       <p>The finished app proves a full deep-learning workflow can live entirely on the client: private by
         construction, tiny, fast, and deployed for anyone to try.</p>
+      <p>That is not a recording: below is the deployed app itself, embedded. Upload an MRI slice (or use a
+        sample) and the same ~1.5&nbsp;MB ONNX model classifies it in your browser, with no server in between.</p>
+      <div class="live-embed" data-embed-src="https://btcs-project.vercel.app/" data-embed-title="Brain Tumor Classifier live demo">
+        <button type="button" class="live-embed__launch">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
+          <strong>Launch live demo</strong>
+          <span>Loads my real deployed app inline. Nothing runs until you click.</span>
+        </button>
+      </div>
+      <p class="live-embed__note">This is my own public app, or <a href="https://btcs-project.vercel.app/" target="_blank" rel="noopener">open it in a new tab instead ↗</a></p>
       <div class="prow__links" style="margin-top:1.4rem">
         <a class="link-arrow solid" href="https://btcs-project.vercel.app/" target="_blank" rel="noopener">Open live demo
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
