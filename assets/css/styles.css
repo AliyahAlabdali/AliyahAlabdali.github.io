@@ -207,6 +207,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .hero__stage{position:relative;z-index:1;text-align:center;margin:2rem auto 0;
   display:flex;flex-direction:column;align-items:center;max-width:none}
 .hero__giant{font-family:var(--f-hero);font-weight:400;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
   line-height:.88;letter-spacing:.005em;color:var(--white);
   font-size:clamp(3rem,13vw,8.5rem)}
 .hero__avatar{position:relative;margin:1.9rem 0 2.3rem;
