@@ -99,6 +99,8 @@ ul{list-style:none;padding:0}
 /* ----- Layout helpers --------------------------------------------------- */
 .wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
 .section{padding-block:var(--section-y)}
+/* Deeper band, used to break up a run of flat sections. */
+.section--alt{background:var(--cream-2)}
 .skip-link{position:absolute;left:-999px;top:0;z-index:200;background:var(--pink);color:var(--ink-on-light);
   padding:.7rem 1.1rem;border-radius:0 0 10px 0;font:600 .9rem var(--f-body)}
 .skip-link:focus{left:0}
@@ -155,6 +157,10 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .nav.is-stuck .nav__inner{padding-block:var(--nav-pad-stuck)}
 .brand{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--f-display);
   font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
+/* The display face sets the two names tight enough to read as one word, so they
+   are two elements with a real 5px gap between them - word-spacing would do the
+   same job but is not applied to a no-break space by every browser. */
+.brand__name{display:inline-flex;gap:5px}
 .brand .monogram{width:38px;height:38px;flex:0 0 auto}
 .nav__links{display:flex;align-items:center;gap:1.9rem;position:relative}
 .nav__pill{position:absolute;left:0;top:.1rem;height:1.9rem;border-radius:100px;background:var(--pastel);
@@ -201,7 +207,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .hero__stage{position:relative;z-index:1;text-align:center;margin:2rem auto 0;
   display:flex;flex-direction:column;align-items:center;max-width:none}
 .hero__giant{font-family:var(--f-hero);font-weight:400;text-transform:uppercase;
-  line-height:.84;letter-spacing:.005em;color:var(--white);
+  line-height:.88;letter-spacing:.005em;color:var(--white);
   font-size:clamp(3rem,13vw,8.5rem)}
 .hero__avatar{position:relative;margin:1.9rem 0 2.3rem;
   width:clamp(84px,10vw,120px);aspect-ratio:1;border-radius:24px;background:var(--pink);
@@ -311,8 +317,10 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .pstack__item:nth-child(3){--pstack-offset:56px}
 .pstack__item:nth-child(4){--pstack-offset:84px}
 
-/* Top row: number, category + name + blurb, live/repo button. */
-.pcard__head{display:grid;grid-template-columns:auto 1fr auto;
+/* Top row: number, category + name + blurb. The live/repo button used to sit
+   here on the right; it now travels with the case-study link in .pcard__links
+   below, so every card opens from the same place. */
+.pcard__head{display:grid;grid-template-columns:auto 1fr;
   gap:clamp(.9rem,2.2vw,2rem);align-items:start}
 .pcard__n{font-family:var(--f-hero);font-weight:400;line-height:.78;
   font-size:clamp(2.4rem,6vw,5rem);color:var(--alabaster);opacity:.85}
@@ -326,13 +334,21 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .pcard__facts{display:grid;grid-template-columns:auto 1fr;
   gap:clamp(1rem,2.5vw,2.2rem);align-items:end}
 .pcard__stats{display:flex;flex-wrap:wrap;gap:clamp(.9rem,2vw,1.8rem)}
-.pcard__aside{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;
-  gap:.7rem 1rem}
+/* A column, not a wrapping row: the chips always sit on their own line above the
+   two actions. As a row, a card with few enough chips (SMS) fitted them beside the
+   buttons while a card with many (Yaqidh) pushed them above - the same block
+   landing in two different shapes. */
+.pcard__aside{display:flex;flex-direction:column;align-items:flex-end;gap:.7rem}
 /* A card with no honest metric to show drops .pcard__stats entirely. The meta row then
    spans the full width and runs from the left, where the stats would have started,
    instead of hanging off the right edge with an empty gutter beside it. */
-.pcard__facts > .pcard__aside:only-child{grid-column:1/-1;justify-content:flex-start}
+.pcard__facts > .pcard__aside:only-child{grid-column:1/-1;align-items:flex-start}
 .pcard__tags{display:flex;flex-wrap:wrap;gap:.4rem}
+/* The two ways into a project, side by side. The outline pill is trimmed here so it
+   reads as the quieter partner of the solid case-study button rather than competing
+   with it on size. */
+.pcard__links{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem}
+.pcard__links .btn-live{padding:.7em 1.3em;font-size:.72rem}
 /* Chips normally fade in from a [data-reveal] ancestor; project cards have
    their own scroll choreography, so show them outright. */
 .pstack__card .chip{opacity:1;transform:none}
@@ -365,7 +381,6 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
      full-width meta row underneath both columns. */
   .pstack__card .pcard__head{grid-area:head;grid-template-columns:auto 1fr;row-gap:1rem;
     align-self:start}
-  .pstack__card .pcard__head .btn-live{grid-column:1/-1;justify-self:start}
   .pstack__card .pcard__facts{grid-area:facts}
   .pstack__card .pcard__media{grid-area:media;height:auto;margin-top:0;align-self:center}
   .pstack__card .pcard__shot{height:auto;aspect-ratio:16/9}
@@ -575,20 +590,21 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
   .nav__pill{display:none}
   .nav__menu .btn{display:inline-flex}
   .pcard__head{grid-template-columns:auto 1fr;row-gap:.9rem}
-  .pcard__head .btn-live{grid-column:1/-1;justify-self:start}
   .pcard__facts{grid-template-columns:1fr}
-  .pcard__aside{justify-content:flex-start}
+  .pcard__aside{align-items:flex-start}
   .pcard__media{height:clamp(170px,48vw,260px)}
-  /* Yaqidh carries the longest blurb of the four and is the only card that cannot
-     fit a phone; the shorter wording keeps every fact and gives the demo back the
-     room it was losing. */
+  /* Every card carries both lengths of its blurb; the shorter wording keeps all the
+     facts and gives the demo back the room it was losing on a phone. */
   .pcard__desc--long{display:none}
   .pcard__desc--short{display:block}
-  /* Its four metrics are also the only set that wraps to two rows here, so they are
-     tightened a little - still the largest type in the row, just less leading. */
-  .pstack__item:nth-child(1) .pcard__stats{gap:.7rem 1.1rem}
-  .pstack__item:nth-child(1) .pstat .n{font-size:1.15rem}
-  .pstack__item:nth-child(1) .pstat .l{font-size:.63rem}
+  /* The metric rows wrap to two lines at this width, so they are tightened a little -
+     still the largest type in the row, just less leading. */
+  .pcard__stats{gap:.7rem 1.1rem}
+  .pstat .n{font-size:1.15rem}
+  .pstat .l{font-size:.63rem}
+  /* Both actions go full width rather than sitting as two stray pills. */
+  .pcard__links{width:100%}
+  .pcard__links > *{justify-content:center;flex:1 1 auto}
   .ai-chat{padding:0;align-items:flex-end}
   .ai-chat__panel{width:100%;max-height:82vh;border-radius:20px 20px 0 0}
 }

@@ -83,25 +83,39 @@
   onScroll();
   window.addEventListener("scroll", onScroll, {passive:true});
 
-  /* ---- Sliding nav pill (desktop hover indicator) ---- */
+  /* ---- Sliding nav pill ----
+     The pill marks the section being read, and only borrows itself to whatever
+     the cursor is over for as long as the cursor is there. Hovering is a
+     question, not an answer, so it never leaves the pill behind on a link the
+     reader merely passed over: on mouseleave the pill returns to the current
+     section. syncNavPill() is what the scrollspy calls when that section
+     changes, and is a no-op while the cursor is inside the menu. ---- */
   var navLinksWrap = document.querySelector(".nav__links");
   var navPill = navLinksWrap && navLinksWrap.querySelector(".nav__pill");
+  var navPillHovered = false;
+  function syncNavPill(){
+    if(!navLinksWrap || !navPill || !canHover || navPillHovered) return;
+    var current = navLinksWrap.querySelector('a[aria-current="true"]');
+    if(current) movePill(current); else navPill.style.opacity = "0";
+  }
+  function movePill(el){
+    if(!navLinksWrap || !navPill) return;
+    var wrapRect = navLinksWrap.getBoundingClientRect();
+    var r = el.getBoundingClientRect();
+    if(!r.width) return;                 /* hidden behind the mobile breakpoint */
+    navPill.style.width = (r.width+16)+"px";
+    navPill.style.transform = "translateX("+(r.left-wrapRect.left-8)+"px)";
+    navPill.style.opacity = "1";
+  }
   if(navLinksWrap && navPill && canHover){
-    var navAnchors = navLinksWrap.querySelectorAll("a");
-    var movePill = function(el){
-      var wrapRect = navLinksWrap.getBoundingClientRect();
-      var r = el.getBoundingClientRect();
-      navPill.style.width = (r.width+16)+"px";
-      navPill.style.transform = "translateX("+(r.left-wrapRect.left-8)+"px)";
-      navPill.style.opacity = "1";
-    };
-    navAnchors.forEach(function(a){
-      a.addEventListener("mouseenter", function(){ movePill(a); });
+    navLinksWrap.querySelectorAll("a").forEach(function(a){
+      a.addEventListener("mouseenter", function(){ navPillHovered = true; movePill(a); });
     });
     navLinksWrap.addEventListener("mouseleave", function(){
-      var current = navLinksWrap.querySelector('a[aria-current="true"]');
-      if(current){ movePill(current); } else { navPill.style.opacity = "0"; }
+      navPillHovered = false;
+      syncNavPill();
     });
+    window.addEventListener("resize", syncNavPill);
   }
 
   /* ---- Cursor spotlight (hero / case-hero) ---- */
@@ -426,35 +440,59 @@
     vids.forEach(function(v){ vo.observe(v); });
   }
 
-  /* ---- Scrollspy for main nav + case nav ---- */
-  function spy(linkSel, attr){
-    var links = Array.prototype.slice.call(document.querySelectorAll(linkSel));
-    if(!links.length) return;
-    var map = {};
-    var sections = links.map(function(l){
-      var id = l.getAttribute("href");
-      if(id && id.charAt(0)==="#"){
-        var s = document.querySelector(id);
-        if(s){ map[id.slice(1)] = l; return s; }
+  /* ---- Scrollspy for main nav + case nav ----
+     Answers "which section am I reading?" directly from scroll position rather
+     than from intersection events. An observer only fires when an edge crosses
+     its band, so a section that never crosses it - one scrolled past in a single
+     jump, or one that is taller than the band, like the pinned project deck -
+     leaves the previous link marked, which is what made the header look like it
+     was highlighting the last thing clicked. Here the active section is simply
+     the last one whose top has passed the reading line, recomputed each frame,
+     so it is correct on load, after an anchor jump, and scrolling either way.
+     The end of the document always resolves to the final section, which would
+     otherwise be unreachable when it is shorter than the fold. ---- */
+  function spy(linkSel, attr, onChange){
+    var pairs = [];
+    Array.prototype.slice.call(document.querySelectorAll(linkSel)).forEach(function(l){
+      var href = l.getAttribute("href");
+      if(!href || href.charAt(0) !== "#") return;
+      var section = document.querySelector(href);
+      if(section) pairs.push({link:l, section:section});
+    });
+    if(!pairs.length) return;
+
+    var current = null, ticking = false;
+    function apply(){
+      ticking = false;
+      var line = window.innerHeight * 0.38;
+      /* Null until the first section reaches the line: over the hero there is no
+         section being read, so nothing should claim to be the current one. */
+      var active = null;
+      for(var i = 0; i < pairs.length; i++){
+        if(pairs[i].section.getBoundingClientRect().top <= line) active = pairs[i];
       }
-      return null;
-    }).filter(Boolean);
-    if(!sections.length) return;
-    var so = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){
-          links.forEach(function(l){
-            if(attr==="class") l.classList.remove("active");
-            else l.removeAttribute("aria-current");
-          });
-          var l = map[e.target.id];
-          if(l){ if(attr==="class") l.classList.add("active"); else l.setAttribute("aria-current","true"); }
-        }
+      var doc = document.documentElement;
+      if(window.innerHeight + doc.scrollTop >= doc.scrollHeight - 2){
+        active = pairs[pairs.length - 1];
+      }
+      if(active === current) return;
+      current = active;
+      pairs.forEach(function(p){
+        var on = p === active;
+        if(attr === "class") p.link.classList.toggle("active", on);
+        else if(on) p.link.setAttribute("aria-current","true");
+        else p.link.removeAttribute("aria-current");
       });
-    }, {rootMargin:"-45% 0px -50% 0px"});
-    sections.forEach(function(s){ so.observe(s); });
+      if(onChange) onChange();
+    }
+    function queue(){ if(!ticking){ ticking = true; requestAnimationFrame(apply); } }
+    window.addEventListener("scroll", queue, {passive:true});
+    window.addEventListener("resize", queue);
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(queue); }
+    window.addEventListener("load", queue);
+    apply();
   }
-  spy(".nav__links a", "aria-current");
+  spy(".nav__links a", "aria-current", syncNavPill);
   spy(".case-nav a", "class");
 
   /* ---- Live embed: load the real deployed app in an iframe on demand,
