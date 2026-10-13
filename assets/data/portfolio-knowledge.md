@@ -19,11 +19,11 @@ update this file; do not add facts that are not on the site.
 - BSc, Artificial Intelligence - Umm Al-Qura University, Makkah, Saudi Arabia, June 2026
 - First Class Honors
 - GPA 4.0 / 4.0
-- STEP English 88/100
 - Dean's Honor List, Academic Excellence Track, Umm Al-Qura University, Spring 2026
 
 ## Certifications
 
+- STEP English Proficiency 88/100 (Education & Training Evaluation Commission, ETEC)
 - AWS AI Practitioner Challenge (Udacity)
 - Microsoft Azure AI Fundamentals (Microsoft & SDAIA)
 - Designing & Implementing an Azure AI Solution (Microsoft & SDAIA)
@@ -53,12 +53,12 @@ Organised on the portfolio as a four-stage pipeline.
 - Data: Python, SQL, PostgreSQL, Data Preprocessing, Roboflow, REST APIs
 - Model: PyTorch, Transformers, Scikit-learn, OpenCV, LLMs & RAG, LangGraph, Fine-tuning
 - Optimize & Deploy: FastAPI, ONNX, ONNX Runtime Web, Model Evaluation, Inference Optimization, Azure, Vercel
-- Application: Yaqidh, InterMind, SMS Scam Detector, Brain Tumor Classifier
+- Output (what the pipeline produces): Yaqidh, InterMind, SMS Scam Detector, Brain Tumor Classifier
 
 Also listed on the portfolio:
 
 - Tools & Workflow: Git / GitHub, Jupyter, Google Colab, Automated Testing, Agile, n8n
-- Strengths: Leadership, Problem-Solving, Teamwork, Communication, Critical Thinking, Time Management, Self-Learning
+- Soft Skills: Leadership, Problem-Solving, Teamwork, Communication, Critical Thinking, Time Management, Self-Learning
 
 ## Projects
 
@@ -104,6 +104,14 @@ interviewing with targeted follow-ups; cumulative evidence carried across an
 exchange; structured answer evaluation feeding an evidence-based report;
 separate recruiter and candidate workflows; optional voice interaction;
 O*NET occupational context used only when the role matches reliably.
+
+Verified evaluation results (rounded display values; these measure specific
+evaluation tasks, not overall model or hiring accuracy):
+- Follow-up F1: 0.885 (0.8852 across 90 labeled cases)
+- Evidence-backed Claims: 90.2% (221 of 245 reviewed report claims fully supported)
+- P95 Backend Latency: 3.83s (3.834 seconds for the backend advance path across 100 usable requests)
+
+Evaluation methodology and scope: https://github.com/AliyahAlabdali/InterMind/blob/main/backend/evals/README.md
 
 Hardest parts: deciding when an answer is enough, when to probe deeper, and when
 to move on (routing held in the LangGraph flow); and making the report show the
@@ -168,7 +176,9 @@ Tech stack: PyTorch, Transformers, Scikit-learn, NLP, text classification.
 Documented results:
 - 98% accuracy
 - 0.95 macro F1-score
-- 100% from-scratch encoder
+
+The Transformer encoder is custom-built in PyTorch; it uses standard PyTorch
+tensor and layer operations and external libraries for the surrounding workflow.
 
 Links:
 - Live demo (Hugging Face Space): https://huggingface.co/spaces/AliyahAlabdali/sms-scam-detector
@@ -196,7 +206,9 @@ Documented results:
 - ~79% accuracy
 - ~9 ms inference time
 - ~1.5 MB model size
-- 0 bytes of data uploaded
+
+MRI preprocessing and ONNX inference run in the browser. The app downloads its
+model and runtime files; the MRI image is read locally for analysis.
 
 Links:
 - Live demo: https://btcs-project.vercel.app/
