@@ -37,10 +37,15 @@
   --grad-primary:linear-gradient(135deg,var(--mauve) 0%,var(--mauve-deep) 100%);
 
   /* Type */
-  --f-hero:"Anton","Archivo Black",var(--f-display);
-  --f-display:"Space Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-body:"DM Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  /* Each stack names an Arabic face right after its Latin one. Browsers pick a
+     font per character, so in the Arabic version tool names such as PyTorch keep
+     the Latin face and only the Arabic letters fall through to Cairo / IBM Plex
+     Sans Arabic. Google Fonts serves those files per Unicode range, so English
+     pages never download them. */
+  --f-hero:"Anton","Cairo","Archivo Black",var(--f-display);
+  --f-display:"Space Grotesk","Cairo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"DM Sans","IBM Plex Sans Arabic",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono","IBM Plex Sans Arabic",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
 
   /* Scale (tightened) */
   --step--1:clamp(.76rem,.735rem + .12vw,.82rem);
@@ -317,6 +322,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
 .pstack__item:nth-child(2){--pstack-offset:28px}
 .pstack__item:nth-child(3){--pstack-offset:56px}
 .pstack__item:nth-child(4){--pstack-offset:84px}
+.pstack__item:nth-child(5){--pstack-offset:112px}
 
 /* Top row: number, category + name + blurb. The live/repo button used to sit
    here on the right; it now travels with the case-study link in .pcard__links
@@ -673,19 +679,20 @@ h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.12;
   .pstack__item:nth-child(2){--pstack-offset:12px}
   .pstack__item:nth-child(3){--pstack-offset:24px}
   .pstack__item:nth-child(4){--pstack-offset:36px}
+  .pstack__item:nth-child(5){--pstack-offset:48px}
   /* The section intro and the first card used to come over the fold barely 180px
      apart, so the heading was already being crowded by card 01 as it arrived. This
      is scroll distance, not timing: the cards still track the scroll one to one,
      there is simply more of it to cross before the first one is in range. */
   .pstack-head{margin-bottom:clamp(1.5rem,9.4vh,5.5rem)}
-  /* The clips are not one shape - 960x540, 1280x720, 1280x632, 962x508 - so a single
-     band height left object-fit cropping three of the four. Giving each figure its
-     own source ratio leaves nothing to crop and lets the demo size itself from the
-     card's width. */
+  /* The demos are not one shape - 960x540, 1280x720, 1100x542, 1280x632, 962x508 -
+     so a single band height left object-fit cropping most of them. Giving each figure its own source ratio leaves nothing to crop and lets
+     the demo size itself from the card's width. */
   .pstack__item:nth-child(1){--shot-ar:960/540}
   .pstack__item:nth-child(2){--shot-ar:1280/720}
-  .pstack__item:nth-child(3){--shot-ar:1280/632}
-  .pstack__item:nth-child(4){--shot-ar:962/508}
+  .pstack__item:nth-child(3){--shot-ar:1100/542}
+  .pstack__item:nth-child(4){--shot-ar:1280/632}
+  .pstack__item:nth-child(5){--shot-ar:962/508}
   .pstack__card .pcard__media{height:auto}
   .pstack__card .pcard__shot{height:auto;aspect-ratio:var(--shot-ar,16/9)}
 }
@@ -832,4 +839,83 @@ button.hero__avatar:hover{transform:scale(1.06)}
   .pstack__item{position:static;height:auto;margin-bottom:1.4rem}
   .pstack__card{top:auto;height:auto;transform:none!important}
   .hero__avatar-inner,.hero__avatar-ping,.bot-eye,.bot-antenna-tip,.pipe-arrow svg,.ai-msg--typing span{animation:none}
+}
+
+/* ----- Language switch + Arabic (right-to-left) ------------------------- */
+/* i18n.js swaps the text in; until then an Arabic visit stays hidden rather
+   than flashing English (the head script drops this after 3s regardless). */
+html.i18n-pending body{visibility:hidden}
+
+.lang-toggle{display:inline-flex;align-items:center;justify-content:center;
+  height:var(--nav-control,2.6rem);padding:0 1rem;border-radius:100px;
+  border:1.5px solid var(--line-strong);color:var(--ink);background:transparent;
+  font-family:var(--f-body);font-weight:600;font-size:.86rem;line-height:1;white-space:nowrap;
+  transition:border-color .25s,color .25s,background .25s}
+.lang-toggle[lang="ar"]{font-size:.95rem}
+.lang-toggle:hover{border-color:var(--pink);color:var(--pink);background:rgba(226,180,189,.08)}
+.lang-toggle:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+
+/* Arabic is a joined script: tracking pulls the letters apart, and the uppercase
+   transforms have nothing to act on, so both are switched off wholesale. */
+:root[lang="ar"] body *{letter-spacing:0!important}
+:root[lang="ar"] svg text{letter-spacing:0!important;font-family:var(--f-body)}
+/* Arabic has taller ascenders and deeper descenders than the Latin faces these
+   line heights were tuned for. */
+:root[lang="ar"] body{line-height:1.75}
+:root[lang="ar"] h1,:root[lang="ar"] h2,:root[lang="ar"] h3,:root[lang="ar"] h4{line-height:1.45}
+/* The name is set in Amiri, a classical Naskh: it carries the hero the way the
+   condensed Anton does in English, without shouting. Naskh runs smaller on the
+   body and deeper below the line, hence the larger size and looser leading. */
+:root[lang="ar"] .hero__giant{font-family:"Amiri",var(--f-hero);font-weight:700;
+  font-size:clamp(3.4rem,15vw,9.5rem);line-height:1.35;gap:0}
+:root[lang="ar"] .pcard__title,:root[lang="ar"] .section-title,
+:root[lang="ar"] .case-hero__title{line-height:1.4}
+/* The small mono labels read too small once they fall back to an Arabic face. */
+:root[lang="ar"] .eyebrow,:root[lang="ar"] .pcard__cat,:root[lang="ar"] .pstat .l,
+:root[lang="ar"] .metric .lbl,:root[lang="ar"] .fact .t,:root[lang="ar"] .facts h3,
+:root[lang="ar"] .nav__links a,:root[lang="ar"] .btn,:root[lang="ar"] .btn-live,
+:root[lang="ar"] .challenge .tag,:root[lang="ar"] .next-proj .t,:root[lang="ar"] .case-nav a,
+:root[lang="ar"] .skills__extra-col h4,:root[lang="ar"] .diagram figcaption,
+:root[lang="ar"] .ai-chat__head p,:root[lang="ar"] .chip,:root[lang="ar"] .pipe-app,
+:root[lang="ar"] .badge{font-size:max(.8rem,1em)}
+:root[lang="ar"] .nav__links a{font-size:.92rem}
+/* Diagrams keep their left-to-right flow; only their labels are translated. */
+[dir="rtl"] svg{direction:ltr}
+
+/* Mirror what was laid out for left-to-right. */
+[dir="rtl"] .scroll-progress{left:auto;right:0}
+/* Readouts like "~20%" or "2-3x" are left-to-right expressions; in a right-to-left
+   line the bidi algorithm would reorder their parts into "%20~". */
+[dir="rtl"] .pstat .n,[dir="rtl"] .metric .num{direction:ltr;unicode-bidi:isolate;text-align:right}
+/* Parked off the left edge, the skip link becomes scrollable overflow in a
+   right-to-left page (that side is where it scrolls to), so it hides above. */
+[dir="rtl"] .skip-link{left:auto;right:0;transform:translateY(-120%)}
+[dir="rtl"] .skip-link:focus{transform:none}
+[dir="rtl"] .nav__links a::after{transform-origin:right}
+[dir="rtl"] .skill-card__idx{margin-left:0;margin-right:auto}
+[dir="rtl"] .timeline{margin-left:0;margin-right:.5rem;padding-left:0;padding-right:2.2rem;
+  border-left:0;border-right:1.5px solid var(--line-strong)}
+[dir="rtl"] .tl-item::before{left:auto;right:calc(-2.2rem - .75px);transform:translateX(50%)}
+[dir="rtl"] .tl-item li{padding-left:0;padding-right:1.3rem}
+[dir="rtl"] .tl-item li::before{left:auto;right:0}
+[dir="rtl"] .clink:hover{padding-left:0;padding-right:.6rem}
+[dir="rtl"] .clinks .clink:hover{padding-right:0}
+[dir="rtl"] .clink .go{margin-left:0;margin-right:auto}
+[dir="rtl"] .ai-chat__close{margin-left:0;margin-right:auto}
+[dir="rtl"] .ai-msg--bot{border-bottom-left-radius:14px;border-bottom-right-radius:4px}
+[dir="rtl"] .ai-msg--user{border-bottom-right-radius:14px;border-bottom-left-radius:4px}
+/* Arrows point the way the page reads. The flip sits on the path, so it never
+   fights the hover nudges and animations that transform the svg itself. */
+[dir="rtl"] path[d^="M5 12h14"],[dir="rtl"] path[d^="M7 17L17 7"],
+[dir="rtl"] path[d^="M22 2L11 13"]{transform:scaleX(-1);transform-box:fill-box;transform-origin:center}
+[dir="rtl"] .btn-live:hover svg{transform:translate(-2px,-2px)}
+@media (max-width:820px){
+  [dir="rtl"] .pipe-arrow svg{rotate:-90deg}
+}
+@media (max-width:760px){
+  /* The open menu is a fixed full-screen layer; lift the bar's controls above it
+     so the close button and the language switch stay reachable. */
+  .nav__cta,.brand{position:relative;z-index:95}
+  [dir="rtl"] .nav__menu{transform:translateX(-100%)}
+  [dir="rtl"] .nav.is-open .nav__menu{transform:none}
 }

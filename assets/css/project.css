@@ -133,3 +133,13 @@
 .live-embed--external{background:var(--cream-2)}
 .live-embed__note{font-family:var(--f-mono);font-size:.74rem;color:var(--ink-2);margin-top:.7rem}
 .live-embed__note a{color:var(--pink);text-decoration:underline}
+
+/* ----- Arabic (right-to-left) ------------------------------------------ */
+[dir="rtl"] .case-nav a{border-left:0;border-right:2px solid var(--line)}
+[dir="rtl"] .case-block ul.ticks li{padding-left:0;padding-right:1.9rem}
+[dir="rtl"] .case-block ul.ticks li::before{left:auto;right:0}
+[dir="rtl"] .challenge{border-left:1px solid var(--line);border-right:3px solid var(--cherry)}
+[dir="rtl"] .next-proj a:hover .go{transform:translateX(-5px)}
+@media (max-width:860px){
+  [dir="rtl"] .case-nav a{border:1px solid var(--line)}
+}

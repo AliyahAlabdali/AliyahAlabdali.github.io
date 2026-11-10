@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Language: set direction before first paint and hold the page hidden until
+     i18n.js has swapped the text in, so Arabic visitors never see English flash. -->
+<script>(function(){try{var m=/[?&]lang=(en|ar)/.exec(location.search),l=m?m[1]:localStorage.getItem("lang");if(l==="ar"){var r=document.documentElement;r.lang="ar";r.dir="rtl";r.classList.add("i18n-pending");setTimeout(function(){r.classList.remove("i18n-pending")},3000)}}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aliyah Alabdali · AI / ML Engineer · Computer Vision & Deep Learning</title>
 <meta name="description" content="Aliyah Alabdali is an Artificial Intelligence graduate (First Class Honors, GPA 4.0) building production-ready AI across Computer Vision, NLP, and Generative AI, from model development to full-stack deployment.">
@@ -30,9 +33,9 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Cairo:wght@600;700;800;900&family=Amiri:wght@700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/css/styles.css?v=3">
+<link rel="stylesheet" href="assets/css/styles.css?v=5">
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -90,6 +93,7 @@
     </nav>
 
     <div class="nav__cta">
+      <button type="button" class="lang-toggle" data-lang-toggle lang="ar">العربية</button>
       <a class="btn btn--primary" href="mailto:AliyahAlabdali24@gmail.com">Email me
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
       </a>
@@ -198,7 +202,7 @@
         <span class="eyebrow">Projects</span>
         <h2 class="section-title" id="work-h">A selection of projects I've built.</h2>
       </div>
-      <p class="mono muted" style="font-size:.8rem">04 case studies</p>
+      <p class="mono muted" style="font-size:.8rem">05 case studies</p>
     </div>
 
     <div class="pstack">
@@ -215,10 +219,11 @@
                    time: display:none takes the other out of the accessibility tree as
                    well as the layout, so nothing is read twice. -->
               <p class="pcard__desc pcard__desc--long">A real-time system that watches live CCTV, detects child falls and violence with
-                custom YOLOv8 models trained on 3,800+ collected and augmented images, and pushes instant, role-based
-                alerts to parents, teachers, and managers, backed by a full FastAPI + React stack with live dashboards.</p>
-              <p class="pcard__desc pcard__desc--short">Real-time child-safety monitoring that detects falls and violence with custom
-                YOLOv8 models and sends instant role-based alerts through a FastAPI + React platform.</p>
+                two custom YOLOv8s models (ONNX-optimized, trained on 3,800+ collected and augmented images), and pushes
+                zone-scoped WebSocket, SMS, and email alerts to parents, teachers, and managers, with video-backed incident
+                records and live dashboards on a FastAPI + React stack.</p>
+              <p class="pcard__desc pcard__desc--short">Real-time child-safety monitoring that detects falls and violence with two custom
+                YOLOv8s models and sends live, role-based alerts through a FastAPI + React platform.</p>
             </div>
           </div>
 
@@ -265,9 +270,10 @@
               <!-- Two lengths of the same blurb. Only one is ever in the document at a
                    time: display:none takes the other out of the accessibility tree as
                    well as the layout, so nothing is read twice. -->
-              <p class="pcard__desc pcard__desc--long">An autonomous AI interviewer that turns a job description into an adaptive
-                interview, asks targeted follow-ups as the conversation unfolds, and produces an evidence-based
-                report where every assessment points back to something the candidate actually said.</p>
+              <p class="pcard__desc pcard__desc--long">An autonomous AI interviewer that turns a job description into a role-specific
+                interview, decides after every answer whether to follow up or move on, and produces an evidence-based
+                report where every assessment traces back to something the candidate actually said. Live on Vercel
+                with PostgreSQL on Neon, with voice through Azure AI Speech.</p>
               <p class="pcard__desc pcard__desc--short">An autonomous AI interviewer that turns a job description into an adaptive
                 interview, asks targeted follow-ups, and produces an evidence-based report.</p>
             </div>
@@ -276,7 +282,7 @@
           <div class="pcard__facts">
             <div class="pcard__stats">
               <div class="pstat"><div class="n"><span data-count="0.885" data-dec="3">0.885</span></div><div class="l">Follow-up F1</div></div>
-              <div class="pstat"><div class="n"><span data-count="90.2" data-dec="1">90.2</span><small>%</small></div><div class="l">Evidence-backed Claims</div></div>
+              <div class="pstat"><div class="n"><span data-count="239" data-dec="0">239</span><small>/239</small></div><div class="l">Evidence Traced</div></div>
               <div class="pstat"><div class="n"><span data-count="3.83" data-dec="2">3.83</span><small>s</small></div><div class="l">P95 Backend Latency</div></div>
             </div>
             <div class="pcard__aside">
@@ -304,34 +310,84 @@
         </article>
       </div>
 
-      <!-- Project 03 : SMS Scam Detection -->
+      <!-- Project 03 : Daleel -->
       <div class="pstack__item">
         <article class="pstack__card">
           <div class="pcard__head">
             <span class="pcard__n" aria-hidden="true">03</span>
             <div class="pcard__meta">
-              <span class="pcard__cat">Advanced Deep Learning &middot; NLP</span>
-              <h3 class="pcard__title">SMS Scam &amp; Spam Detection</h3>
+              <span class="pcard__cat">Generative AI &middot; RAG</span>
+              <h3 class="pcard__title">Daleel: RAG Document Assistant</h3>
               <!-- Two lengths of the same blurb. Only one is ever in the document at a
                    time: display:none takes the other out of the accessibility tree as
                    well as the layout, so nothing is read twice. -->
-              <p class="pcard__desc pcard__desc--long">A Transformer-based classifier, implemented from the ground up in PyTorch, that
-                flags scam and spam SMS on a heavily imbalanced dataset, and correctly labels brand-new, hand-written
-                messages it has never seen before.</p>
-              <p class="pcard__desc pcard__desc--short">A Transformer encoder built from scratch in PyTorch that flags scam and spam SMS on a
-                heavily imbalanced dataset, and holds up on messages it has never seen.</p>
+              <p class="pcard__desc pcard__desc--long">A retrieval-augmented assistant that answers questions from your own documents
+                and names the file behind every answer. Two n8n workflows index PDFs, text, and Markdown into Supabase
+                pgvector and run a chat agent over them; a changed file replaces its old version in a single transaction,
+                and instructions hidden inside documents are ignored.</p>
+              <p class="pcard__desc pcard__desc--short">A RAG assistant that answers from your documents and cites its sources, built on
+                n8n workflows, Supabase pgvector, and OpenAI embeddings.</p>
             </div>
           </div>
 
           <div class="pcard__facts">
             <div class="pcard__stats">
-              <div class="pstat"><div class="n"><span data-count="98" data-dec="0">98</span><small>%</small></div><div class="l">accuracy</div></div>
-              <div class="pstat"><div class="n"><span data-count="0.95" data-dec="2">0.95</span></div><div class="l">macro F1</div></div>
+              <div class="pstat"><div class="n"><span data-count="8" data-dec="0">8</span><small>/9</small></div><div class="l">demo checks passed</div></div>
+              <div class="pstat"><div class="n"><span data-count="16" data-dec="0">16</span></div><div class="l">offline tests</div></div>
+            </div>
+            <div class="pcard__aside">
+              <div class="pcard__tags chips">
+                <span class="chip">n8n</span><span class="chip">Supabase pgvector</span><span class="chip">OpenAI</span><span class="chip">PostgreSQL</span><span class="chip">RAG</span>
+              </div>
+              <!-- Both ways into the project sit together: the write-up and the
+                   thing itself, so neither has to be hunted for in another corner. -->
+              <div class="pcard__links">
+                <a class="link-arrow solid" href="projects/daleel.html">Read case study
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+                <a class="btn-live" href="https://github.com/AliyahAlabdali/Daleel" target="_blank" rel="noopener" data-magnet>View Repo
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pcard__media">
+            <figure class="pcard__shot">
+              <video data-autoplay autoplay muted loop playsinline preload="metadata" poster="assets/media/daleel-poster.jpg" aria-label="Daleel indexing a document, answering questions with cited source files, and replacing an updated document">
+                <source src="assets/media/daleel-preview.mp4" type="video/mp4">
+              </video>
+            </figure>
+          </div>
+        </article>
+      </div>
+
+      <!-- Project 04 : Nabeeh (SMS Scam Detection) -->
+      <div class="pstack__item">
+        <article class="pstack__card">
+          <div class="pcard__head">
+            <span class="pcard__n" aria-hidden="true">04</span>
+            <div class="pcard__meta">
+              <span class="pcard__cat">Advanced Deep Learning &middot; NLP</span>
+              <h3 class="pcard__title">Nabeeh: SMS Scam Detection</h3>
+              <!-- Two lengths of the same blurb. Only one is ever in the document at a
+                   time: display:none takes the other out of the accessibility tree as
+                   well as the layout, so nothing is read twice. -->
+              <p class="pcard__desc pcard__desc--long">An English SMS scam detector built on a Transformer encoder written from scratch
+                in PyTorch, with custom multi-head attention, pre-LayerNorm, and masked pooling. Class-weighted training
+                handles a heavily imbalanced corpus, and the live demo shows which words pushed each message toward scam.</p>
+              <p class="pcard__desc pcard__desc--short">A from-scratch PyTorch Transformer that flags scam SMS on a heavily imbalanced
+                dataset, with a live demo that shows each word's influence.</p>
+            </div>
+          </div>
+
+          <div class="pcard__facts">
+            <div class="pcard__stats">
+              <div class="pstat"><div class="n"><span data-count="98.07" data-dec="2">98.07</span><small>%</small></div><div class="l">test accuracy</div></div>
+              <div class="pstat"><div class="n"><span data-count="0.954" data-dec="3">0.954</span></div><div class="l">macro F1</div></div>
               <div class="pstat"><div class="n">Custom</div><div class="l">PyTorch encoder</div></div>
             </div>
             <div class="pcard__aside">
               <div class="pcard__tags chips">
-                <span class="chip">Transformers</span><span class="chip">PyTorch</span><span class="chip">Scikit-learn</span><span class="chip">NLP</span>
+                <span class="chip">Transformers</span><span class="chip">PyTorch</span><span class="chip">Scikit-learn</span><span class="chip">Gradio</span><span class="chip">Hugging Face</span>
               </div>
               <!-- Both ways into the project sit together: the write-up and the
                    thing itself, so neither has to be hunted for in another corner. -->
@@ -346,7 +402,7 @@
 
           <div class="pcard__media">
             <figure class="pcard__shot">
-              <video data-autoplay autoplay muted loop playsinline preload="metadata" poster="assets/media/scam-detector-demo.jpg" aria-label="The SMS scam detector classifying messages in real time">
+              <video data-autoplay autoplay muted loop playsinline preload="metadata" poster="assets/media/scam-detector-demo.jpg" aria-label="Nabeeh classifying SMS messages in real time">
                 <source src="assets/media/scam-detector-demo.mp4" type="video/mp4">
               </video>
             </figure>
@@ -354,11 +410,11 @@
         </article>
       </div>
 
-      <!-- Project 04 : Brain Tumor MRI Classifier -->
+      <!-- Project 05 : Brain Tumor MRI Classifier -->
       <div class="pstack__item">
         <article class="pstack__card">
           <div class="pcard__head">
-            <span class="pcard__n" aria-hidden="true">04</span>
+            <span class="pcard__n" aria-hidden="true">05</span>
             <div class="pcard__meta">
               <span class="pcard__cat">AI System Design &middot; Privacy-first</span>
               <h3 class="pcard__title">Brain Tumor MRI Classifier</h3>
@@ -486,7 +542,8 @@
         <div class="chips">
           <a class="pipe-app" href="projects/yaqidh.html">Yaqidh</a>
           <a class="pipe-app" href="projects/intermind.html">InterMind</a>
-          <a class="pipe-app" href="projects/sms-scam-detection.html">SMS Scam Detector</a>
+          <a class="pipe-app" href="projects/daleel.html">Daleel</a>
+          <a class="pipe-app" href="projects/sms-scam-detection.html">Nabeeh</a>
           <a class="pipe-app" href="projects/brain-tumor.html">Brain Tumor Classifier</a>
         </div>
       </div>
@@ -626,6 +683,8 @@
   </div>
 </div>
 
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/i18n-ar.js?v=3" defer></script>
+<script src="assets/js/i18n.js?v=1" defer></script>
+<script src="assets/js/main.js?v=5" defer></script>
 </body>
 </html>

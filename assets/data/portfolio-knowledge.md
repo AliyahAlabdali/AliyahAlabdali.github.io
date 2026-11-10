@@ -50,7 +50,7 @@ Organised on the portfolio as a four-stage pipeline.
 - Data: Python, SQL, PostgreSQL, Data Preprocessing, Roboflow, REST APIs
 - Model: PyTorch, Transformers, Scikit-learn, OpenCV, LLMs & RAG, LangGraph, Fine-tuning
 - Optimize & Deploy: FastAPI, ONNX, ONNX Runtime Web, Model Evaluation, Inference Optimization, Azure, Vercel
-- Output (what the pipeline produces): Yaqidh, InterMind, SMS Scam Detector, Brain Tumor Classifier
+- Output (what the pipeline produces): Yaqidh, InterMind, Daleel, Nabeeh, Brain Tumor Classifier
 
 Also listed on the portfolio:
 
@@ -59,8 +59,9 @@ Also listed on the portfolio:
 
 ## Projects
 
-Four projects are represented on the portfolio: InterMind, Yaqidh, SMS Scam &
-Spam Detection, and the Brain Tumor MRI Classifier.
+Five projects are represented on the portfolio, in this order: Yaqidh,
+InterMind, Daleel, Nabeeh (SMS scam detection), and the Brain Tumor MRI
+Classifier. Each has a full case study.
 
 ### InterMind: Autonomous AI Interviewer (2026, Agentic AI / Full-Stack AI)
 
@@ -90,10 +91,10 @@ Her role: the whole system, end to end.
 - Backend: FastAPI service and PostgreSQL persistence behind interview sessions
 - Frontend: React and TypeScript app covering both recruiter and candidate workflows
 - Voice: integrated Azure AI Speech so an interview can be spoken instead of typed
-- Deployment: React app on Vercel, API on Azure App Service
+- Deployment: React app and FastAPI backend on Vercel, PostgreSQL on Neon
 
 Tech stack: LangGraph, OpenAI, Python, FastAPI, PostgreSQL, React, TypeScript,
-Azure AI Speech, O*NET, Vercel, Azure App Service.
+Azure AI Speech, O*NET, Vercel, Neon PostgreSQL.
 
 Key features: job-description analysis into structured requirements; structured
 interview planning with assessment areas rather than a fixed script; adaptive
@@ -105,7 +106,7 @@ O*NET occupational context used only when the role matches reliably.
 Verified evaluation results (rounded display values; these measure specific
 evaluation tasks, not overall model or hiring accuracy):
 - Follow-up F1: 0.885 (0.8852 across 90 labeled cases)
-- Evidence-backed Claims: 90.2% (221 of 245 reviewed report claims fully supported)
+- Evidence Traced: 239/239 (every reviewed evidence string traces back to the transcript; this does not prove every report claim or score is correct)
 - P95 Backend Latency: 3.83s (3.834 seconds for the backend advance path across 100 usable requests)
 
 Evaluation methodology and scope: https://github.com/AliyahAlabdali/InterMind/blob/main/backend/evals/README.md
@@ -122,8 +123,9 @@ Links:
 ### Yaqidh: AI Child-Safety Monitoring (2025 to 2026, graduation project, Computer Vision)
 
 Yaqidh (يقظ, "vigilant") is a real-time system that watches live CCTV, detects
-child falls and violence with custom YOLOv8 models, and sends instant,
-role-based alerts to parents, teachers, or facility managers. Built for
+child falls and violence with two custom YOLOv8s models (ONNX-optimised), and
+sends zone-scoped WebSocket, SMS, and email alerts to parents, teachers, or
+facility managers, with video-backed incident records for review. Built for
 nurseries, schools, and homes, it connects to existing CCTV without new hardware.
 
 Models were trained on 3,800+ collected and augmented images. Two dedicated
@@ -151,10 +153,15 @@ Links:
 - Repository: https://github.com/Yaqidh-Project/Yaqidh
 - Case study: https://aliyahalabdali.github.io/projects/yaqidh.html
 
-### SMS Scam & Spam Detection (2026, NLP, Advanced Deep Learning)
+### Nabeeh: SMS Scam Detection (2026, NLP, Advanced Deep Learning)
 
-A Transformer encoder implemented from scratch in PyTorch (tokenisation,
-embeddings, self-attention, classification head) that separates scam and spam
+Nabeeh (نَبيه, "alert / perceptive") is the new name of the project formerly
+shown as "SMS Scam & Spam Detection"; the repository was renamed to Nabeeh.
+
+An English SMS scam detector built on a Transformer encoder implemented from
+scratch in PyTorch (custom multi-head attention, pre-LayerNorm, masked mean
+pooling, linear classifier), trained from random initialisation without
+nn.Transformer or pretrained weights, that separates scam and spam
 SMS from legitimate messages on a heavily imbalanced dataset, and correctly
 labels brand-new hand-written messages never seen in training.
 
@@ -168,19 +175,49 @@ vocabulary; implemented the encoder (embeddings, multi-head attention, FFN,
 classifier head); trained and tuned for the minority class optimising macro-F1;
 validated on held-out data and new hand-written messages.
 
-Tech stack: PyTorch, Transformers, Scikit-learn, NLP, text classification.
+Tech stack: PyTorch, Transformers, Scikit-learn, Gradio, Hugging Face Spaces.
 
-Documented results:
-- 98% accuracy
-- 0.95 macro F1-score
+The live demo shows class probabilities and a word-level influence view (masking
+one token at a time and measuring the change in p(scam)).
+
+Documented results (517 held-out test messages):
+- 98.07% accuracy
+- 0.954 macro F1-score (0.9542)
+- Scam-class recall 0.877: 8 of 65 scam messages were missed, 2 false positives
 
 The Transformer encoder is custom-built in PyTorch; it uses standard PyTorch
 tensor and layer operations and external libraries for the surrounding workflow.
 
 Links:
 - Live demo (Hugging Face Space): https://huggingface.co/spaces/AliyahAlabdali/sms-scam-detector
-- Repository: https://github.com/AliyahAlabdali/SMS-Scam-Detection-Transformer
+- Repository: https://github.com/AliyahAlabdali/Nabeeh
 - Case study: https://aliyahalabdali.github.io/projects/sms-scam-detection.html
+
+### Daleel: RAG Document Assistant (2026, Generative AI, RAG)
+
+Daleel (دليل, "guide") is a retrieval-augmented assistant that answers questions
+from uploaded documents and names the source files behind each answer. It runs
+on two n8n workflows: one indexes PDF, TXT, and MD files into Supabase pgvector,
+the other is a chat agent that searches them.
+
+Key features: every answer cites its source files; unchanged re-uploads are
+detected by SHA-256 hash and skipped; a changed file replaces the old version
+only after its new chunks are indexed and counted, in a single transaction;
+follow-up questions use chat history stored in Postgres; web search and a
+calculator for questions the documents cannot answer; text inside documents is
+treated as data, so hidden instructions are ignored.
+
+Tech stack: n8n, Supabase Postgres with pgvector (HNSW, cosine), OpenAI
+text-embedding-3-small (1536 dimensions), n8n Postgres Chat Memory, Brave
+Search, Node.js test runner.
+
+Documented results: 8 of 9 scripted demo steps passed (one partial: it declined
+to invent an answer but did not offer a web search); 16 offline tests. The demo
+is a single run, not an accuracy benchmark. Scanned-image PDFs are not supported yet.
+
+Links:
+- Repository: https://github.com/AliyahAlabdali/Daleel
+- Case study: https://aliyahalabdali.github.io/projects/daleel.html
 
 ### Brain Tumor MRI Classifier (2025, Deep Learning, AI System Design)
 
@@ -222,5 +259,5 @@ Links:
 
 - If a question is not covered by the facts above, say so plainly and point to
   the portfolio or her email. Do not invent projects, employers, metrics, or dates.
-- Only the four projects listed above are on the portfolio.
+- Only the five projects listed above are on the portfolio.
 - InterMind is a current, completed, live project, not a work in progress.

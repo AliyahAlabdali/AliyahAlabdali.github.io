@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Language: set direction before first paint and hold the page hidden until
+     i18n.js has swapped the text in, so Arabic visitors never see English flash. -->
+<script>(function(){try{var m=/[?&]lang=(en|ar)/.exec(location.search),l=m?m[1]:localStorage.getItem("lang");if(l==="ar"){var r=document.documentElement;r.lang="ar";r.dir="rtl";r.classList.add("i18n-pending");setTimeout(function(){r.classList.remove("i18n-pending")},3000)}}catch(e){}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daleel: RAG Document Assistant · Generative AI · Aliyah Alabdali</title>
+<meta name="description" content="A RAG assistant that answers questions from your own documents and names the source file behind every answer, built on n8n, Supabase pgvector, and OpenAI embeddings. Case study by Aliyah Alabdali.">
+<meta name="theme-color" content="#363D44">
+<link rel="canonical" href="https://aliyahalabdali.github.io/projects/daleel.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Daleel: RAG Document Assistant · Generative AI">
+<meta property="og:description" content="Answers from your documents, with the source file named every time. n8n, Supabase pgvector, OpenAI.">
+<meta property="og:image" content="../assets/media/daleel-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239B6A6C'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Cairo:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css?v=5">
+<link rel="stylesheet" href="../assets/css/project.css?v=4">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CreativeWork","name":"Daleel: RAG Document Assistant","author":{"@type":"Person","name":"Aliyah Alabdali"},"about":["Generative AI","Retrieval-augmented generation","AI agents"],"keywords":"RAG, n8n, Supabase, pgvector, OpenAI, vector search, AI agent"}
+</script>
+</head>
+<body>
+<div class="scroll-progress" aria-hidden="true"></div>
+<a class="skip-link" href="#overview">Skip to content</a>
+
+<header class="nav" id="top">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../index.html" aria-label="Back to Aliyah Alabdali home">
+      <span class="brand__name"><span>Aliyah</span><span>Alabdali</span></span>
+    </a>
+    <div class="nav__cta">
+      <button type="button" class="lang-toggle" data-lang-toggle lang="ar">العربية</button>
+      <a class="btn btn--ghost" href="../index.html#work">All work</a>
+      <a class="btn btn--primary" href="https://github.com/AliyahAlabdali/Daleel" target="_blank" rel="noopener">GitHub
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="case-hero">
+  <div class="hero__beam" aria-hidden="true"></div>
+  <div class="case-hero__orbs" aria-hidden="true"><div class="orb orb--1"></div><div class="orb orb--2"></div><div class="spotlight" aria-hidden="true"></div></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb" data-load data-delay="1">
+      <a href="../index.html">Home</a><span>/</span><a href="../index.html#work">Work</a><span>/</span>Daleel
+    </nav>
+    <div class="case-hero__meta" data-load data-delay="1">
+      <span class="badge">Generative AI</span><span class="badge">2026</span><span class="badge">RAG</span>
+    </div>
+    <h1 class="case-hero__title" data-load data-delay="2" data-split="words">Daleel: <em>RAG document assistant</em></h1>
+    <p class="case-hero__lede" data-load data-delay="3">An AI assistant that answers questions from your own documents and
+      names the file behind every answer, built on two n8n workflows, Supabase pgvector, and OpenAI embeddings.</p>
+    <div class="case-hero__cta" data-load data-delay="4">
+      <a class="btn btn--primary" href="#results">See the results
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+      <a class="btn btn--ghost" href="https://github.com/AliyahAlabdali/Daleel" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+    <figure class="case-figure" data-load data-delay="4">
+      <video controls muted loop playsinline preload="metadata" poster="../assets/media/daleel-poster.jpg">
+        <source src="../assets/media/daleel-demo.mp4" type="video/mp4">
+        Your browser doesn't support embedded video.
+      </video>
+      <figcaption>Indexing a document, answering with its sources named, replacing an updated version, and ignoring an instruction hidden inside a file.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="wrap case-body">
+  <nav class="case-nav" aria-label="Sections">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#problem">Problem</a>
+    <a href="#role">My role</a>
+    <a href="#tech">Tech stack</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#features">Key features</a>
+    <a href="#challenges">Challenges</a>
+    <a href="#results">Results</a>
+  </nav>
+
+  <div class="case-content">
+    <section class="case-block" id="overview" data-reveal>
+      <span class="eyebrow">Overview</span>
+      <h2>Answers you can trace back to a file.</h2>
+      <p>Daleel (دليل, "guide") is a <strong>retrieval-augmented generation (RAG)</strong> assistant for your own
+        documents. You upload PDF, text, or Markdown files, ask questions in plain language, and every answer comes
+        with the <strong>file it was taken from</strong>, so it can be checked rather than trusted blindly.</p>
+      <p>It runs on <strong>two n8n workflows</strong>: one validates, hashes, chunks, and embeds documents into
+        <strong>Supabase pgvector</strong>; the other is a chat agent that searches them, keeps conversation memory
+        in Postgres, and reaches for web search or a calculator when the documents can't answer.</p>
+    </section>
+
+    <section class="case-block" id="problem" data-reveal>
+      <span class="eyebrow">Problem</span>
+      <h2>A confident wrong answer is worse than none.</h2>
+      <p>A general-purpose chatbot knows nothing about a team's own policies, projects, or vendor notes, yet it will
+        still answer questions about them, and sound sure while doing it. RAG fixes that by grounding answers in the
+        documents themselves, but a naive pipeline brings <strong>its own failure modes</strong>.</p>
+      <p>When a document is updated, old and new chunks can both stay searchable, so answers <strong>mix outdated and
+        current facts</strong>. Re-uploading the same file bloats the index with duplicates. And a document can carry
+        <strong>hidden instructions</strong> aimed at the model. The goal was an assistant that only answers from the
+        current version of each file, says where every answer came from, and treats document text as data.</p>
+    </section>
+
+    <section class="case-block" id="role" data-reveal>
+      <span class="eyebrow">My role</span>
+      <h2>Designed and built it end to end.</h2>
+      <p>This was an individual project, so I owned every layer:</p>
+      <div class="role-grid">
+        <div class="role-card"><h4>Ingestion workflow</h4><p>Built the n8n flow that validates uploads, extracts text, hashes files, chunks, and embeds them.</p></div>
+        <div class="role-card"><h4>Database</h4><p>Designed the Supabase schema: the documents table, a version registry, grants, RLS, and the activation function.</p></div>
+        <div class="role-card"><h4>Chat agent</h4><p>Built the agent workflow with session validation, Postgres chat memory, vector search, and web and calculator tools.</p></div>
+        <div class="role-card"><h4>Testing &amp; evaluation</h4><p>Wrote 16 offline checks, a retrieval-scoring script, and a scripted end-to-end demo run.</p></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="tech" data-reveal>
+      <span class="eyebrow">Tech stack</span>
+      <h2>What it's built with.</h2>
+      <div class="tech-grid">
+        <div class="tech-col"><h4>Orchestration</h4><div class="chips"><span class="chip">n8n</span><span class="chip">AI Agent</span></div></div>
+        <div class="tech-col"><h4>Retrieval &amp; storage</h4><div class="chips"><span class="chip">Supabase</span><span class="chip">pgvector</span><span class="chip">PostgreSQL</span></div></div>
+        <div class="tech-col"><h4>Models &amp; tools</h4><div class="chips"><span class="chip">OpenAI</span><span class="chip">text-embedding-3-small</span><span class="chip">Brave Search</span></div></div>
+        <div class="tech-col"><h4>Testing</h4><div class="chips"><span class="chip">Node.js test runner</span></div></div>
+      </div>
+    </section>
+
+    <section class="case-block" id="architecture" data-reveal>
+      <span class="eyebrow">Architecture</span>
+      <h2>Two workflows, one source of truth.</h2>
+      <p>The ingestion workflow writes new document versions into pgvector and only then marks them active. The chat
+        workflow searches that same store, reading active versions only, and builds an answer that names its sources.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 640 360" role="img" aria-label="Two n8n workflows. Ingestion: an upload form validates and extracts PDF, TXT and MD files, a SHA-256 hash check skips unchanged files, and new or changed text is chunked, embedded into pgvector, and swapped in as the active version. Chat: an agent with session validation and Postgres chat memory runs a top-5 vector search over active versions only, and returns an answer that names its source files"><text x="16" y="26" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">01 &middot; INGESTION WORKFLOW</text><line x1="16" y1="38" x2="624" y2="38" stroke="#5C6670"/><text x="16" y="214" font-weight="700" font-size="13" letter-spacing="2" fill="#E2B4BD">02 &middot; CHAT WORKFLOW</text><line x1="16" y1="226" x2="280" y2="226" stroke="#5C6670"/><g font-family="DM Sans,sans-serif"><rect x="16" y="58" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="16" y="58" width="5" height="96" rx="2.5" fill="#9B6A6C"/><text x="38" y="92" font-size="15" fill="#F6F3F1">Upload</text><text x="38" y="114" font-size="12" fill="#93A8AC">PDF &middot; TXT &middot; MD</text><text x="38" y="130" font-size="12" fill="#93A8AC">validate + extract</text><rect x="232" y="58" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="232" y="58" width="5" height="96" rx="2.5" fill="#9B6A6C"/><text x="254" y="92" font-size="15" fill="#F6F3F1">Hash check</text><text x="254" y="114" font-size="12" fill="#93A8AC">SHA-256, skip</text><text x="254" y="130" font-size="12" fill="#93A8AC">unchanged files</text><rect x="448" y="58" width="176" height="96" rx="14" fill="#4C3A3C" stroke="#5C6670"/><rect x="448" y="58" width="5" height="96" rx="2.5" fill="#E2B4BD"/><text x="470" y="92" font-size="15" fill="#F6F3F1">Embed + swap</text><text x="470" y="114" font-size="12" fill="#93A8AC">chunks &#8594; pgvector,</text><text x="470" y="130" font-size="12" fill="#93A8AC">then activate</text><rect x="16" y="248" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="16" y="248" width="5" height="96" rx="2.5" fill="#9B6A6C"/><text x="38" y="282" font-size="15" fill="#F6F3F1">Chat agent</text><text x="38" y="304" font-size="12" fill="#93A8AC">session + Postgres</text><text x="38" y="320" font-size="12" fill="#93A8AC">chat memory</text><rect x="232" y="248" width="176" height="96" rx="14" fill="#4C3A3C" stroke="#5C6670"/><rect x="232" y="248" width="5" height="96" rx="2.5" fill="#E2B4BD"/><text x="254" y="282" font-size="15" fill="#F6F3F1">Vector search</text><text x="254" y="304" font-size="12" fill="#93A8AC">top-5 chunks,</text><text x="254" y="320" font-size="12" fill="#93A8AC">active versions only</text><rect x="448" y="248" width="176" height="96" rx="14" fill="#424B54" stroke="#5C6670"/><rect x="448" y="248" width="5" height="96" rx="2.5" fill="#E2B4BD"/><text x="470" y="282" font-size="15" fill="#F6F3F1">Cited answer</text><text x="470" y="304" font-size="12" fill="#93A8AC">names its</text><text x="470" y="320" font-size="12" fill="#93A8AC">source files</text></g><g stroke="#9B6A6C" stroke-width="2" fill="#9B6A6C"><line x1="192" y1="106" x2="224" y2="106"/><path d="M224 106l-8 -4v8z"/><line x1="408" y1="106" x2="440" y2="106"/><path d="M440 106l-8 -4v8z"/><line x1="192" y1="296" x2="224" y2="296"/><path d="M224 296l-8 -4v8z"/><line x1="408" y1="296" x2="440" y2="296"/><path d="M440 296l-8 -4v8z"/></g><path d="M536 154 V190 H320 V240" fill="none" stroke="#9B6A6C" stroke-width="2"/><path d="M320 248l-4 -8h8z" fill="#9B6A6C"/><text x="344" y="183" font-family="DM Sans,sans-serif" font-size="12" fill="#93A8AC">shared pgvector store</text></svg>
+        <figcaption>Write the new version, count it, then switch: search never sees a half-indexed file.</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-block" id="features" data-reveal>
+      <span class="eyebrow">Key features</span>
+      <h2>What it does.</h2>
+      <ul class="ticks">
+        <li><strong>Cited answers</strong>: every response names the documents it was drawn from, even when it combines several.</li>
+        <li><strong>Safe document updates</strong>: a changed file replaces the old version only after its new chunks are indexed and counted, in a single transaction.</li>
+        <li><strong>Duplicate detection</strong>: unchanged re-uploads are recognised by SHA-256 hash and skipped.</li>
+        <li><strong>Conversation memory</strong>: follow-up questions use chat history stored in Postgres.</li>
+        <li><strong>Fallback tools</strong>: web search and a calculator for questions the documents can't answer.</li>
+        <li><strong>Injection-resistant</strong>: text inside documents is treated as data, so hidden instructions are ignored.</li>
+      </ul>
+    </section>
+
+    <section class="case-block" id="challenges" data-reveal>
+      <span class="eyebrow">Challenges</span>
+      <h2>The hard parts, and how I solved them.</h2>
+      <div class="challenge">
+        <span class="tag">Versioning</span>
+        <h4>Old and new facts in the same answer</h4>
+        <p>If an updated file is indexed while the old one is still searchable, answers blend both. I added a
+        <strong>document registry</strong> and an activation step that counts the new chunks and switches the active
+        version <strong>in one transaction</strong>; search filters to active versions only. In the demo, questions asked
+        after the update returned the new project manager and remaining budget.</p>
+      </div>
+      <div class="challenge">
+        <span class="tag">Efficiency</span>
+        <h4>The same file, uploaded again</h4>
+        <p>Re-uploading an unchanged document would re-embed it and fill the index with duplicate chunks. Each file is
+        <strong>hashed with SHA-256</strong> on arrival; a known hash stops before any embedding call and is reported as
+        a duplicate.</p>
+      </div>
+      <div class="challenge">
+        <span class="tag">Security</span>
+        <h4>Documents that try to give orders</h4>
+        <p>Retrieved text lands in the model's context, so a file can smuggle in instructions. The agent is set up to
+        treat document content strictly as <strong>data</strong>. Tested with a vendor file containing a hidden
+        instruction, Daleel reported only the real points and ignored the instruction.</p>
+      </div>
+    </section>
+
+    <section class="case-block" id="results" data-reveal>
+      <span class="eyebrow">Results &amp; impact</span>
+      <h2>Grounded, current, and checkable.</h2>
+      <div class="metrics">
+        <div class="metric"><div class="num"><span data-count="8" data-dec="0">8</span><small>/9</small></div><div class="lbl">demo steps passed</div></div>
+        <div class="metric"><div class="num"><span data-count="16" data-dec="0">16</span></div><div class="lbl">offline checks</div></div>
+        <div class="metric"><div class="num">Top-<span data-count="5" data-dec="0">5</span></div><div class="lbl">vector search</div></div>
+      </div>
+      <p>Daleel answered single- and multi-document questions with the right sources, replaced an updated file,
+        skipped a duplicate, and ignored a hidden instruction. The 16 offline checks cover workflow wiring, upload validation, the SQL schema, and that no
+        credentials are committed.</p>
+      <p>The demo is a single run, not an accuracy benchmark; the repository includes a script that scores labelled
+        questions for Hit@5 and MRR. Scanned-image PDFs aren't supported yet, only PDFs with selectable text.</p>
+      <div class="prow__links" style="margin-top:1.4rem">
+        <a class="link-arrow solid" href="https://github.com/AliyahAlabdali/Daleel" target="_blank" rel="noopener">View repository
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
+      </div>
+    </section>
+  </div>
+</div>
+
+<section class="section next-proj">
+  <div class="wrap">
+    <a href="sms-scam-detection.html" data-reveal>
+      <div><div class="t">Next project</div><div class="n">Nabeeh: SMS Scam Detection</div></div>
+      <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span>© <span data-year>2026</span> Aliyah Alabdali</span>
+    <a class="to-top" href="../index.html">Back to portfolio
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
+  </div>
+</footer>
+<script src="../assets/js/i18n-ar.js?v=3" defer></script>
+<script src="../assets/js/i18n.js?v=1" defer></script>
+<script src="../assets/js/main.js?v=5" defer></script>
+</body>
+</html>

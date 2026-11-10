@@ -9,6 +9,10 @@
 (function(){
   "use strict";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Strings built here at runtime go through the same dictionary as the page
+     (see i18n.js); without it they stay English. */
+  var t = (window.I18N && window.I18N.t) || function(s){ return s; };
+  var lang = (window.I18N && window.I18N.lang) || "en";
   var canHover = window.matchMedia("(hover: hover)").matches;
 
   /* ---- Word-stagger headline split (runs before .loaded is applied) ---- */
@@ -503,7 +507,7 @@
     if(!btn) return;
     btn.addEventListener("click", function(){
       var src = box.getAttribute("data-embed-src");
-      var title = box.getAttribute("data-embed-title") || "Live demo";
+      var title = box.getAttribute("data-embed-title") || t("Live demo");
       var iframe = document.createElement("iframe");
       iframe.src = src;
       iframe.title = title;
@@ -529,14 +533,14 @@
      the JSON {reply} it gets back instead of mockReply(). That's the only
      integration point - nothing else needs to change.
      ======================================================================= */
-  var ASSISTANT_ENDPOINT = "https://aliyahalabdali3.app.n8n.cloud/webhook/aliyah-assistant";
+  var ASSISTANT_ENDPOINT = "https://aliyahalabdali4.app.n8n.cloud/webhook/aliyah-assistant";
 
   function getAssistantReply(message){
     if(ASSISTANT_ENDPOINT){
       return fetch(ASSISTANT_ENDPOINT, {
         method: "POST",
         headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({message: message})
+        body: JSON.stringify({message: message, lang: lang})
       }).then(function(r){ return r.json(); }).then(function(data){
         return data && data.reply ? data.reply : mockReply(message);
       }).catch(function(){ return mockReply(message); });
@@ -550,16 +554,16 @@
      fails, so it stays deliberately small and carries no project detail. */
   function mockReply(message){
     var q = message.toLowerCase();
-    if(/who (is|are)|about (you|aliyah)|introduce/.test(q)){
-      return "Aliyah Alabdali is an AI/ML engineer and Artificial Intelligence graduate specialising in Computer Vision, NLP, and Generative AI. I can't reach the full assistant right now, so have a look around the portfolio for the details.";
+    if(/who (is|are)|about (you|aliyah)|introduce|من هي|من عاليه|عرّف|عرف/.test(q)){
+      return t("Aliyah Alabdali is an AI/ML engineer and Artificial Intelligence graduate specialising in Computer Vision, NLP, and Generative AI. I can't reach the full assistant right now, so have a look around the portfolio for the details.");
     }
-    if(/project|built|shipped|portfolio|intermind|yaqidh|scam|spam|sms|tumor|tumour|brain|mri/.test(q)){
-      return "Her public projects are InterMind, Yaqidh, SMS Scam & Spam Detection, and the Brain Tumor MRI Classifier. I can't reach the full assistant right now, so open any of them in the Projects section for the full case study.";
+    if(/project|built|shipped|portfolio|intermind|yaqidh|daleel|rag|nabeeh|scam|spam|sms|tumor|tumour|brain|mri|مشروع|مشاريع|يقظ|دليل|نبيه|أورام/.test(q)){
+      return t("Her portfolio shows five projects: Yaqidh, InterMind, Daleel, Nabeeh (SMS scam detection), and the Brain Tumor MRI Classifier. I can't reach the full assistant right now, so open any of them in the Projects section for the full case study.");
     }
-    if(/contact|reach|email|hire|linkedin|github/.test(q)){
-      return "The fastest way to reach her is by email at AliyahAlabdali24@gmail.com, or through the LinkedIn and GitHub links in the Contact section below.";
+    if(/contact|reach|email|hire|linkedin|github|تواصل|بريد|توظيف|ايميل|إيميل/.test(q)){
+      return t("The fastest way to reach her is by email at AliyahAlabdali24@gmail.com, or through the LinkedIn and GitHub links in the Contact section below.");
     }
-    return "I can't reach the full portfolio assistant right now. You can explore the portfolio, or contact Aliyah directly at AliyahAlabdali24@gmail.com.";
+    return t("I can't reach the full portfolio assistant right now. You can explore the portfolio, or contact Aliyah directly at AliyahAlabdali24@gmail.com.");
   }
 
   /* ---- Robot launcher + chat panel wiring ---- */
@@ -691,7 +695,7 @@
       launcher.setAttribute("aria-expanded","true");
       if(!greeted){
         greeted = true;
-        addMessage("Hi! I'm an AI assistant trained on Aliyah's background, projects, and skills. Ask me anything — try one of the suggestions below, or type your own question.", "bot");
+        addMessage(t("Hi! I'm an AI assistant trained on Aliyah's background, projects, and skills. Ask me anything — try one of the suggestions below, or type your own question."), "bot");
       }
       setTimeout(function(){ chatInput && chatInput.focus(); }, 300);
     }

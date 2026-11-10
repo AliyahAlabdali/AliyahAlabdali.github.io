@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Language: set direction before first paint and hold the page hidden until
+     i18n.js has swapped the text in, so Arabic visitors never see English flash. -->
+<script>(function(){try{var m=/[?&]lang=(en|ar)/.exec(location.search),l=m?m[1]:localStorage.getItem("lang");if(l==="ar"){var r=document.documentElement;r.lang="ar";r.dir="rtl";r.classList.add("i18n-pending");setTimeout(function(){r.classList.remove("i18n-pending")},3000)}}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>InterMind: Autonomous AI Interviewer · Aliyah Alabdali</title>
 <meta name="description" content="InterMind: an autonomous AI interviewer that turns a job description into an adaptive interview, evaluates candidate responses as the conversation unfolds, and produces an evidence-based report. Built with LangGraph, OpenAI, FastAPI, React, and PostgreSQL. Case study by Aliyah Alabdali.">
@@ -15,9 +18,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239B6A6C'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css">
-<link rel="stylesheet" href="../assets/css/project.css">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Cairo:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css?v=5">
+<link rel="stylesheet" href="../assets/css/project.css?v=4">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CreativeWork","name":"InterMind: Autonomous AI Interviewer","author":{"@type":"Person","name":"Aliyah Alabdali"},"about":["Agentic AI","Large Language Models","Full-stack engineering"],"keywords":"LangGraph, OpenAI, FastAPI, React, TypeScript, PostgreSQL, Azure AI Speech, O*NET","url":"https://intermind-ai.vercel.app"}
 </script>
@@ -32,6 +35,7 @@
       <span class="brand__name"><span>Aliyah</span><span>Alabdali</span></span>
     </a>
     <div class="nav__cta">
+      <button type="button" class="lang-toggle" data-lang-toggle lang="ar">العربية</button>
       <a class="btn btn--ghost" href="../index.html#work">All work</a>
       <a class="btn btn--primary" href="https://intermind-ai.vercel.app" target="_blank" rel="noopener">Live product
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
@@ -127,7 +131,7 @@
         <div class="role-card"><h4>Backend</h4><p>Developed the FastAPI service and the PostgreSQL persistence behind interview sessions.</p></div>
         <div class="role-card"><h4>Frontend</h4><p>Built the React and TypeScript app covering both the recruiter and candidate workflows.</p></div>
         <div class="role-card"><h4>Voice</h4><p>Integrated Azure AI Speech so an interview can be spoken instead of typed.</p></div>
-        <div class="role-card"><h4>Deployment</h4><p>Shipped it to production: the React app on Vercel, the API on Azure App Service.</p></div>
+        <div class="role-card"><h4>Deployment</h4><p>Shipped it to production: the React app and FastAPI backend on Vercel, with PostgreSQL on Neon.</p></div>
       </div>
     </section>
 
@@ -139,7 +143,7 @@
         <div class="tech-col"><h4>Backend</h4><div class="chips"><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">PostgreSQL</span></div></div>
         <div class="tech-col"><h4>Frontend</h4><div class="chips"><span class="chip">React</span><span class="chip">TypeScript</span></div></div>
         <div class="tech-col"><h4>Voice &amp; context</h4><div class="chips"><span class="chip">Azure AI Speech</span><span class="chip">O*NET</span></div></div>
-        <div class="tech-col"><h4>Deployment</h4><div class="chips"><span class="chip">Vercel</span><span class="chip">Azure App Service</span></div></div>
+        <div class="tech-col"><h4>Deployment</h4><div class="chips"><span class="chip">Vercel</span><span class="chip">Neon PostgreSQL</span></div></div>
       </div>
     </section>
 
@@ -204,12 +208,12 @@
       <h2>InterMind is live.</h2>
       <div class="metrics">
         <div class="metric"><div class="num"><span data-count="0.885" data-dec="3">0.885</span></div><div class="lbl">Follow-up F1</div></div>
-        <div class="metric"><div class="num"><span data-count="90.2" data-dec="1">90.2</span><small>%</small></div><div class="lbl">Evidence-backed Claims</div></div>
+        <div class="metric"><div class="num"><span data-count="239" data-dec="0">239</span><small>/239</small></div><div class="lbl">Evidence Traced</div></div>
         <div class="metric"><div class="num"><span data-count="3.83" data-dec="2">3.83</span><small>s</small></div><div class="lbl">P95 Backend Latency</div></div>
       </div>
-      <p>Follow-up F1 covers 90 labeled routing cases. Evidence-backed Claims counts 221 fully supported claims
-        among 245 reviewed. P95 Backend Latency covers 100 controlled backend requests, excluding browser latency.</p>
-      <p>It is deployed and public: the React app on Vercel, the API on Azure App Service. Recruiters use it
+      <p>Follow-up F1 covers 90 labeled routing cases. Evidence Traced counts reviewed evidence strings that
+        trace back to the transcript: 239 of 239. P95 Backend Latency covers 100 controlled backend requests, excluding browser latency.</p>
+      <p>It is deployed and public: the React app and FastAPI backend on Vercel, with PostgreSQL on Neon. Recruiters use it
         to set up roles, and candidates use it for interviews.</p>
       <a class="live-embed live-embed__launch" href="https://intermind-ai.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Launch InterMind in a new tab">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
@@ -231,10 +235,10 @@
 <!-- NEXT -->
 <section class="section next-proj">
   <div class="wrap">
-    <a href="sms-scam-detection.html" data-reveal>
+    <a href="daleel.html" data-reveal>
       <div>
         <div class="t">Next project</div>
-        <div class="n">SMS Scam &amp; Spam Detection</div>
+        <div class="n">Daleel: RAG Document Assistant</div>
       </div>
       <span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
     </a>
@@ -250,6 +254,8 @@
   </div>
 </footer>
 
-<script src="../assets/js/main.js?v=2" defer></script>
+<script src="../assets/js/i18n-ar.js?v=3" defer></script>
+<script src="../assets/js/i18n.js?v=1" defer></script>
+<script src="../assets/js/main.js?v=5" defer></script>
 </body>
 </html>

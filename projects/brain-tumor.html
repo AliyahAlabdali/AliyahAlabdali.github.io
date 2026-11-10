@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Language: set direction before first paint and hold the page hidden until
+     i18n.js has swapped the text in, so Arabic visitors never see English flash. -->
+<script>(function(){try{var m=/[?&]lang=(en|ar)/.exec(location.search),l=m?m[1]:localStorage.getItem("lang");if(l==="ar"){var r=document.documentElement;r.lang="ar";r.dir="rtl";r.classList.add("i18n-pending");setTimeout(function(){r.classList.remove("i18n-pending")},3000)}}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Brain Tumor MRI Classifier · In-browser AI · Aliyah Alabdali</title>
 <meta name="description" content="A privacy-first web app that classifies brain-MRI scans into four tumor types entirely in the browser via ONNX Runtime Web. ~79% accuracy, ~9ms inference, ~1.5MB model, no patient data leaving the device. Case study by Aliyah Alabdali.">
@@ -15,9 +18,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='26' fill='%239B6A6C'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/styles.css">
-<link rel="stylesheet" href="../assets/css/project.css">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Cairo:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css?v=5">
+<link rel="stylesheet" href="../assets/css/project.css?v=4">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CreativeWork","name":"Brain Tumor MRI Classifier","author":{"@type":"Person","name":"Aliyah Alabdali"},"about":["Deep Learning","Medical imaging","On-device inference"],"keywords":"ONNX Runtime Web, React, Vite, brain MRI, in-browser inference"}
 </script>
@@ -32,6 +35,7 @@
       <span class="brand__name"><span>Aliyah</span><span>Alabdali</span></span>
     </a>
     <div class="nav__cta">
+      <button type="button" class="lang-toggle" data-lang-toggle lang="ar">العربية</button>
       <a class="btn btn--ghost" href="../index.html#work">All work</a>
       <a class="btn btn--primary" href="https://btcs-project.vercel.app/" target="_blank" rel="noopener">Live demo
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7m0 0H8m9 0v9"/></svg></a>
@@ -224,6 +228,8 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></a>
   </div>
 </footer>
-<script src="../assets/js/main.js" defer></script>
+<script src="../assets/js/i18n-ar.js?v=3" defer></script>
+<script src="../assets/js/i18n.js?v=1" defer></script>
+<script src="../assets/js/main.js?v=5" defer></script>
 </body>
 </html>
